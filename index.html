@@ -1315,6 +1315,13 @@
             <h2>行き先ナビ</h2>
           </div>
         </div>
+        <div class="quick-label">行き先を選ぶ</div>
+        <div class="quick-grid" id="quickGrid"></div>
+        <div class="quick-label">または、展示団体から探す</div>
+        <div class="search-wrap"><span class="search-icon">⌕</span><input id="destSearch" class="search"
+            placeholder="団体名を入力" autocomplete="off">
+          <div class="suggestions" id="destSuggest"></div>
+        </div>
         <div class="scanner-card"><strong>現在地を設定</strong>
           <div class="scanner-video-wrap"><span id="scannerPlaceholder" style="color:#fff;font-size:12px;padding:12px;text-align:center">目的地を選ぶとQRコード読取を開始します</span><video id="locationVideo" playsinline muted hidden></video></div>
           <div class="scanner-status" id="scannerStatus" aria-live="polite">カメラが使えない場合は番号を入力してください。</div>
@@ -1326,13 +1333,6 @@
             <div class="loc-label">YOUR CURRENT LOCATION</div>
             <div class="loc-value" id="currentLocation">出発地を確認中</div>
           </div><span class="loc-id" id="currentId"></span>
-        </div>
-        <div class="quick-label">行き先を選ぶ</div>
-        <div class="quick-grid" id="quickGrid"></div>
-        <div class="quick-label">または、展示団体から探す</div>
-        <div class="search-wrap"><span class="search-icon">⌕</span><input id="destSearch" class="search"
-            placeholder="団体名を入力" autocomplete="off">
-          <div class="suggestions" id="destSuggest"></div>
         </div>
         <div class="route-result" id="routeResult">
           <div class="route-header"><span class="route-dest" id="routeDest"></span><span class="route-step"
@@ -1545,17 +1545,19 @@
     id: "roof",
     name: "屋上庭園"
   }];
-  const locations = {
-  room301: "東館 3F・301教室",
-  mainGate: "正門",
-  eastEntrance: "東館入口",
-  northEntrance: "北館入口",
-  southEntrance: "南館入口",
-  gymEntrance: "体育館入口",
-  courtyard: "中庭"
-  };
-  // 番号は実際の掲示番号が確定してから入力し、空欄は照合対象外です。
-  const placeData = Object.entries(locations).map(([id,name])=>({id,number:"",name,building:name.match(/^(東館|北館|南館|特別棟|体育館)/)?.[1]||"",floor:name.match(/([0-9]+F)/)?.[1]||""}));
+  // 仮番号は動作確認用です。正式な番号はこの一覧だけを変更してください。
+  const placeData = [
+    {id:"mainGate",number:"1001",name:"正門",building:"",floor:""},
+    {id:"building1f",number:"1002",name:"本館1階",building:"本館",floor:"1階"},
+    {id:"building2f",number:"1003",name:"本館2階",building:"本館",floor:"2階"},
+    {id:"gymEntrance",number:"1004",name:"体育館",building:"体育館",floor:""},
+    {id:"courtyard",number:"1005",name:"校庭",building:"",floor:""},
+    {id:"room301",number:"",name:"東館 3F・301教室",building:"東館",floor:"3F"},
+    {id:"eastEntrance",number:"",name:"東館入口",building:"東館",floor:""},
+    {id:"northEntrance",number:"",name:"北館入口",building:"北館",floor:""},
+    {id:"southEntrance",number:"",name:"南館入口",building:"南館",floor:""}
+  ];
+  const locations = Object.fromEntries(placeData.map(place=>[place.id,place.name]));
   const destinationNames = {
   east: "東館",
   north: "北館",
@@ -1968,17 +1970,15 @@
   document.querySelectorAll('.tab').forEach(b => b.onclick = () => setTab(b.dataset.tab));
   $('#mapDirections').addEventListener('click',()=>{if(selectedEx){setTab('navigator');chooseDestination(selectedEx);}});
   function resolveStart() {
-  const raw = new URLSearchParams(location.search).get('start') || 'mainGate';
-  const key = locations[raw] ? raw : 'mainGate';
-  $('#currentLocation').textContent = locations[key] || `校内案内スポット (${raw})`;
-  $('#currentId').textContent = raw;
-  return raw
+    $('#currentLocation').textContent='現在地は未設定です。校内のQRコードを読み取ってください。';
+    $('#currentId').textContent='';
+    return null;
   }
   let startId = resolveStart();
   function setCurrentLocation(place){startId=place.id;$('#currentLocation').textContent=place.name;$('#currentId').textContent=place.id;$('#scannerStatus').textContent='現在地を設定しました：'+place.name;stopLocationScanner();const u=new URL(location.href);u.searchParams.set('start',place.id);history.replaceState({},'',u);if(routeDestination)chooseDestination(routeDestination,false);}
-  function resolveQrLocation(value){let raw=String(value||'').trim();try{const u=new URL(raw);raw=u.searchParams.get('start')||u.searchParams.get('location')||u.searchParams.get('id')||raw;}catch(_){}raw=raw.trim();return placeData.find(x=>x.id===raw||(x.number&&x.number.trim()===raw))||null;}
+  function resolveQrLocation(value){let raw=String(value||'').trim();try{const u=new URL(raw);raw=u.searchParams.get('start')||u.searchParams.get('location')||u.searchParams.get('id')||u.searchParams.get('number')||raw;}catch(_){}raw=raw.trim();return placeData.find(x=>x.id===raw||(x.number&&x.number.trim()===raw))||null;}
   function stopLocationScanner(){if(scanTimer)cancelAnimationFrame(scanTimer);scanTimer=null;if(cameraStream)cameraStream.getTracks().forEach(t=>t.stop());cameraStream=null;const v=$('#locationVideo');v.pause();v.srcObject=null;v.hidden=true;$('#scannerPlaceholder').hidden=false;$('#stopScanner').hidden=true;}
-  async function startLocationScanner(){stopLocationScanner();const status=$('#scannerStatus');if(!('BarcodeDetector'in window)){status.textContent='このブラウザーはQR読取に未対応です。案内番号を入力してください。';return;}if(!navigator.mediaDevices?.getUserMedia){status.textContent='カメラを利用できません。案内番号を入力してください。';return;}try{barcodeDetector=new BarcodeDetector({formats:['qr_code']});cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});const v=$('#locationVideo');v.srcObject=cameraStream;v.hidden=false;$('#scannerPlaceholder').hidden=true;$('#stopScanner').hidden=false;await v.play();status.textContent='QRコードをカメラに映してください。';const scan=async()=>{if(!cameraStream)return;try{const c=await barcodeDetector.detect(v);if(c.length){const place=resolveQrLocation(c[0].rawValue);if(place)setCurrentLocation(place);else status.textContent='QRの場所IDが未登録です。設置番号を入力してください。';}}catch(_){}if(cameraStream)scanTimer=requestAnimationFrame(scan);};scanTimer=requestAnimationFrame(scan);}catch(e){stopLocationScanner();status.textContent=e?.name==='NotAllowedError'?'カメラが許可されていません。番号入力を利用してください。':'カメラ起動に失敗しました。番号入力を利用してください。';}}
+  async function startLocationScanner(){stopLocationScanner();const status=$('#scannerStatus');if(!('BarcodeDetector'in window)){status.textContent='このブラウザーはQR読取に未対応です。案内番号を入力してください。';return;}if(!navigator.mediaDevices?.getUserMedia){status.textContent='カメラを利用できません。案内番号を入力してください。';return;}try{barcodeDetector=new BarcodeDetector({formats:['qr_code']});cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});const v=$('#locationVideo');v.srcObject=cameraStream;v.hidden=false;$('#scannerPlaceholder').hidden=true;$('#stopScanner').hidden=false;await v.play();status.textContent='QRコードをカメラに映してください。';const scan=async()=>{if(!cameraStream)return;try{const c=await barcodeDetector.detect(v);if(c.length){const place=resolveQrLocation(c[0].rawValue);if(place)setCurrentLocation(place);else status.textContent='QRの番号が未登録または不正です。現在地は変更していません。';}}catch(_){status.textContent='QRコードを読み取れませんでした。位置を調整してください。現在地は維持されます。';}if(cameraStream)scanTimer=requestAnimationFrame(scan);};scanTimer=requestAnimationFrame(scan);}catch(e){stopLocationScanner();status.textContent=e?.name==='NotAllowedError'?'カメラが許可されていません。番号入力を利用してください。':'カメラ起動に失敗しました。番号入力を利用してください。';}}
   $('#confirmLocation').onclick=()=>{const value=$('#locationNumber').value.trim();const place=placeData.find(x=>x.number&&x.number.trim()===value);if(!value||!place){$('#scannerStatus').textContent='番号が正しくありません。設置番号を確認してください。';return;}setCurrentLocation(place);};
   $('#stopScanner').onclick=stopLocationScanner;
   $('#locationNumber').addEventListener('keydown',e=>{if(e.key==='Enter')$('#confirmLocation').click();});
@@ -1993,8 +1993,9 @@
   function chooseDestination(dest, startScanner = true) {
   routeDestination = dest;
   $('#destSearch').value=dest.name;
-  $('#scannerStatus').textContent='目的地「'+dest.name+'」を設定しました。現在地を選んでください。';
+  $('#scannerStatus').textContent='目的地「'+dest.name+'」を設定しました。現在地をQRコードで読み取ってください。';
   if(startScanner) startLocationScanner();
+  if(!startId){routeSlides=[];routeIndex=0;$('#routeDest').textContent='目的地：'+dest.name;$('#routeResult').classList.add('show');$('#routeCaption').textContent='現在地が未設定です。QRコードを読み取ると案内を更新します。';renderSlide();return;}
   document.querySelectorAll('.quick').forEach(b => b.classList.toggle('selected',b.dataset.id === dest.id));
   const hub = getHub(startId),
   individual = nearestHubImages[startId],
