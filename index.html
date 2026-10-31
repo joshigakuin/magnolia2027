@@ -125,6 +125,7 @@
       margin: 0 0 16px
     }
 
+    .event-alert[hidden] { display:none }
     .event-alert {
       position: sticky;
       top: 0;
@@ -316,6 +317,32 @@
     .suggestion:last-child {
       border: 0
     }
+
+    .event-alert[hidden] { display:none }
+    .alert-event { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:7px }
+    .alert-event button { flex:none; min-height:38px; border:0; border-radius:10px; padding:7px 10px; color:#fff; background:#98601a; font-family:inherit;font-size:10px;font-weight:700 }
+    .ex-category-tabs { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px; margin:0 0 12px }
+    .ex-filter { min-width:0; min-height:42px; padding:7px 3px; border:1px solid var(--line); border-radius:11px; background:#fff; color:#5c655c; font-family:inherit;font-size:10px;font-weight:700; cursor:pointer; overflow-wrap:anywhere }
+    .ex-filter.active { color:#fff; background:var(--green); border-color:var(--green) }
+    .event-dialog { width:min(92vw,420px); padding:0; border:1px solid var(--line); border-radius:18px; color:var(--ink); box-shadow:var(--shadow) }
+    .event-dialog::backdrop { background:#17251dcc }
+    .event-dialog-head { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:15px 16px 9px }
+    .event-dialog-head strong { font-size:16px }
+    .event-dialog-head button { width:40px; height:40px; border:0; border-radius:12px; background:#eef2e8; font-size:24px }
+    .event-dialog-body { padding:0 16px 12px; font-size:13px; line-height:1.8; white-space:pre-line }
+    .event-dialog-actions { padding:0 16px 16px }
+    .event-dialog-actions button { min-height:44px; width:100% }
+    .time-group-name,.time-group-short { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; line-height:20px }
+    .time-group-short { color:var(--muted); font-size:9px; font-weight:600 }
+    .group-description p { position:absolute; top:calc(100% + 2px); left:0; z-index:10; width:min(240px,78vw); }
+    .time-grid-heading { overflow:visible }
+    .toilet-map-preview { position:relative; width:100%; background:#101010 }
+    .toilet-image-stage { position:relative; width:100%; line-height:0 }
+    .toilet-map-preview img { display:block; width:100%; height:auto }
+    .toilet-marker { position:absolute; transform:translate(-50%,-50%); border-radius:50%; min-width:34px; min-height:34px; display:grid; place-items:center; border:2px solid #fff; color:#fff; font-size:11px; font-weight:900; box-shadow:0 2px 8px #0008 }
+    .toilet-marker.male { left:46%; top:53%; background:#2588d8 }
+    .toilet-marker.female { left:56%; top:53%; background:#d65d91 }
+    .toilet-map-label { display:block; padding:8px 10px; color:#fff; background:#35483b; font-size:11px; line-height:1.5 }
 
     .ex-list {
       display: grid;
@@ -723,12 +750,15 @@
     }
 
     .time-grid-heading {
-      padding: 11px 9px;
+      box-sizing:border-box;
+      height:58px;
+      padding:7px 6px;
       font-size: 10px;
       font-weight: 900;
       color: #425647;
       border-right: 1px solid var(--line);
-      white-space: nowrap
+      white-space:normal;
+      overflow:hidden
     }
 
     .time-grid-heading:first-child {
@@ -784,6 +814,11 @@
     }
 
     .time-event {
+      appearance:none;
+      width:calc(100% - 8px);
+      font-family:inherit;
+      text-align:left;
+      cursor:pointer;
       position: absolute;
       left: 4px;
       right: 4px;
@@ -1071,7 +1106,7 @@
 
     .quick-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 8px
     }
 
@@ -1240,10 +1275,10 @@
       <h1 class="hero">好きが集まる、<br><em>今日だけのマグノリア祭。</em></h1>
       <p class="sub">見つけよう。出会おう。マグノリア祭を楽しもう。</p>
     </header>
-    <section class="event-alert" id="alert" aria-live="polite"></section>
+    <section class="event-alert" id="alert" aria-live="polite" hidden></section>
 
     <nav class="tabs" aria-label="メインメニュー">
-      <button class="tab active" data-tab="exhibitions">展示団体</button>
+      <button class="tab active" data-tab="exhibitions">団体一覧</button>
       <button class="tab" data-tab="timetable">タイムテーブル</button>
       <button class="tab" data-tab="navigator">行き先ナビ</button>
     </nav>
@@ -1255,7 +1290,7 @@
             <div class="eyebrow">FIND YOUR FAVORITE
             </div>
 
-            <h2>展示団体</h2>
+            <h2>団体一覧</h2>
           </div>
           <span class="count" id="exCount"></span>
         </div>
@@ -1265,6 +1300,7 @@
           <button class="clear" id="exClear">×</button>
           <div class="suggestions" id="exSuggest"></div>
         </div>
+        <div class="ex-category-tabs" id="exCategoryTabs" role="group" aria-label="団体カテゴリー"><button class="ex-filter active" data-filter="展示団体">展示団体</button><button class="ex-filter" data-filter="運動系クラブ">運動系クラブ</button><button class="ex-filter" data-filter="公演">公演</button><button class="ex-filter" data-filter="食品販売">食品販売</button></div>
         <div class="ex-list" id="exList"></div>
         <div id="mapSlot">
         <div class="map-card" id="mapCard">
@@ -1317,7 +1353,7 @@
         </div>
         <div class="quick-label">行き先を選ぶ</div>
         <div class="quick-grid" id="quickGrid"></div>
-        <div class="quick-label">または、展示団体から探す</div>
+        <div class="quick-label">または、団体一覧から探す</div>
         <div class="search-wrap"><span class="search-icon">⌕</span><input id="destSearch" class="search"
             placeholder="団体名を入力" autocomplete="off">
           <div class="suggestions" id="destSuggest"></div>
@@ -1337,8 +1373,10 @@
         <div class="route-result" id="routeResult">
           <div class="route-header"><span class="route-dest" id="routeDest"></span><span class="route-step"
               id="routeStep"></span></div>
+          <div class="route-caption" id="routeFloorNote" hidden></div>
           <div class="slide-wrap" id="slideWrap"></div>
           <div class="route-caption" id="routeCaption"></div>
+          <div id="toiletPreview" class="toilet-map-preview" hidden></div>
           <div class="route-controls"><button id="prevBtn">◀ 前へ</button><button class="next" id="nextBtn">次へ ▶</button>
           </div>
           <p class="route-note">案内画像（images/ 内のPNG）と実際の場所番号が必要です。画像が未配置・経路データが不足している場合は、案内を完成扱いにせず不足を表示します。</p>
@@ -1347,6 +1385,7 @@
     </div>
     <footer class="footer">MAGNOLIA FESTIVAL · MAKE YOUR DAY</footer>
   </main>
+  <dialog class="event-dialog" id="eventDialog"><div class="event-dialog-head"><strong id="eventDialogTitle"></strong><button type="button" id="closeEventDialog" aria-label="閉じる">×</button></div><div class="event-dialog-body" id="eventDialogBody"></div><div class="event-dialog-actions"><button type="button" id="eventRouteButton" class="map-directions-button">行き方が分からない</button></div></dialog>
   <script>
 // ① 公演スケジュール
   const events = [
@@ -1357,56 +1396,105 @@
     place: "体育館",
     start: "09:00",
     end: "09:40"
-  },
-  {
+  },{
     day: 1,
     category: "公演",
     name: "ダンス部 ステージ",
     place: "中庭ステージ",
     start: "10:00",
     end: "10:45"
-  },
-  {
+  },{
     day: 1,
     category: "公演",
     name: "演劇部 公演",
     place: "体育館",
     start: "13:00",
     end: "14:00"
-  },
-  {
+  },{
     day: 1,
     category: "公演",
     name: "軽音楽部 ファイナルライブ",
     place: "中庭ステージ",
     start: "15:00",
     end: "16:00"
-  },
-  {
+  },{
     day: 1,
     category: "部活",
     name: "化学",
     place: "体育館",
     start: "09:00",
     end: "09:40"
-  },
-  {
+  },{
     day: 1,
     category: "部活",
     name: "化学い",
     place: "中庭ステージ",
     start: "10:00",
     end: "10:45"
-  },
-  {
+  },{
     day: 1,
     category: "部活",
-    name: "化学あ",
-    place: "体育館",
-    start: "13:00",
-    end: "14:00"
-  },
-  {
+    name: "落語研究班",
+    place: "北4-A",
+    start: "9:00",
+    end: "12:00"
+  },{
+    day: 1,
+    category: "部活",
+    name: "天文班",
+    place: "特別棟4階",
+    start: "9:20",
+    end: "9:40"
+  },{
+    day: 1,
+    category: "部活",
+    name: "天文班",
+    place: "特別棟4階",
+    start: "9:40",
+    end: "10:00"
+  },{
+    day: 1,
+    category: "部活",
+    name: "天文班",
+    place: "特別棟4階",
+    start: "10:00",
+    end: "10:20"
+  },{
+    day: 1,
+    category: "部活",
+    name: "天文班",
+    place: "特別棟4階",
+    start: "10:20",
+    end: "10:40"
+  },{
+    day: 1,
+    category: "部活",
+    name: "天文班",
+    place: "特別棟4階",
+    start: "10:40",
+    end: "11:00"
+  },{
+    day: 1,
+    category: "部活",
+    name: "天文班",
+    place: "特別棟4階",
+    start: "11:00",
+    end: "11:20"
+  },{
+    day: 1,
+    category: "部活",
+    name: "天文班",
+    place: "特別棟4階",
+    start: "11:20",
+    end: "11:40"
+  },{
+    day: 1,
+    category: "部活",
+    name: "天文班",
+    place: "特別棟4階",
+    start: "11:40",
+    end: "12:00"
+  },{
     day: 1,
     category: "部活",
     name: "書道",
@@ -1542,9 +1630,15 @@
     name: "小体育館"
   },
   {
+    id: "ko-do",
+    name: "講堂"
+  },
+  {
     id: "roof",
     name: "屋上庭園"
-  }];
+  },
+  { id:"toilet", name:"トイレ" }
+ ];
   // 仮番号は動作確認用です。正式な番号はこの一覧だけを変更してください。
   const placeData = [
     {id:"mainGate",number:"1001",name:"正門",building:"",floor:""},
@@ -1691,7 +1785,7 @@
   }
   };
   const $ = s => document.querySelector(s);
-  let selectedEx = null,routeSlides = [],routeIndex = 0,routeDestination = null;
+  let selectedEx = null,routeSlides = [],routeIndex = 0,routeDestination = null,routeFloor = null,routeTargetLabel = null;
   function mins(s) {
   const [h,
     m] = s.split(':').map(Number);
@@ -1702,29 +1796,46 @@
   return d.getHours() * 60 + d.getMinutes()
   }
   function updateAlert() {
-  const now = nowMins(),
-  active = events.filter(e => now >= mins(e.start) && now < mins(e.end)),
-  upcoming = events.filter(e => mins(e.start) > now && mins(e.start) - now <= 30),
-  list = [...active,
-    ...upcoming].sort((a,b) => mins(a.start) - mins(b.start)),
-  el = $('#alert');
-  if (!list.length) {
-    el.innerHTML = '<span class="alert-icon">✨</span><div class="alert-empty">現在、まもなく始まる公演はありません</div>';
-    return
+    const el = $('#alert');
+    if (selectedFestivalDay === null) {
+      el.hidden = true;
+      el.innerHTML = '';
+      return;
+    }
+    el.hidden = false;
+    const now = nowMins();
+    const list = events
+      .filter(e => Number(e.day) === selectedFestivalDay && e.category === '公演' && mins(e.start) > now && mins(e.start) - now <= 30)
+      .sort((a,b) => mins(a.start) - mins(b.start));
+    el.innerHTML = list.length
+      ? '<span class="alert-icon">⏰</span><div class="alert-copy"><div class="alert-label">' + selectedFestivalDay + '日目 · COMING UP</div>' +
+        list.map(e => '<div class="alert-event"><div><div class="alert-title">' + e.name + '</div><div class="alert-meta">' + (e.place || '会場未登録') + ' · ' + e.start + '〜' + (e.end || '終了時刻未登録') + '</div></div><button type="button" data-alert-index="' + events.indexOf(e) + '">行き方が分からない</button></div>').join('') +
+        '</div>'
+      : '<span class="alert-icon">✨</span><div class="alert-copy"><div class="alert-label">' + selectedFestivalDay + '日目</div><div class="alert-empty">まもなく始まる公演はありません</div></div>';
+    el.querySelectorAll('[data-alert-index]').forEach(button => {
+      button.addEventListener('click', () => navigateToEvent(events[Number(button.dataset.alertIndex)]));
+    });
+  }  function exhibitionMatchesCategory(item, category) {
+    const type = String(item.type || item.category || '').toLowerCase();
+    const text = (String(item.name || '') + ' ' + String(item.category || '')).toLowerCase();
+    if (category === '展示団体') return /展示|アトラクション|体験|販売/.test(type) && !/フード|食品|カフェ/.test(text);
+    if (category === '運動系クラブ') return /運動|スポーツ/.test(type) || /運動部|野球|サッカー|バスケ|テニス|陸上|卓球|バレー/.test(text);
+    if (category === '公演') return /公演|ステージ/.test(type);
+    if (category === '食品販売') return /食品販売|フード|飲食/.test(type) || /カフェ|食品|飲食|スイーツ/.test(text);
+    return true;
   }
-  el.innerHTML = '<span class="alert-icon">' + (active.length ? '🎤' : '⏰') + '</span><div class="alert-copy"><div class="alert-label">' + (active.length ? 'NOW ON STAGE' : 'COMING UP') + '</div>' + list.map(e => '<div class="alert-title">' + e.name + '</div><div class="alert-meta">' + e.place + ' · ' + e.start + '〜' + e.end + '</div>').join('') + '</div>'
-  }
+  document.querySelectorAll('.ex-filter').forEach(button => button.addEventListener('click', () => {
+    selectedExCategory = button.dataset.filter;
+    document.querySelectorAll('.ex-filter').forEach(item => item.classList.toggle('active', item === button));
+    renderExList($('#exSearch').value);
+  }));
   function renderExList(query = '') {
   const list = $('#exList');
   const map = $('#mapCard');
   const mapSlot = $('#mapSlot');
   mapSlot.append(map);
   const q = query.trim().toLowerCase();
-  const items = exhibitions.filter(item =>
-  (item.name + item.description + item.category + item.building)
-  .toLowerCase()
-  .includes(q)
-  );
+  const items = exhibitions.filter(item => exhibitionMatchesCategory(item, selectedExCategory) && (item.name + item.description + item.category + item.building + item.floor).toLowerCase().includes(q));
   $('#exCount').textContent = `${items.length} 団体`;
   list.innerHTML = items.length
   ? items.map(item => `
@@ -1803,6 +1914,7 @@
   "部活",
   "有志"];
   let selectedDay = null,selectedCategory = "公演";
+  let selectedFestivalDay = null, selectedExCategory = "展示団体";
   const targetSelection = new Map();
   function scheduleRows() {
   return events.filter(e => Number(e.day) === selectedDay && e.category === selectedCategory)
@@ -1872,6 +1984,60 @@
     height: Math.round((b - a) * MINUTE_HEIGHT * 1000) / 1000
   }
   }
+  function exhibitionForEvent(event) {
+    const org = String(event.name || '').match(/[^\s　]+(?:部|班|委員会|同好会|研究会)/)?.[0];
+    return exhibitions.find(item => event.name === item.name || event.name.includes(item.name) || (org && item.name.includes(org))) || null;
+  }
+  function destinationForBuilding(building) {
+    const aliases = {東館:'east',北館:'north',南館:'south',特別棟:'middle',大体育館:'gym-big',小体育館:'gym-small',体育館:'gym-big',講堂:'ko-do',屋上庭園:'roof'};
+    const id = aliases[building];
+    return quickDestinations.find(item => item.id === id) || {id:'building-' + building,name:building || '目的地未登録',temporary:true};
+  }
+  function floorForOrganization(item) {
+    if (!item || !['東館','北館','南館'].includes(item.building)) return null;
+    return String(item.floor || '').match(/[0-9]+階|[0-9]+F/)?.[0] || null;
+  }
+  function eventVenueDestination(event, organization) {
+    if (organization) return destinationForBuilding(organization.building);
+    const place = String(event.place || '');
+    const exact = quickDestinations.find(item => item.name === place);
+    if (exact) return exact;
+    if (place === '体育館') return Object.assign({},quickDestinations.find(item => item.id === 'gym-big'),{temporary:true});
+    if (/^北/.test(place)) return Object.assign({},quickDestinations.find(item => item.id === 'north'),{temporary:true});
+    if (/^特別棟/.test(place)) return Object.assign({},quickDestinations.find(item => item.id === 'middle'),{temporary:true});
+    return {id:'venue-' + events.indexOf(event),name:place || '会場未登録',temporary:true};
+  }
+  function navigateToExhibition(item) {
+    const dest = destinationForBuilding(item.building);
+    setTab('navigator');
+    chooseDestination(dest,true,floorForOrganization(item),item.name);
+  }
+  function navigateToEvent(event) {
+    if (!event) return;
+    const organization = exhibitionForEvent(event);
+    if (organization) { navigateToExhibition(organization); return; }
+    setTab('navigator');
+    chooseDestination(eventVenueDestination(event,null),true,null,event.name);
+  }
+  let activeDetailEvent = null;
+  function openEventDetail(event) {
+    if (!event) return;
+    activeDetailEvent = event;
+    const organization = exhibitionForEvent(event);
+    const activityOnly = event.category === '部活' || event.category === '有志';
+    $('#eventDialogTitle').textContent = activityOnly ? '' : (event.name || '予定の詳細');
+    const body = $('#eventDialogBody');
+    body.replaceChildren();
+    if (!activityOnly) {
+      const detailLines = [event.place && ('会場：' + event.place),event.start && ('時間：' + event.start + '〜' + (event.end || '終了時刻未登録')),organization && ('建物・階：' + organization.building + (organization.floor ? '・' + organization.floor : ''))].filter(Boolean);
+      const description = event.description || organization?.description;
+      if (description) detailLines.push(description);
+      const p = document.createElement('p'); p.textContent = detailLines.join('\n'); body.appendChild(p);
+    }
+    $('#eventDialog').showModal();
+  }
+  $('#closeEventDialog').addEventListener('click',() => $('#eventDialog').close());
+  $('#eventRouteButton').addEventListener('click',() => { const event = activeDetailEvent; $('#eventDialog').close(); navigateToEvent(event); });
   function renderSchedule() {
   const root = $('#schedule');
   if (!selectedDay) {
@@ -1917,12 +2083,13 @@
       return `<div class="time-grid-heading">${target}</div>`;
     }
     const description = descriptionForTarget(target, visible);
-    return `<div class="time-grid-heading"><details class="group-description"><summary>${target}</summary><p>${description}</p></details></div>`;
+    const shortDescription = Array.from(description).slice(0,10).join("");
+    return `<div class="time-grid-heading"><details class="group-description"><summary><span class="time-group-name">${target}</span><span class="time-group-short">${shortDescription}</span></summary><p>${description}</p></details></div>`;
   }).join("");
   const axis = tickTimes.map((t,i) => `<span class="time-label ${i === 0 ? "first" : i === tickTimes.length - 1 ? "last" : ""}" style="top:${(t - first) * MINUTE_HEIGHT}px">${clockLabel(t)}</span>`).join("");
   const lanes = targets.map(target => {
     const items = timed.filter(e => targetKey(e) === target).sort((a,b) => a._start - b._start);const cards = items.map(e => {
-      const layout = getEventLayout(e.start,e.end,first),top = layout.top,eventHeight = layout.height,compact = eventHeight < 38;const title = e.name || e.title || "企画名未登録";return `<article class="time-event ${compact ? "compact" : ""}" style="top:${top}px;height:${eventHeight}px" title="${title}｜${clockLabel(e._start)}〜${clockLabel(e._end)}"><strong>${title}</strong><span class="time-event-time">${clockLabel(e._start)}〜${clockLabel(e._end)}</span></article>`
+      const layout = getEventLayout(e.start,e.end,first),top = layout.top,eventHeight = layout.height,compact = eventHeight < 38;const title = e.name || e.title || "企画名未登録";return `<article class="time-event ${compact ? "compact" : ""}" data-event-index="${events.indexOf(e)}" tabindex="0" role="button" style="top:${top}px;height:${eventHeight}px" title="詳細を表示：${title}｜${clockLabel(e._start)}〜${clockLabel(e._end)}"><strong>${title}</strong><span class="time-event-time">${clockLabel(e._start)}〜${clockLabel(e._end)}</span></article>`
     }).join("");return `<div class="time-lane" style="height:${height}px">${cards}</div>`
   }).join("");
   const isPlace = selectedCategory === "公演" || selectedCategory === "試合",
@@ -1935,7 +2102,12 @@
     e.name || e.title || "企画名未登録"
   }
   `).join("<br>")}</div>`;
-  root.innerHTML = html
+  root.innerHTML = html;
+  root.querySelectorAll(".time-event").forEach(card => {
+    const open = () => openEventDetail(events[Number(card.dataset.eventIndex)]);
+    card.addEventListener("click",open);
+    card.addEventListener("keydown",event => { if(event.key === "Enter" || event.key === " "){event.preventDefault();open();} });
+  });
   }
   function renderTimetable() {
   if (!selectedDay) return;
@@ -1945,13 +2117,13 @@
   renderSchedule()
   }
   document.querySelectorAll('.day-choice').forEach(button => button.addEventListener('click',() => {
-  selectedDay = Number(button.dataset.day);selectedCategory = "公演";$('#dayChooser').hidden = true;$('#timetableContent').hidden = false;renderTimetable()
+  selectedDay = Number(button.dataset.day); selectedFestivalDay = selectedDay; updateAlert();selectedCategory = "公演";$('#dayChooser').hidden = true;$('#timetableContent').hidden = false;renderTimetable()
   }));
   document.querySelectorAll('.category-tab').forEach(button => button.addEventListener('click',() => {
   selectedCategory = button.dataset.category;renderTimetable()
   }));
   $('#backToDays').addEventListener('click',() => {
-  selectedDay = null;$('#schedule').innerHTML = "";$('#dayChooser').hidden = false;$('#timetableContent').hidden = true
+  selectedDay = null;selectedFestivalDay = null;updateAlert();$('#schedule').innerHTML = "";$('#dayChooser').hidden = false;$('#timetableContent').hidden = true
   });
   $('#selectAllTargets').addEventListener('click',() => {
   targetSelection.set(selectionKey(),new Set(currentTargets()));renderTargetChoices();renderSchedule()
@@ -1968,18 +2140,64 @@
   })
   }
   document.querySelectorAll('.tab').forEach(b => b.onclick = () => setTab(b.dataset.tab));
-  $('#mapDirections').addEventListener('click',()=>{if(selectedEx){setTab('navigator');chooseDestination(selectedEx);}});
+  $('#mapDirections').addEventListener('click',()=>{if(selectedEx) navigateToExhibition(selectedEx);});
   function resolveStart() {
     $('#currentLocation').textContent='現在地は未設定です。校内のQRコードを読み取ってください。';
     $('#currentId').textContent='';
     return null;
   }
   let startId = resolveStart();
-  function setCurrentLocation(place){startId=place.id;$('#currentLocation').textContent=place.name;$('#currentId').textContent=place.id;$('#scannerStatus').textContent='現在地を設定しました：'+place.name;stopLocationScanner();const u=new URL(location.href);u.searchParams.set('start',place.id);history.replaceState({},'',u);if(routeDestination)chooseDestination(routeDestination,false);}
+  function setCurrentLocation(place){startId=place.id;$('#currentLocation').textContent=place.name;$('#currentId').textContent=place.id;$('#scannerStatus').textContent='現在地を設定しました：'+place.name;stopLocationScanner();const u=new URL(location.href);u.searchParams.set('start',place.id);history.replaceState({},'',u);if(routeDestination)chooseDestination(routeDestination,false,routeFloor,routeTargetLabel);}
   function resolveQrLocation(value){let raw=String(value||'').trim();try{const u=new URL(raw);raw=u.searchParams.get('start')||u.searchParams.get('location')||u.searchParams.get('id')||u.searchParams.get('number')||raw;}catch(_){}raw=raw.trim();return placeData.find(x=>x.id===raw||(x.number&&x.number.trim()===raw))||null;}
-  function stopLocationScanner(){if(scanTimer)cancelAnimationFrame(scanTimer);scanTimer=null;if(cameraStream)cameraStream.getTracks().forEach(t=>t.stop());cameraStream=null;const v=$('#locationVideo');v.pause();v.srcObject=null;v.hidden=true;$('#scannerPlaceholder').hidden=false;$('#stopScanner').hidden=true;}
-  async function startLocationScanner(){stopLocationScanner();const status=$('#scannerStatus');if(!('BarcodeDetector'in window)){status.textContent='このブラウザーはQR読取に未対応です。案内番号を入力してください。';return;}if(!navigator.mediaDevices?.getUserMedia){status.textContent='カメラを利用できません。案内番号を入力してください。';return;}try{barcodeDetector=new BarcodeDetector({formats:['qr_code']});cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});const v=$('#locationVideo');v.srcObject=cameraStream;v.hidden=false;$('#scannerPlaceholder').hidden=true;$('#stopScanner').hidden=false;await v.play();status.textContent='QRコードをカメラに映してください。';const scan=async()=>{if(!cameraStream)return;try{const c=await barcodeDetector.detect(v);if(c.length){const place=resolveQrLocation(c[0].rawValue);if(place)setCurrentLocation(place);else status.textContent='QRの番号が未登録または不正です。現在地は変更していません。';}}catch(_){status.textContent='QRコードを読み取れませんでした。位置を調整してください。現在地は維持されます。';}if(cameraStream)scanTimer=requestAnimationFrame(scan);};scanTimer=requestAnimationFrame(scan);}catch(e){stopLocationScanner();status.textContent=e?.name==='NotAllowedError'?'カメラが許可されていません。番号入力を利用してください。':'カメラ起動に失敗しました。番号入力を利用してください。';}}
-  $('#confirmLocation').onclick=()=>{const value=$('#locationNumber').value.trim();const place=placeData.find(x=>x.number&&x.number.trim()===value);if(!value||!place){$('#scannerStatus').textContent='番号が正しくありません。設置番号を確認してください。';return;}setCurrentLocation(place);};
+  let scanBusy = false, scanLocked = false, lastRejectedQr = '', lastScanAt = 0;
+  function stopLocationScanner(){
+    if(scanTimer) cancelAnimationFrame(scanTimer);
+    scanTimer = null; scanBusy = false; scanLocked = false;
+    if(cameraStream) cameraStream.getTracks().forEach(t => t.stop());
+    cameraStream = null;
+    const v = $('#locationVideo');
+    v.pause(); v.srcObject = null; v.hidden = true;
+    $('#scannerPlaceholder').hidden = false; $('#stopScanner').hidden = true;
+  }
+  async function startLocationScanner(){
+    stopLocationScanner();
+    const status = $('#scannerStatus');
+    if(!window.isSecureContext){status.textContent='カメラにはHTTPS接続が必要です。GitHub PagesのHTTPSで開くか、案内番号を入力してください。';return;}
+    if(!('BarcodeDetector' in window)){status.textContent='このブラウザーは内蔵QR読取に未対応です。最新版の対応ブラウザーを使うか、案内番号を入力してください。';return;}
+    if(!navigator.mediaDevices?.getUserMedia){status.textContent='このページからカメラを利用できません。HTTPSで開き、ブラウザーのカメラ権限を確認してください。';return;}
+    try{
+      barcodeDetector = new BarcodeDetector({formats:['qr_code']});
+      cameraStream = await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
+      const v = $('#locationVideo'); v.srcObject = cameraStream; v.hidden = false;
+      $('#scannerPlaceholder').hidden = true; $('#stopScanner').hidden = false;
+      await v.play(); status.textContent='カメラ起動中です。QRコードを枠内に映してください。';
+      const scan = async () => {
+        if(!cameraStream || scanLocked) return;
+        if(!scanBusy){
+          scanBusy = true;
+          try{
+            const codes = await barcodeDetector.detect(v);
+            if(codes.length){
+              const raw = String(codes[0].rawValue || '').trim();
+              if(raw && raw !== lastRejectedQr){
+                const place = resolveQrLocation(raw);
+                if(place){scanLocked = true; setCurrentLocation(place); return;}
+                lastRejectedQr = raw;
+                status.textContent='QRの番号が未登録または不正です。現在地は変更していません。別のQRを読み取るか番号を入力してください。';
+              }
+            }
+          }catch(_){status.textContent='QRを読み取れませんでした。カメラを安定させ、明るい場所でもう一度お試しください。';}
+          finally{scanBusy = false;}
+        }
+        if(cameraStream && !scanLocked) scanTimer = requestAnimationFrame(scan);
+      };
+      scanTimer = requestAnimationFrame(scan);
+    }catch(e){
+      stopLocationScanner();
+      const messages = {NotAllowedError:'カメラが許可されていません。アドレスバーのサイト設定でカメラを許可してください。',NotFoundError:'利用できるカメラが見つかりません。端末のカメラを確認してください。',NotReadableError:'カメラを他のアプリが使用中です。ほかのアプリを閉じて再試行してください.',OverconstrainedError:'利用可能なカメラ設定が見つかりません。端末のカメラを確認してください。'};
+      status.textContent = messages[e?.name] || 'カメラ起動に失敗しました。HTTPS接続とブラウザーのカメラ権限を確認するか、案内番号を入力してください。';
+    }
+  }  $('#confirmLocation').onclick=()=>{const value=$('#locationNumber').value.trim();const place=placeData.find(x=>x.number&&x.number.trim()===value);if(!value||!place){$('#scannerStatus').textContent='番号が正しくありません。設置番号を確認してください。';return;}setCurrentLocation(place);};
   $('#stopScanner').onclick=stopLocationScanner;
   $('#locationNumber').addEventListener('keydown',e=>{if(e.key==='Enter')$('#confirmLocation').click();});
 
@@ -1990,12 +2208,28 @@
   const match = filename.match(/to_(.+)\.png$/);
   return match ? match[1] : null
   }
-  function chooseDestination(dest, startScanner = true) {
-  routeDestination = dest;
+  function renderToiletPreview(show){
+    const preview = $('#toiletPreview');
+    preview.hidden = !show;
+    preview.replaceChildren();
+    if(!show) return;
+    const stage = document.createElement('div'); stage.className = 'toilet-image-stage';
+    const img = document.createElement('img');
+    img.src = 'images/campus-other.png';
+    img.alt = 'トイレ位置の仮表示に使う校内マップ';
+    img.onerror = () => { preview.innerHTML = '<div class="slide-fallback"><strong>校内マップがありません</strong></div>'; };
+    const male = document.createElement('span'); male.className = 'toilet-marker male'; male.textContent = '男'; male.setAttribute('aria-label','男性用トイレ 仮位置');
+    const female = document.createElement('span'); female.className = 'toilet-marker female'; female.textContent = '女'; female.setAttribute('aria-label','女性用トイレ 仮位置');
+    const note = document.createElement('span'); note.className = 'toilet-map-label'; note.textContent = '男女のマークは仮位置です。実際の場所を確認してから座標を更新してください。';
+    stage.append(img,male,female); preview.append(stage,note);
+  }  function chooseDestination(dest, startScanner = true, floor = null, targetLabel = null) {
+  routeDestination = dest; routeFloor = floor; routeTargetLabel = targetLabel;
+  const floorNote = $('#routeFloorNote'); floorNote.hidden = !floor; floorNote.textContent = floor ? ('建物に到着後、' + floor + 'へ移動してください。階段・エレベーターの位置と経路は未登録です。') : '';
+  renderToiletPreview(dest.id === 'toilet');
   $('#destSearch').value=dest.name;
   $('#scannerStatus').textContent='目的地「'+dest.name+'」を設定しました。現在地をQRコードで読み取ってください。';
   if(startScanner) startLocationScanner();
-  if(!startId){routeSlides=[];routeIndex=0;$('#routeDest').textContent='目的地：'+dest.name;$('#routeResult').classList.add('show');$('#routeCaption').textContent='現在地が未設定です。QRコードを読み取ると案内を更新します。';renderSlide();return;}
+  if(!startId){routeSlides=[];routeIndex=0;$('#routeDest').textContent='目的地：'+(targetLabel ? targetLabel+'（'+dest.name+'）' : dest.name);$('#routeResult').classList.add('show');$('#routeCaption').textContent='現在地が未設定です。QRコードを読み取ると案内を更新します。';renderSlide();return;}
   document.querySelectorAll('.quick').forEach(b => b.classList.toggle('selected',b.dataset.id === dest.id));
   const hub = getHub(startId),
   individual = nearestHubImages[startId],
@@ -2005,7 +2239,7 @@
   if (Array.isArray(shared)) routeSlides.push(...shared);
   routeSlides = [...new Set(routeSlides.filter(p => typeof p === 'string' && p.startsWith('images/')))];
   routeIndex = 0;
-  $('#routeDest').textContent = `目的地：${dest.name}`;
+  $('#routeDest').textContent = '目的地：'+(routeTargetLabel ? routeTargetLabel+'（'+dest.name+'）' : dest.name);
   $('#routeResult').classList.add('show');
   if (!hub || !individual || !shared?.length) {
     $('#routeCaption').textContent = 'この出発地・目的地の案内画像は未設定です。データ定義を確認してください。';
@@ -2042,7 +2276,7 @@
     へ`}</strong><span>案内画像：${src}<br>画像を配置するとここに表示されます</span></div>`
   };
   wrap.appendChild(img);
-  $('#routeCaption').textContent = routeIndex === 0 ? `出発地から最寄りハブへ · ${src}` : `ハブから目的地への案内 · ${src}`
+  $('#routeCaption').textContent = (routeIndex === 0 ? `出発地から最寄りハブへ · ${src}` : `ハブから目的地への案内 · ${src}`) + (routeIndex === routeSlides.length - 1 && routeFloor ? `。到着後、${routeFloor}へ移動してください（階段・エレベーター位置は未登録です）。` : '');
   }
   $('#prevBtn').onclick = () => {
   if (routeIndex > 0) {
@@ -2068,7 +2302,7 @@
   $('#exSearch').focus()
   };
   suggestions($('#exSearch'),$('#exSuggest'),exhibitions,selectEx);
-  suggestions($('#destSearch'),$('#destSuggest'),exhibitions,x => chooseDestination(x));
+  suggestions($('#destSearch'),$('#destSuggest'),exhibitions,navigateToExhibition);
   renderExList();
   renderCampusMap();
   renderSchedule();
