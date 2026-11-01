@@ -1,2316 +1,3673 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#f7f7f2" />
+    <title>マグノリア祭｜文化祭ガイド</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap");
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#f7f7f2">
-  <title>マグノリア祭｜文化祭ガイド</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap');
-
-    :root {
-      --ink: #20251f;
-      --muted: #7b8179;
-      --paper: #f7f7f2;
-      --card: #fff;
-      --green: #315e49;
-      --lime: #d8ef72;
-      --line: #e8e9e1;
-      --orange: #ffb44c;
-      --shadow: 0 12px 34px #1821170d
-    }
-
-    * {
-      box-sizing: border-box
-    }
-
-    html {
-      scroll-behavior: smooth
-    }
-
-    body {
-      margin: 0;
-      background: var(--paper);
-      color: var(--ink);
-      font-family: 'DM Sans', 'Noto Sans JP', sans-serif;
-      -webkit-font-smoothing: antialiased
-    }
-
-    .app {
-      max-width: 520px;
-      margin: 0 auto;
-      min-height: 100vh;
-      padding-bottom: 36px;
-      background: var(--paper)
-    }
-
-    .top {
-      padding: 22px 20px 14px;
-      background: var(--paper)
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 19px
-    }
-
-    .brandmark {
-      display: flex;
-      align-items: center;
-      gap: 10px
-    }
-
-    .logo {
-      width: 39px;
-      height: 39px;
-      display: grid;
-      place-items: center;
-      background: var(--green);
-      color: white;
-      border-radius: 13px;
-      font-size: 21px
-    }
-
-    .brandname {
-      font-size: 17px;
-      font-weight: 900;
-      letter-spacing: .04em
-    }
-
-    .brandname small {
-      display: block;
-      font-size: 9px;
-      letter-spacing: .18em;
-      color: var(--muted);
-      font-weight: 700;
-      margin-top: 2px
-    }
-
-    .date-pill {
-      background: #e9ecdf;
-      border-radius: 99px;
-      padding: 8px 11px;
-      font-size: 10px;
-      color: var(--green);
-      font-weight: 800
-    }
-
-    .eyebrow {
-      font-size: 10px;
-      letter-spacing: .18em;
-      font-weight: 800;
-      color: var(--green);
-      text-transform: uppercase
-    }
-
-    .hero {
-      font-size: 28px;
-      line-height: 1.24;
-      letter-spacing: -.04em;
-      font-weight: 900;
-      margin: 8px 0 5px
-    }
-
-    .hero em {
-      font-style: normal;
-      color: var(--green)
-    }
-
-    .sub {
-      font-size: 12px;
-      color: var(--muted);
-      margin: 0 0 16px
-    }
-
-    .event-alert[hidden] { display:none }
-    .event-alert {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      margin: 0 16px 12px;
-      border-radius: 16px;
-      padding: 12px 14px;
-      background: #fff0ce;
-      border: 1px solid #ffe2a0;
-      box-shadow: 0 5px 16px #362a130d;
-      display: flex;
-      gap: 11px;
-      align-items: center
-    }
-
-    .alert-icon {
-      font-size: 20px
-    }
-
-    .alert-copy {
-      flex: 1;
-      min-width: 0
-    }
-
-    .alert-label {
-      font-size: 9px;
-      letter-spacing: .13em;
-      font-weight: 900;
-      color: #9b5d09
-    }
-
-    .alert-title {
-      font-size: 12px;
-      font-weight: 800;
-      margin-top: 2px
-    }
-
-    .alert-meta {
-      font-size: 10px;
-      color: #826641;
-      margin-top: 2px
-    }
-
-    .alert-empty {
-      font-size: 11px;
-      color: #7b6847;
-      font-weight: 700
-    }
-
-    .tabs {
-      position: sticky;
-      top: 67px;
-      z-index: 19;
-      margin: 0 16px 19px;
-      padding: 5px;
-      background: #e9ebe4;
-      border-radius: 15px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 4px
-    }
-
-    .tab {
-      border: 0;
-      background: transparent;
-      padding: 11px 4px;
-      border-radius: 11px;
-      color: #747a71;
-      font: 700 11px inherit;
-      cursor: pointer;
-      transition: .2s
-    }
-
-    .tab.active {
-      background: white;
-      color: var(--green);
-      box-shadow: 0 2px 8px #18211712
-    }
-
-    .content {
-      padding: 0 16px
-    }
-
-    .panel {
-      display: none;
-      animation: fade .2s ease
-    }
-
-    .panel.active {
-      display: block
-    }
-
-    @keyframes fade {
-      from {
-        opacity: .3;
-        transform: translateY(4px)
+      :root {
+        --ink: #20251f;
+        --muted: #7b8179;
+        --paper: #f7f7f2;
+        --card: #fff;
+        --green: #315e49;
+        --lime: #d8ef72;
+        --line: #e8e9e1;
+        --orange: #ffb44c;
+        --shadow: 0 12px 34px #1821170d;
       }
 
-      to {
-        opacity: 1;
-        transform: none
-      }
-    }
-
-    .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      margin: 4px 2px 13px
-    }
-
-    .section-head h2 {
-      font-size: 21px;
-      letter-spacing: -.04em;
-      margin: 3px 0 0;
-      font-weight: 900
-    }
-
-    .count {
-      font-size: 10px;
-      color: var(--muted);
-      font-weight: 700
-    }
-
-    .search-wrap {
-      position: relative;
-      margin-bottom: 12px
-    }
-
-    .search {
-      width: 100%;
-      border: 1px solid var(--line);
-      background: white;
-      border-radius: 14px;
-      padding: 14px 42px 14px 42px;
-      font: 500 13px inherit;
-      outline: none;
-      box-shadow: var(--shadow)
-    }
-
-    .search:focus {
-      border-color: #85a591
-    }
-
-    .search-icon {
-      position: absolute;
-      left: 15px;
-      top: 13px;
-      font-size: 16px;
-      color: #7d857b
-    }
-
-    .clear {
-      position: absolute;
-      right: 12px;
-      top: 11px;
-      border: 0;
-      background: none;
-      color: #8b9089;
-      font-size: 18px;
-      display: none
-    }
-
-    .suggestions {
-      position: absolute;
-      top: calc(100% + 5px);
-      left: 0;
-      right: 0;
-      background: white;
-      border: 1px solid var(--line);
-      border-radius: 13px;
-      z-index: 8;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      display: none
-    }
-
-    .suggestions.show {
-      display: block
-    }
-
-    .suggestion {
-      padding: 11px 14px;
-      font-size: 12px;
-      border-bottom: 1px solid #f0f0eb;
-      cursor: pointer
-    }
-
-    .suggestion:last-child {
-      border: 0
-    }
-
-    .event-alert[hidden] { display:none }
-    .alert-event { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:7px }
-    .alert-event button { flex:none; min-height:38px; border:0; border-radius:10px; padding:7px 10px; color:#fff; background:#98601a; font-family:inherit;font-size:10px;font-weight:700 }
-    .ex-category-tabs { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px; margin:0 0 12px }
-    .ex-filter { min-width:0; min-height:42px; padding:7px 3px; border:1px solid var(--line); border-radius:11px; background:#fff; color:#5c655c; font-family:inherit;font-size:10px;font-weight:700; cursor:pointer; overflow-wrap:anywhere }
-    .ex-filter.active { color:#fff; background:var(--green); border-color:var(--green) }
-    .event-dialog { width:min(92vw,420px); padding:0; border:1px solid var(--line); border-radius:18px; color:var(--ink); box-shadow:var(--shadow) }
-    .event-dialog::backdrop { background:#17251dcc }
-    .event-dialog-head { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:15px 16px 9px }
-    .event-dialog-head strong { font-size:16px }
-    .event-dialog-head button { width:40px; height:40px; border:0; border-radius:12px; background:#eef2e8; font-size:24px }
-    .event-dialog-body { padding:0 16px 12px; font-size:13px; line-height:1.8; white-space:pre-line }
-    .event-dialog-actions { padding:0 16px 16px }
-    .event-dialog-actions button { min-height:44px; width:100% }
-    .time-group-name,.time-group-short { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; line-height:20px }
-    .time-group-short { color:var(--muted); font-size:9px; font-weight:600 }
-    .group-description p { position:absolute; top:calc(100% + 2px); left:0; z-index:10; width:min(240px,78vw); }
-    .time-grid-heading { overflow:visible }
-    .toilet-map-preview { position:relative; width:100%; background:#101010 }
-    .toilet-image-stage { position:relative; width:100%; line-height:0 }
-    .toilet-map-preview img { display:block; width:100%; height:auto }
-    .toilet-marker { position:absolute; transform:translate(-50%,-50%); border-radius:50%; min-width:34px; min-height:34px; display:grid; place-items:center; border:2px solid #fff; color:#fff; font-size:11px; font-weight:900; box-shadow:0 2px 8px #0008 }
-    .toilet-marker.male { left:46%; top:53%; background:#2588d8 }
-    .toilet-marker.female { left:56%; top:53%; background:#d65d91 }
-    .toilet-map-label { display:block; padding:8px 10px; color:#fff; background:#35483b; font-size:11px; line-height:1.5 }
-
-    .ex-list {
-      display: grid;
-      gap: 8px;
-      max-height: none;
-      overflow: visible;
-      padding: 1px 2px 5px
-    }
-
-    .ex-card {
-      width: 100%;
-      border: 1px solid var(--line);
-      background: white;
-      border-radius: 15px;
-      padding: 12px;
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      text-align: left;
-      cursor: pointer;
-      transition: .18s
-    }
-
-    .ex-card.selected {
-      border-color: var(--green);
-      box-shadow: 0 0 0 2px #315e4915
-    }
-
-    .ex-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 13px;
-      background: #eef2e7;
-      display: grid;
-      place-items: center;
-      font-size: 20px;
-      flex: none
-    }
-
-    .ex-info {
-      min-width: 0;
-      flex: 1
-    }
-
-    .ex-title {
-      font-size: 12px;
-      font-weight: 800
-    }
-
-    .ex-desc {
-      font-size: 10px;
-      color: var(--muted);
-      margin-top: 4px
-    }
-
-    .ex-floor {
-      font-size: 9px;
-      font-weight: 800;
-      background: #f3f4ee;
-      color: #687065;
-      padding: 5px 7px;
-      border-radius: 8px;
-      white-space: nowrap
-    }
-
-    .map-card {
-      display: none;
-      margin-top: 14px;
-      background: white;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      overflow: hidden;
-      box-shadow: var(--shadow)
-    }
-
-    .map-card.visible {
-      display: block
-    }
-
-    .map-top {
-      padding: 13px 15px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between
-    }
-
-    .map-title {
-      font-weight: 900;
-      font-size: 12px
-    }
-
-    .map-art { position: relative; width: 100%; overflow: hidden; background: #eef1e9; line-height: 0 }
-    .campus-map-image { display:block; width:100%; height:auto; max-width:100%; object-fit:contain }
-    .map-art:has(.map-placeholder) { min-height:150px; aspect-ratio:auto; display:grid; place-items:center; line-height:1.8 }
-    .map-directions-button,.location-input-row button,.scanner-stop { border:0; border-radius:10px; padding:10px 12px; color:#fff; background:var(--green); font:inherit; font-weight:800; cursor:pointer }
-    .scanner-card { margin:14px 0; padding:14px; border:1px solid var(--line); border-radius:16px; background:#fff }
-    .scanner-video-wrap { width:100%; max-width:420px; aspect-ratio:16/9; margin:10px auto; overflow:hidden; border-radius:12px; background:#1d2b22; display:grid; place-items:center }
-    .scanner-video-wrap video { width:100%; height:100%; object-fit:cover }
-    .scanner-status { min-height:1.5em; color:#657364; font-size:12px }
-    .location-input-row { display:flex; gap:8px; margin-top:10px }
-    .location-input-row input { min-width:0; flex:1; padding:12px; border:1px solid var(--line); border-radius:10px; font:inherit }
-    .scanner-stop { color:var(--green); background:#edf2e9 }
-
-    .map-placeholder {
-      max-width: 280px;
-      padding: 22px;
-      text-align: center;
-      color: #70796d;
-      font-size: 12px;
-      line-height: 1.8
-    }
-
-    .map-placeholder strong {
-      display: block;
-      margin-bottom: 6px;
-      color: #405543;
-      font-size: 14px
-    }
-    .pin {
-      position: absolute;
-      z-index: 4;
-      width: 17px;
-      height: 17px;
-      border-radius: 50%;
-      background: #f04444;
-      border: 3px solid white;
-      box-shadow: 0 0 0 5px #f0444430;
-      left: var(--x, 32%);
-      top: var(--y, 45%);
-      transform: translate(-50%, -50%);
-      animation: pulse 1.35s infinite
-    }
-
-    .pin-label {
-      position: absolute;
-      z-index: 5;
-      left: calc(var(--x, 32%) + 11px);
-      top: calc(var(--y, 45%) - 8px);
-      background: #252b25;
-      color: white;
-      font-size: 9px;
-      padding: 5px 8px;
-      border-radius: 7px;
-      white-space: nowrap
-    }
-
-    .map-bottom {
-      padding: 11px 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 10px;
-      color: var(--muted)
-    }
-
-    .map-bottom strong {
-      color: var(--ink)
-    }
-
-    @keyframes pulse {
-      50% {
-        box-shadow: 0 0 0 9px #f0444400;
-        transform: translate(-50%, -50%) scale(1.12)
-      }
-    }
-
-    .day-chooser {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 20px;
-      box-shadow: var(--shadow)
-    }
-
-    .day-chooser p {
-      margin: 0 0 15px;
-      font-size: 14px;
-      font-weight: 900;
-      text-align: center
-    }
-
-    .day-buttons {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px
-    }
-
-    .day-choice {
-      border: 1px solid #dce5d9;
-      background: #f5f7f0;
-      border-radius: 14px;
-      padding: 15px 8px;
-      color: var(--green);
-      font-family: inherit;
-      font-size: 15px;
-      font-weight: 900;
-      cursor: pointer
-    }
-
-    .day-choice span {
-      display: block;
-      font-size: 9px;
-      letter-spacing: .14em;
-      margin-top: 5px;
-      color: #8b9587
-    }
-
-    .selected-day-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--green);
-      color: #fff;
-      border-radius: 15px;
-      padding: 13px 15px;
-      margin-bottom: 12px
-    }
-
-    .selected-day-bar .eyebrow {
-      color: #c8d9c9;
-      font-size: 8px
-    }
-
-    .selected-day-bar strong {
-      display: block;
-      font-size: 16px;
-      margin-top: 3px
-    }
-
-    .back-days {
-      border: 1px solid #ffffff55;
-      color: #fff;
-      background: #ffffff14;
-      border-radius: 9px;
-      padding: 9px 10px;
-      font: 700 10px inherit;
-      cursor: pointer
-    }
-
-    .category-tabs {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 5px;
-      padding: 5px;
-      background: #e9ebe4;
-      border-radius: 13px;
-      margin-bottom: 12px
-    }
-
-    .category-tab {
-      border: 0;
-      background: transparent;
-      border-radius: 9px;
-      padding: 10px 3px;
-      color: #747a71;
-      font: 800 11px inherit;
-      cursor: pointer
-    }
-
-    .category-tab.active {
-      background: #fff;
-      color: var(--green);
-      box-shadow: 0 2px 8px #18211712
-    }
-
-    .target-panel {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      margin-bottom: 12px;
-      overflow: hidden
-    }
-
-    .target-panel summary {
-      cursor: pointer;
-      list-style: none;
-      padding: 14px;
-      font-size: 11px;
-      font-weight: 900
-    }
-
-    .target-panel summary::-webkit-details-marker {
-      display: none
-    }
-
-    .target-panel summary:after {
-      content: '＋';
-      float: right;
-      color: var(--green)
-    }
-
-    .target-panel[open] summary:after {
-      content: '−'
-    }
-
-    .target-panel-body {
-      border-top: 1px solid var(--line);
-      padding: 12px
-    }
-
-    .target-actions {
-      display: flex;
-      gap: 7px;
-      margin-bottom: 8px
-    }
-
-    .target-actions button {
-      border: 1px solid var(--line);
-      background: #f7f8f4;
-      border-radius: 8px;
-      padding: 8px 10px;
-      font: 700 10px inherit;
-      color: #4a5148;
-      cursor: pointer
-    }
-
-    .target-choices {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 5px
-    }
-
-    .target-option {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      min-height: 42px;
-      padding: 7px 9px;
-      border-radius: 9px;
-      background: #f7f8f4;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer
-    }
-
-    .target-option input {
-      width: 18px;
-      height: 18px;
-      accent-color: var(--green);
-      flex: none
-    }
-
-    .time-grid-scroll {
-      overflow-x: auto;
-      max-width: 100%;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: #fff;
-      -webkit-overflow-scrolling: touch
-    }
-
-    .time-grid-header,
-    .time-grid-body {
-      display: grid;
-      grid-template-columns: 66px repeat(var(--lane-count), minmax(138px, 1fr));
-      width: max-content;
-      min-width: 100%
-    }
-
-    .time-grid-header {
-      position: sticky;
-      top: 0;
-      z-index: 5;
-      background: #eef2e8;
-      border-bottom: 1px solid var(--line)
-    }
-
-    .group-description {
-      position: relative;
-      min-width: 0
-    }
-
-    .group-description summary {
-      cursor: pointer;
-      list-style: none;
-      font-weight: 900;
-      white-space: normal
-    }
-
-    .group-description summary::-webkit-details-marker {
-      display: none
-    }
-
-    .group-description summary:after {
-      content: 'ⓘ';
-      margin-left: 5px;
-      color: var(--green);
-      font-size: 10px
-    }
-
-    .group-description p {
-      position: static;
-      width: auto;
-      margin: 6px 0 0;
-      padding: 8px 10px;
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 9px;
-      box-shadow: var(--shadow);
-      font-size: 11px;
-      font-weight: 500;
-      line-height: 1.6;
-      white-space: normal;
-      color: var(--ink)
-    }
-
-    .time-grid-heading {
-      box-sizing:border-box;
-      height:58px;
-      padding:7px 6px;
-      font-size: 10px;
-      font-weight: 900;
-      color: #425647;
-      border-right: 1px solid var(--line);
-      white-space:normal;
-      overflow:hidden
-    }
-
-    .time-grid-heading:first-child {
-      position: sticky;
-      left: 0;
-      z-index: 6;
-      background: #eef2e8
-    }
-
-    .time-grid-body {
-      position: relative;
-      align-items: stretch
-    }
-
-    .time-axis {
-      position: sticky;
-      left: 0;
-      z-index: 3;
-      background: #fff;
-      border-right: 1px solid var(--line)
-    }
-
-    .time-label {
-      position: absolute;
-      left: 0;
-      right: 0;
-      height: 1px;
-      padding: 0 7px;
-      transform: translateY(-50%);
-      font-size: 9px;
-      font-weight: 800;
-      color: #6f796e;
-      white-space: nowrap
-    }
-
-    .time-label.first {
-      transform: none
-    }
-
-    .time-label.last {
-      transform: translateY(-100%)
-    }
-
-    .time-lane {
-      position: relative;
-      min-width: 138px;
-      border-right: 1px solid var(--line);
-      background-image: repeating-linear-gradient(to bottom, transparent 0 65px, #e4e8df 65px 66px)
-    }
-
-    .time-lane:last-child {
-      border-right: 0
-    }
-
-    .time-event {
-      appearance:none;
-      width:calc(100% - 8px);
-      font-family:inherit;
-      text-align:left;
-      cursor:pointer;
-      position: absolute;
-      left: 4px;
-      right: 4px;
-      min-height: 2px;
-      overflow: hidden;
-      border-radius: 7px;
-      border-left: 3px solid var(--green);
-      background: #e9f0e8;
-      color: #2d4435;
-      padding: 4px 5px;
-      font-size: 9px;
-      line-height: 1.25;
-      box-shadow: 0 2px 5px #18211712
-    }
-
-    .time-event:nth-of-type(2n) {
-      background: #fff0d9;
-      border-left-color: #e39a38
-    }
-
-    .time-event strong {
-      display: block;
-      font-size: 10px;
-      line-height: 1.2;
-      overflow-wrap: anywhere
-    }
-
-    .time-event .time-event-time {
-      display: block;
-      margin-top: 2px;
-      font-size: 9px;
-      font-weight: 800;
-      white-space: nowrap
-    }
-
-    .time-event.compact {
-      padding: 2px 4px
-    }
-
-    .time-event.compact strong {
-      font-size: 9px
-    }
-
-    .time-event.compact .time-event-time {
-      display: none
-    }
-
-    .unscheduled {
-      margin-top: 10px;
-      padding: 12px;
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      font-size: 10px;
-      color: var(--muted)
-    }
-
-    .unscheduled strong {
-      display: block;
-      margin-bottom: 6px;
-      color: var(--ink);
-      font-size: 11px
-    }
-
-    @media(min-width:700px) {
-
-      .time-grid-header,
-      .time-grid-body {
-        grid-template-columns: 74px repeat(var(--lane-count), minmax(160px, 1fr))
+      * {
+        box-sizing: border-box;
       }
 
-      .time-label {
-        font-size: 10px
+      html {
+        scroll-behavior: smooth;
       }
 
-      .time-event {
-        font-size: 10px;
-        padding: 6px
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: "DM Sans", "Noto Sans JP", sans-serif;
+        -webkit-font-smoothing: antialiased;
       }
 
-      .time-event strong {
-        font-size: 11px
-      }
-
-      .time-event .time-event-time {
-        font-size: 10px
-      }
-    }
-
-    .schedule-table-wrap {
-      overflow-x: auto;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: #fff;
-      -webkit-overflow-scrolling: touch
-    }
-
-    .schedule-table {
-      border-collapse: collapse;
-      width: 100%;
-      min-width: 440px;
-      font-size: 11px
-    }
-
-    .schedule-table th,
-    .schedule-table td {
-      padding: 11px 12px;
-      text-align: left;
-      border-bottom: 1px solid #f0f0ec;
-      vertical-align: top
-    }
-
-    .schedule-table th {
-      background: #eef2e8;
-      color: #425647;
-      font-size: 10px;
-      position: sticky;
-      top: 0;
-      white-space: nowrap
-    }
-
-    .schedule-table tr:last-child td {
-      border-bottom: 0
-    }
-
-    .schedule-table td:first-child {
-      font-weight: 900;
-      color: var(--green);
-      white-space: nowrap
-    }
-
-    .schedule-empty {
-      padding: 21px 14px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 11px;
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 14px
-    }
-
-    @media(min-width:700px) {
       .app {
-        max-width: 760px
+        max-width: 520px;
+        margin: 0 auto;
+        min-height: 100vh;
+        padding-bottom: 36px;
+        background: var(--paper);
+      }
+
+      .top {
+        padding: 22px 20px 14px;
+        background: var(--paper);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 19px;
+      }
+
+      .brandmark {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo {
+        width: 39px;
+        height: 39px;
+        display: grid;
+        place-items: center;
+        background: var(--green);
+        color: white;
+        border-radius: 13px;
+        font-size: 21px;
+      }
+
+      .brandname {
+        font-size: 17px;
+        font-weight: 900;
+        letter-spacing: 0.04em;
+      }
+
+      .brandname small {
+        display: block;
+        font-size: 9px;
+        letter-spacing: 0.18em;
+        color: var(--muted);
+        font-weight: 700;
+        margin-top: 2px;
+      }
+
+      .date-pill {
+        background: #e9ecdf;
+        border-radius: 99px;
+        padding: 8px 11px;
+        font-size: 10px;
+        color: var(--green);
+        font-weight: 800;
+      }
+
+      .eyebrow {
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        font-weight: 800;
+        color: var(--green);
+        text-transform: uppercase;
+      }
+
+      .hero {
+        font-size: 28px;
+        line-height: 1.24;
+        letter-spacing: -0.04em;
+        font-weight: 900;
+        margin: 8px 0 5px;
+      }
+
+      .hero em {
+        font-style: normal;
+        color: var(--green);
+      }
+
+      .sub {
+        font-size: 12px;
+        color: var(--muted);
+        margin: 0 0 16px;
+      }
+
+      .prototype-notice {
+        margin: 0;
+        padding: 5px 10px;
+        border-radius: 9px;
+        background: #fff4d8;
+        color: #785622;
+        font-size: 10px;
+        line-height: 1.5;
+      }
+      .event-alert[hidden] {
+        display: none;
+      }
+      .event-alert {
+        position: sticky;
+        top: 60px;
+        z-index: 20;
+        margin: 0 16px 12px;
+        border-radius: 16px;
+        padding: 12px 14px;
+        background: #fff0ce;
+        border: 1px solid #ffe2a0;
+        box-shadow: 0 5px 16px #362a130d;
+        display: flex;
+        gap: 11px;
+        align-items: center;
+      }
+
+      .alert-icon {
+        font-size: 20px;
+      }
+
+      .alert-copy {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .alert-label {
+        font-size: 9px;
+        letter-spacing: 0.13em;
+        font-weight: 900;
+        color: #9b5d09;
+      }
+
+      .alert-title {
+        font-size: 12px;
+        font-weight: 800;
+        margin-top: 2px;
+      }
+
+      .alert-meta {
+        font-size: 10px;
+        color: #826641;
+        margin-top: 2px;
+      }
+
+      .alert-empty {
+        font-size: 11px;
+        color: #7b6847;
+        font-weight: 700;
+      }
+
+      .tabs {
+        position: sticky;
+        top: 5px;
+        z-index: 19;
+        margin: 0 16px 19px;
+        padding: 5px;
+        background: #e9ebe4;
+        border-radius: 15px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4px;
+      }
+
+      .tab {
+        border: 0;
+        background: transparent;
+        padding: 11px 4px;
+        border-radius: 11px;
+        color: #747a71;
+        font-family: inherit;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+
+      .tab.active {
+        background: white;
+        color: var(--green);
+        box-shadow: 0 2px 8px #18211712;
+      }
+
+      .content {
+        padding: 0 16px;
+      }
+
+      .panel {
+        display: none;
+        animation: fade 0.2s ease;
+      }
+
+      .panel.active {
+        display: block;
+      }
+
+      @keyframes fade {
+        from {
+          opacity: 0.3;
+          transform: translateY(4px);
+        }
+
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        margin: 4px 2px 13px;
+      }
+
+      .section-head h2 {
+        font-size: 21px;
+        letter-spacing: -0.04em;
+        margin: 3px 0 0;
+        font-weight: 900;
+      }
+
+      .count {
+        font-size: 10px;
+        color: var(--muted);
+        font-weight: 700;
+      }
+
+      .search-wrap {
+        position: relative;
+        margin-bottom: 12px;
+      }
+
+      .search {
+        width: 100%;
+        border: 1px solid var(--line);
+        background: white;
+        border-radius: 14px;
+        padding: 14px 42px 14px 42px;
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 500;
+        outline: none;
+        box-shadow: var(--shadow);
+      }
+
+      .search:focus {
+        border-color: #85a591;
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 15px;
+        top: 13px;
+        font-size: 16px;
+        color: #7d857b;
+      }
+
+      .clear {
+        position: absolute;
+        right: 12px;
+        top: 11px;
+        border: 0;
+        background: none;
+        color: #8b9089;
+        font-size: 18px;
+        display: none;
+      }
+
+      .suggestions {
+        position: absolute;
+        top: calc(100% + 5px);
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        z-index: 8;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        display: none;
+      }
+
+      .suggestions.show {
+        display: block;
+      }
+
+      .suggestion {
+        padding: 11px 14px;
+        font-size: 12px;
+        border-bottom: 1px solid #f0f0eb;
+        cursor: pointer;
+      }
+
+      .suggestion:last-child {
+        border: 0;
+      }
+      .alert-event {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-top: 7px;
+      }
+      .alert-event button {
+        flex: none;
+        min-height: 38px;
+        border: 0;
+        border-radius: 10px;
+        padding: 7px 10px;
+        color: #fff;
+        background: #98601a;
+        font-family: inherit;
+        font-size: 10px;
+        font-weight: 700;
+      }
+      .ex-category-tabs {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 6px;
+        margin: 0 0 12px;
+      }
+      .ex-filter {
+        min-width: 0;
+        min-height: 42px;
+        padding: 7px 3px;
+        border: 1px solid var(--line);
+        border-radius: 11px;
+        background: #fff;
+        color: #5c655c;
+        font-family: inherit;
+        font-size: 10px;
+        font-weight: 700;
+        cursor: pointer;
+        overflow-wrap: anywhere;
+      }
+      .ex-filter.active {
+        color: #fff;
+        background: var(--green);
+        border-color: var(--green);
+      }
+      .event-dialog {
+        width: min(92vw, 420px);
+        padding: 0;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        color: var(--ink);
+        box-shadow: var(--shadow);
+      }
+      .event-dialog::backdrop {
+        background: #17251dcc;
+      }
+      .event-dialog-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 15px 16px 9px;
+      }
+      .event-dialog-head strong {
+        font-size: 16px;
+      }
+      .event-dialog-head button {
+        width: 40px;
+        height: 40px;
+        border: 0;
+        border-radius: 12px;
+        background: #eef2e8;
+        font-size: 24px;
+      }
+      .event-dialog-body {
+        padding: 0 16px 12px;
+        font-size: 13px;
+        line-height: 1.8;
+        white-space: pre-line;
+      }
+      .event-dialog-actions {
+        padding: 0 16px 16px;
+      }
+      .event-dialog-actions button {
+        min-height: 44px;
+        width: 100%;
+      }
+      .time-group-name,
+      .time-group-short {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        line-height: 20px;
+      }
+      .time-group-short {
+        color: var(--muted);
+        font-size: 9px;
+        font-weight: 600;
+      }
+      .ex-list {
+        display: grid;
+        gap: 8px;
+        max-height: none;
+        overflow: visible;
+        padding: 1px 2px 5px;
+      }
+
+      .ex-card {
+        width: 100%;
+        border: 1px solid var(--line);
+        background: white;
+        border-radius: 15px;
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        text-align: left;
+        cursor: pointer;
+        transition: 0.18s;
+      }
+
+      .ex-card.selected {
+        border-color: var(--green);
+        box-shadow: 0 0 0 2px #315e4915;
+      }
+
+      .ex-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 13px;
+        background: #eef2e7;
+        display: grid;
+        place-items: center;
+        font-size: 20px;
+        flex: none;
+      }
+
+      .ex-info {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .ex-title {
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .ex-desc {
+        font-size: 10px;
+        color: var(--muted);
+        margin-top: 4px;
+      }
+
+      .ex-floor {
+        font-size: 9px;
+        font-weight: 800;
+        background: #f3f4ee;
+        color: #687065;
+        padding: 5px 7px;
+        border-radius: 8px;
+        white-space: nowrap;
+      }
+
+      .map-card {
+        display: none;
+        margin-top: 14px;
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+
+      .map-card.visible {
+        display: block;
+      }
+
+      .map-top {
+        padding: 13px 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .map-title {
+        font-weight: 900;
+        font-size: 12px;
+      }
+
+      .map-art {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        background: #eef1e9;
+        line-height: 0;
+      }
+      .campus-map-image {
+        display: block;
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+        object-fit: contain;
+      }
+      .map-art:has(.map-placeholder) {
+        min-height: 150px;
+        aspect-ratio: auto;
+        display: grid;
+        place-items: center;
+        line-height: 1.8;
+      }
+      .map-directions-button,
+      .location-input-row button,
+      .scanner-stop {
+        border: 0;
+        border-radius: 10px;
+        padding: 10px 12px;
+        color: #fff;
+        background: var(--green);
+        font: inherit;
+        font-weight: 800;
+        cursor: pointer;
+      }
+      .scanner-card {
+        margin: 14px 0;
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: #fff;
+      }
+      .scanner-video-wrap {
+        width: 100%;
+        max-width: 420px;
+        aspect-ratio: 16/9;
+        margin: 10px auto;
+        overflow: hidden;
+        border-radius: 12px;
+        background: #1d2b22;
+        display: grid;
+        place-items: center;
+      }
+      .scanner-video-wrap video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .scanner-status {
+        min-height: 1.5em;
+        color: #657364;
+        font-size: 12px;
+      }
+      .location-input-row {
+        display: flex;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .location-input-row input {
+        min-width: 0;
+        flex: 1;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        font: inherit;
+      }
+      .scanner-stop {
+        color: var(--green);
+        background: #edf2e9;
+      }
+
+      .map-placeholder {
+        max-width: 280px;
+        padding: 22px;
+        text-align: center;
+        color: #70796d;
+        font-size: 12px;
+        line-height: 1.8;
+      }
+
+      .map-placeholder strong {
+        display: block;
+        margin-bottom: 6px;
+        color: #405543;
+        font-size: 14px;
+      }
+      .pin {
+        position: absolute;
+        z-index: 4;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        background: #f04444;
+        border: 3px solid white;
+        box-shadow: 0 0 0 5px #f0444430;
+        left: var(--x, 32%);
+        top: var(--y, 45%);
+        transform: translate(-50%, -50%);
+        animation: pulse 1.35s infinite;
+      }
+
+      .pin-label {
+        position: absolute;
+        z-index: 5;
+        left: calc(var(--x, 32%) + 11px);
+        top: calc(var(--y, 45%) - 8px);
+        background: #252b25;
+        color: white;
+        font-size: 9px;
+        padding: 5px 8px;
+        border-radius: 7px;
+        white-space: nowrap;
+      }
+
+      .map-bottom {
+        padding: 11px 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 10px;
+        color: var(--muted);
+      }
+
+      .map-bottom strong {
+        color: var(--ink);
+      }
+
+      @keyframes pulse {
+        50% {
+          box-shadow: 0 0 0 9px #f0444400;
+          transform: translate(-50%, -50%) scale(1.12);
+        }
+      }
+
+      .day-chooser {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 20px;
+        box-shadow: var(--shadow);
+      }
+
+      .day-chooser p {
+        margin: 0 0 15px;
+        font-size: 14px;
+        font-weight: 900;
+        text-align: center;
+      }
+
+      .day-buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .day-choice {
+        border: 1px solid #dce5d9;
+        background: #f5f7f0;
+        border-radius: 14px;
+        padding: 15px 8px;
+        color: var(--green);
+        font-family: inherit;
+        font-size: 15px;
+        font-weight: 900;
+        cursor: pointer;
+      }
+
+      .day-choice span {
+        display: block;
+        font-size: 9px;
+        letter-spacing: 0.14em;
+        margin-top: 5px;
+        color: #8b9587;
+      }
+
+      .selected-day-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--green);
+        color: #fff;
+        border-radius: 15px;
+        padding: 13px 15px;
+        margin-bottom: 12px;
+      }
+
+      .selected-day-bar .eyebrow {
+        color: #c8d9c9;
+        font-size: 8px;
+      }
+
+      .selected-day-bar strong {
+        display: block;
+        font-size: 16px;
+        margin-top: 3px;
+      }
+
+      .back-days {
+        border: 1px solid #ffffff55;
+        color: #fff;
+        background: #ffffff14;
+        border-radius: 9px;
+        padding: 9px 10px;
+        font-family: inherit;
+        font-size: 10px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .category-tabs {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 5px;
+        padding: 5px;
+        background: #e9ebe4;
+        border-radius: 13px;
+        margin-bottom: 12px;
+      }
+
+      .category-tab {
+        border: 0;
+        background: transparent;
+        border-radius: 9px;
+        padding: 10px 3px;
+        color: #747a71;
+        font-family: inherit;
+        font-size: 11px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .category-tab.active {
+        background: #fff;
+        color: var(--green);
+        box-shadow: 0 2px 8px #18211712;
+      }
+
+      .target-panel {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        margin-bottom: 12px;
+        overflow: hidden;
+      }
+
+      .target-panel summary {
+        cursor: pointer;
+        list-style: none;
+        padding: 14px;
+        font-size: 11px;
+        font-weight: 900;
+      }
+
+      .target-panel summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .target-panel summary:after {
+        content: "＋";
+        float: right;
+        color: var(--green);
+      }
+
+      .target-panel[open] summary:after {
+        content: "−";
+      }
+
+      .target-panel-body {
+        border-top: 1px solid var(--line);
+        padding: 12px;
+      }
+
+      .target-actions {
+        display: flex;
+        gap: 7px;
+        margin-bottom: 8px;
+      }
+
+      .target-actions button {
+        border: 1px solid var(--line);
+        background: #f7f8f4;
+        border-radius: 8px;
+        padding: 8px 10px;
+        font-family: inherit;
+        font-size: 10px;
+        font-weight: 700;
+        color: #4a5148;
+        cursor: pointer;
       }
 
       .target-choices {
-        grid-template-columns: repeat(3, minmax(0, 1fr))
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 5px;
+      }
+
+      .target-option {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        min-height: 42px;
+        padding: 7px 9px;
+        border-radius: 9px;
+        background: #f7f8f4;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .target-option input {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--green);
+        flex: none;
+      }
+
+      .time-grid-scroll {
+        overflow-x: auto;
+        max-width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: #fff;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .time-grid-header,
+      .time-grid-body {
+        display: grid;
+        grid-template-columns: 66px repeat(
+            var(--lane-count),
+            minmax(138px, 1fr)
+          );
+        width: max-content;
+        min-width: 100%;
+      }
+
+      .time-grid-header {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        background: #eef2e8;
+        border-bottom: 1px solid var(--line);
+      }
+      .time-grid-heading {
+        box-sizing: border-box;
+        height: 58px;
+        padding: 7px 6px;
+        font-size: 10px;
+        font-weight: 900;
+        color: #425647;
+        border-right: 1px solid var(--line);
+        white-space: normal;
+        overflow: hidden;
+      }
+
+      .time-grid-heading:first-child {
+        position: sticky;
+        left: 0;
+        z-index: 6;
+        background: #eef2e8;
+      }
+
+      .time-grid-body {
+        position: relative;
+        align-items: stretch;
+      }
+
+      .time-axis {
+        position: sticky;
+        left: 0;
+        z-index: 3;
+        background: #fff;
+        border-right: 1px solid var(--line);
+      }
+
+      .time-label {
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 1px;
+        padding: 0 7px;
+        transform: translateY(-50%);
+        font-size: 9px;
+        font-weight: 800;
+        color: #6f796e;
+        white-space: nowrap;
+      }
+
+      .time-label.first {
+        transform: none;
+      }
+
+      .time-label.last {
+        transform: translateY(-100%);
+      }
+
+      .time-lane {
+        position: relative;
+        min-width: 138px;
+        border-right: 1px solid var(--line);
+        background-image: repeating-linear-gradient(
+          to bottom,
+          transparent 0 65px,
+          #e4e8df 65px 66px
+        );
+      }
+
+      .time-lane:last-child {
+        border-right: 0;
+      }
+
+      .time-event {
+        appearance: none;
+        width: calc(100% - 8px);
+        font-family: inherit;
+        text-align: left;
+        cursor: pointer;
+        position: absolute;
+        left: 4px;
+        right: 4px;
+        min-height: 2px;
+        overflow: hidden;
+        border-radius: 7px;
+        border-left: 3px solid var(--green);
+        background: #e9f0e8;
+        color: #2d4435;
+        padding: 4px 5px;
+        font-size: 9px;
+        line-height: 1.25;
+        box-shadow: 0 2px 5px #18211712;
+      }
+
+      .time-event:nth-of-type(2n) {
+        background: #fff0d9;
+        border-left-color: #e39a38;
+      }
+
+      .time-event strong {
+        display: block;
+        font-size: 10px;
+        line-height: 1.2;
+        overflow-wrap: anywhere;
+      }
+
+      .time-event .time-event-time {
+        display: block;
+        margin-top: 2px;
+        font-size: 9px;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+
+      .time-event.compact {
+        padding: 2px 4px;
+      }
+
+      .time-event.compact strong {
+        font-size: 9px;
+      }
+
+      .time-event.compact .time-event-time {
+        display: none;
+      }
+
+      .unscheduled {
+        margin-top: 10px;
+        padding: 12px;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        font-size: 10px;
+        color: var(--muted);
+      }
+
+      .unscheduled strong {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--ink);
+        font-size: 11px;
+      }
+
+      @media (min-width: 700px) {
+        .time-grid-header,
+        .time-grid-body {
+          grid-template-columns: 74px repeat(
+              var(--lane-count),
+              minmax(160px, 1fr)
+            );
+        }
+
+        .time-label {
+          font-size: 10px;
+        }
+
+        .time-event {
+          font-size: 10px;
+          padding: 6px;
+        }
+
+        .time-event strong {
+          font-size: 11px;
+        }
+
+        .time-event .time-event-time {
+          font-size: 10px;
+        }
+      }
+
+      .schedule-table-wrap {
+        overflow-x: auto;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: #fff;
+        -webkit-overflow-scrolling: touch;
       }
 
       .schedule-table {
-        min-width: 0
+        border-collapse: collapse;
+        width: 100%;
+        min-width: 440px;
+        font-size: 11px;
       }
 
       .schedule-table th,
       .schedule-table td {
-        padding: 13px 16px
+        padding: 11px 12px;
+        text-align: left;
+        border-bottom: 1px solid #f0f0ec;
+        vertical-align: top;
       }
-    }
 
-    .venue {
-      margin: 15px 0 9px;
-      background: white;
-      border: 1px solid var(--line);
-      border-radius: 17px;
-      overflow: hidden
-    }
+      .schedule-table th {
+        background: #eef2e8;
+        color: #425647;
+        font-size: 10px;
+        position: sticky;
+        top: 0;
+        white-space: nowrap;
+      }
 
-    .venue-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 13px 14px;
-      background: #eef2e8
-    }
+      .schedule-table tr:last-child td {
+        border-bottom: 0;
+      }
 
-    .venue-name {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 900;
-      font-size: 13px
-    }
+      .schedule-table td:first-child {
+        font-weight: 900;
+        color: var(--green);
+        white-space: nowrap;
+      }
 
-    .venue-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--green)
-    }
+      .schedule-empty {
+        padding: 21px 14px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 11px;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+      }
 
-    .venue-count {
-      font-size: 9px;
-      color: var(--muted);
-      font-weight: 700
-    }
-
-    .event-row {
-      padding: 13px 14px;
-      display: grid;
-      grid-template-columns: 56px 1fr;
-      gap: 9px;
-      border-top: 1px solid #f0f0ec
-    }
-
-    .event-time {
-      font-size: 11px;
-      font-weight: 900;
-      color: var(--green);
-      padding-top: 1px
-    }
-
-    .event-name {
-      font-size: 12px;
-      font-weight: 800
-    }
-
-    .event-status {
-      display: inline-flex;
-      margin-top: 6px;
-      font-size: 9px;
-      font-weight: 800;
-      color: #788075;
-      background: #f2f3ef;
-      border-radius: 6px;
-      padding: 4px 7px
-    }
-
-    .event-status.live {
-      background: #ffe5de;
-      color: #b84d32
-    }
-
-    .event-status.soon {
-      background: #fff0ce;
-      color: #98601a
-    }
-
-    .loc-card {
-      border-radius: 17px;
-      background: var(--green);
-      color: white;
-      padding: 16px;
-      margin: 4px 0 17px;
-      display: flex;
-      align-items: center;
-      gap: 12px
-    }
-
-    .loc-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      background: #ffffff20;
-      display: grid;
-      place-items: center;
-      font-size: 21px
-    }
-
-    .loc-label {
-      font-size: 9px;
-      color: #c8d9c9;
-      letter-spacing: .1em;
-      font-weight: 800
-    }
-
-    .loc-value {
-      font-size: 13px;
-      font-weight: 900;
-      margin-top: 4px
-    }
-
-    .loc-id {
-      font: 10px monospace;
-      color: #d2e0d0;
-      margin-left: auto
-    }
-
-    .quick-label {
-      font-size: 10px;
-      font-weight: 900;
-      color: var(--muted);
-      margin: 17px 1px 9px
-    }
-
-    .quick-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px
-    }
-
-    .quick {
-      border: 1px solid var(--line);
-      background: white;
-      border-radius: 12px;
-      padding: 11px 5px;
-      font: 700 10px inherit;
-      color: #4a5148;
-      cursor: pointer
-    }
-
-    .quick:active,
-    .quick.selected {
-      background: var(--green);
-      color: white;
-      border-color: var(--green)
-    }
-
-    .route-result {
-      display: none;
-      margin-top: 15px;
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      overflow: hidden;
-      box-shadow: var(--shadow)
-    }
-
-    .route-result.show {
-      display: block
-    }
-
-    .route-header {
-      padding: 14px 15px 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center
-    }
-
-    .route-dest {
-      font-size: 13px;
-      font-weight: 900
-    }
-
-    .route-step {
-      font-size: 10px;
-      color: var(--muted);
-      font-weight: 800
-    }
-
-    .slide-wrap {
-      margin: 0 12px;
-      background: #eff2e9;
-      border-radius: 13px;
-      position: relative;
-      overflow: hidden;
-      min-height: 198px
-    }
-
-    .slide-wrap img {
-      display: block;
-      width: 100%;
-      height: 210px;
-      object-fit: contain
-    }
-
-    .slide-fallback {
-      height: 210px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 22px;
-      background: linear-gradient(135deg, #edf1e5, #f9f7e9);
-      color: #475548
-    }
-
-    .slide-fallback .big {
-      font-size: 38px;
-      margin-bottom: 10px
-    }
-
-    .slide-fallback strong {
-      font-size: 13px
-    }
-
-    .slide-fallback span {
-      font-size: 10px;
-      color: #7c8577;
-      margin-top: 6px
-    }
-
-    .route-caption {
-      padding: 10px 15px 2px;
-      font-size: 10px;
-      color: var(--muted)
-    }
-
-    .route-controls {
-      display: flex;
-      gap: 8px;
-      padding: 12px
-    }
-
-    .route-controls button {
-      flex: 1;
-      border: 0;
-      border-radius: 11px;
-      padding: 12px;
-      background: #edf0e8;
-      color: #334437;
-      font: 800 11px inherit;
-      cursor: pointer
-    }
-
-    .route-controls button.next {
-      background: var(--green);
-      color: white
-    }
-
-    .route-controls button:disabled {
-      opacity: .4;
-      cursor: not-allowed
-    }
-
-    .route-note {
-      margin: 0 15px 14px;
-      font-size: 9px;
-      color: #93998f;
-      line-height: 1.6
-    }
-
-    .empty {
-      padding: 20px;
-      text-align: center;
-      font-size: 11px;
-      color: var(--muted)
-    }
-
-    .footer {
-      text-align: center;
-      padding: 25px 15px 10px;
-      font-size: 9px;
-      color: #a1a59e;
-      letter-spacing: .06em
-    }
-  </style>
-</head>
-
-<body>
-  <main class="app">
-    <header class="top">
-      <div class="brand">
-        <div class="brandmark">
-          <div class="logo">✳</div>
-          <div class="brandname">マグノリア祭 GUIDE
-            <small>MAGNOLIA HIGH SCHOOL FESTIVAL</small>
-          </div>
-        </div>
-        <div class="date-pill">文化祭 2027</div>
-      </div>
-      <div class="eyebrow">WELCOME TO MAGNOLIA</div>
-      <h1 class="hero">好きが集まる、<br><em>今日だけのマグノリア祭。</em></h1>
-      <p class="sub">見つけよう。出会おう。マグノリア祭を楽しもう。</p>
-    </header>
-    <section class="event-alert" id="alert" aria-live="polite" hidden></section>
-
-    <nav class="tabs" aria-label="メインメニュー">
-      <button class="tab active" data-tab="exhibitions">団体一覧</button>
-      <button class="tab" data-tab="timetable">タイムテーブル</button>
-      <button class="tab" data-tab="navigator">行き先ナビ</button>
-    </nav>
-
-    <div class="content">
-      <section class="panel active" id="panel-exhibitions">
-        <div class="section-head">
-          <div>
-            <div class="eyebrow">FIND YOUR FAVORITE
-            </div>
-
-            <h2>団体一覧</h2>
-          </div>
-          <span class="count" id="exCount"></span>
-        </div>
-        <div class="search-wrap">
-          <span class="search-icon">⌕</span>
-          <input id="exSearch" class="search" placeholder="団体名・内容から探す" autocomplete="off">
-          <button class="clear" id="exClear">×</button>
-          <div class="suggestions" id="exSuggest"></div>
-        </div>
-        <div class="ex-category-tabs" id="exCategoryTabs" role="group" aria-label="団体カテゴリー"><button class="ex-filter active" data-filter="展示団体">展示団体</button><button class="ex-filter" data-filter="運動系クラブ">運動系クラブ</button><button class="ex-filter" data-filter="公演">公演</button><button class="ex-filter" data-filter="食品販売">食品販売</button></div>
-        <div class="ex-list" id="exList"></div>
-        <div id="mapSlot">
-        <div class="map-card" id="mapCard">
-          <div class="map-top">
-            <span class="map-title">📍<span id="mapLocation">団体を選択してください</span>
-          </div>
-          <div class="map-art" id="mapArt" role="region" aria-label="校内マップ"></div>
-          <div class="map-bottom"><button class="map-directions-button" id="mapDirections" type="button">行き方が分からない</button></div>
-        </div>
-      </div>
-      </section>
-      <section class="panel" id="panel-timetable">
-        <div class="section-head">
-          <div>
-            <div class="eyebrow">TODAY'S PROGRAM</div>
-            <h2>タイムテーブル</h2>
-          </div><span class="count">日程を選んでご覧ください</span>
-        </div>
-        <div id="dayChooser" class="day-chooser">
-          <p>日程を選択してください</p>
-          <div class="day-buttons"><button class="day-choice" data-day="1">1日目<span>DAY 1</span></button><button
-              class="day-choice" data-day="2">2日目<span>DAY 2</span></button></div>
-        </div>
-        <div id="timetableContent" hidden>
-          <div class="selected-day-bar">
-            <div><span class="eyebrow">SELECTED SCHEDULE</span><strong id="selectedDayLabel"></strong></div><button
-              id="backToDays" class="back-days">日程選択に戻る</button>
-          </div>
-          <div class="category-tabs" role="tablist" aria-label="予定カテゴリ"><button class="category-tab active"
-              data-category="公演">公演</button><button class="category-tab" data-category="試合">試合</button><button
-              class="category-tab" data-category="部活">部活</button><button class="category-tab"
-              data-category="有志">有志</button></div>
-          <details class="target-panel" id="targetPanel">
-            <summary id="targetSummary">表示する場所・団体（0 / 0 選択中）</summary>
-            <div class="target-panel-body">
-              <div class="target-actions"><button type="button" id="selectAllTargets">すべて選択</button><button
-                  type="button" id="clearTargets">すべて解除</button></div>
-              <div id="targetChoices" class="target-choices"></div>
-            </div>
-          </details>
-          <div id="schedule" aria-live="polite"></div>
-        </div>
-      </section>
-      <section class="panel" id="panel-navigator">
-        <div class="section-head">
-          <div>
-            <div class="eyebrow">LET'S GO</div>
-            <h2>行き先ナビ</h2>
-          </div>
-        </div>
-        <div class="quick-label">行き先を選ぶ</div>
-        <div class="quick-grid" id="quickGrid"></div>
-        <div class="quick-label">または、団体一覧から探す</div>
-        <div class="search-wrap"><span class="search-icon">⌕</span><input id="destSearch" class="search"
-            placeholder="団体名を入力" autocomplete="off">
-          <div class="suggestions" id="destSuggest"></div>
-        </div>
-        <div class="scanner-card"><strong>現在地を設定</strong>
-          <div class="scanner-video-wrap"><span id="scannerPlaceholder" style="color:#fff;font-size:12px;padding:12px;text-align:center">目的地を選ぶとQRコード読取を開始します</span><video id="locationVideo" playsinline muted hidden></video></div>
-          <div class="scanner-status" id="scannerStatus" aria-live="polite">カメラが使えない場合は番号を入力してください。</div>
-          <div class="location-input-row"><input id="locationNumber" inputmode="text" autocomplete="off" placeholder="案内番号を入力"><button id="confirmLocation" type="button">現在地を確定</button></div>
-          <button class="scanner-stop" id="stopScanner" type="button" hidden>カメラを停止</button></div>
-        <div class="loc-card">
-          <div class="loc-icon">⌖</div>
-          <div>
-            <div class="loc-label">YOUR CURRENT LOCATION</div>
-            <div class="loc-value" id="currentLocation">出発地を確認中</div>
-          </div><span class="loc-id" id="currentId"></span>
-        </div>
-        <div class="route-result" id="routeResult">
-          <div class="route-header"><span class="route-dest" id="routeDest"></span><span class="route-step"
-              id="routeStep"></span></div>
-          <div class="route-caption" id="routeFloorNote" hidden></div>
-          <div class="slide-wrap" id="slideWrap"></div>
-          <div class="route-caption" id="routeCaption"></div>
-          <div id="toiletPreview" class="toilet-map-preview" hidden></div>
-          <div class="route-controls"><button id="prevBtn">◀ 前へ</button><button class="next" id="nextBtn">次へ ▶</button>
-          </div>
-          <p class="route-note">案内画像（images/ 内のPNG）と実際の場所番号が必要です。画像が未配置・経路データが不足している場合は、案内を完成扱いにせず不足を表示します。</p>
-        </div>
-      </section>
-    </div>
-    <footer class="footer">MAGNOLIA FESTIVAL · MAKE YOUR DAY</footer>
-  </main>
-  <dialog class="event-dialog" id="eventDialog"><div class="event-dialog-head"><strong id="eventDialogTitle"></strong><button type="button" id="closeEventDialog" aria-label="閉じる">×</button></div><div class="event-dialog-body" id="eventDialogBody"></div><div class="event-dialog-actions"><button type="button" id="eventRouteButton" class="map-directions-button">行き方が分からない</button></div></dialog>
-  <script>
-// ① 公演スケジュール
-  const events = [
-  {
-    day: 1,
-    category: "公演",
-    name: "吹奏楽部 オープニング演奏",
-    place: "体育館",
-    start: "09:00",
-    end: "09:40"
-  },{
-    day: 1,
-    category: "公演",
-    name: "ダンス部 ステージ",
-    place: "中庭ステージ",
-    start: "10:00",
-    end: "10:45"
-  },{
-    day: 1,
-    category: "公演",
-    name: "演劇部 公演",
-    place: "体育館",
-    start: "13:00",
-    end: "14:00"
-  },{
-    day: 1,
-    category: "公演",
-    name: "軽音楽部 ファイナルライブ",
-    place: "中庭ステージ",
-    start: "15:00",
-    end: "16:00"
-  },{
-    day: 1,
-    category: "部活",
-    name: "化学",
-    place: "体育館",
-    start: "09:00",
-    end: "09:40"
-  },{
-    day: 1,
-    category: "部活",
-    name: "化学い",
-    place: "中庭ステージ",
-    start: "10:00",
-    end: "10:45"
-  },{
-    day: 1,
-    category: "部活",
-    name: "落語研究班",
-    place: "北4-A",
-    start: "9:00",
-    end: "12:00"
-  },{
-    day: 1,
-    category: "部活",
-    name: "天文班",
-    place: "特別棟4階",
-    start: "9:20",
-    end: "9:40"
-  },{
-    day: 1,
-    category: "部活",
-    name: "天文班",
-    place: "特別棟4階",
-    start: "9:40",
-    end: "10:00"
-  },{
-    day: 1,
-    category: "部活",
-    name: "天文班",
-    place: "特別棟4階",
-    start: "10:00",
-    end: "10:20"
-  },{
-    day: 1,
-    category: "部活",
-    name: "天文班",
-    place: "特別棟4階",
-    start: "10:20",
-    end: "10:40"
-  },{
-    day: 1,
-    category: "部活",
-    name: "天文班",
-    place: "特別棟4階",
-    start: "10:40",
-    end: "11:00"
-  },{
-    day: 1,
-    category: "部活",
-    name: "天文班",
-    place: "特別棟4階",
-    start: "11:00",
-    end: "11:20"
-  },{
-    day: 1,
-    category: "部活",
-    name: "天文班",
-    place: "特別棟4階",
-    start: "11:20",
-    end: "11:40"
-  },{
-    day: 1,
-    category: "部活",
-    name: "天文班",
-    place: "特別棟4階",
-    start: "11:40",
-    end: "12:00"
-  },{
-    day: 1,
-    category: "部活",
-    name: "書道",
-    place: "中庭ステージ",
-    start: "15:00",
-    end: "16:00"
-  }
-  ];
-  // 校内マップPNG: 東館は campus-east.png、北館・南館・特別棟は campus-other.png。
-  // PNG画像は images/campus-east.png (東館)、images/campus-other.png (北館・南館・特別棟) に配置。
-  const CAMPUS_MAP_IMAGES = {east:"images/campus-east.png",other:"images/campus-other.png"};
-  // ② 展示団体（x,y は校内マップ上のパーセンテージ）
-  const exhibitions = [
-  {
-    id: "class3a",
-    name: "3年A組 おばけ屋敷",
-    category: "アトラクション",
-    description: "本気でこわい？教室まるごと肝だめし",
-    building: "東館",
-    floor: "3F · 301教室",
-    room: "301",
-    icon: "👻",
-    x: 30,
-    y: 39
-  },
-  {
-    id: "artclub",
-    name: "美術部 アートギャラリー",
-    category: "展示",
-    description: "一年間の作品を展示しています",
-    building: "北館",
-    floor: "2F · 美術室",
-    room: "美術室",
-    icon: "🎨",
-    x: 39,
-    y: 63
-  },
-  {
-    id: "tea",
-    name: "茶道部 お茶会",
-    category: "体験",
-    description: "和室でほっと一息、季節のお菓子も",
-    building: "南館",
-    floor: "2F · 和室",
-    room: "和室",
-    icon: "🍵",
-    x: 69,
-    y: 42
-  },
-  {
-    id: "science",
-    name: "科学部 ふしぎ実験室",
-    category: "体験",
-    description: "見てびっくり！参加できる実験ショー",
-    building: "北館",
-    floor: "1F · 化学室",
-    room: "化学室",
-    icon: "🧪",
-    x: 61,
-    y: 68
-  },
-  {
-    id: "photo",
-    name: "写真部 青春フォトスポット",
-    category: "展示",
-    description: "今日の思い出を撮っていこう",
-    building: "東館",
-    floor: "2F · 204教室",
-    room: "204",
-    icon: "📸",
-    x: 29,
-    y: 55
-  },
-  {
-    id: "cafe",
-    name: "家庭科部 あおばカフェ",
-    category: "フード",
-    description: "手作りスイーツとドリンク",
-    building: "南館",
-    floor: "1F · 調理室",
-    room: "調理室",
-    icon: "🍰",
-    x: 75,
-    y: 60
-  },
-  {
-    id: "music",
-    name: "軽音楽部 ミニライブ",
-    category: "ステージ",
-    description: "放課後の熱量をそのままに！",
-    building: "体育館",
-    floor: "1F · 体育館",
-    room: "体育館",
-    icon: "🎸",
-    x: 82,
-    y: 46
-  },
-  {
-    id: "book",
-    name: "図書委員会 古本市",
-    category: "販売",
-    description: "お気に入りの一冊に出会えるかも",
-    building: "北館",
-    floor: "2F · 図書室",
-    room: "図書室",
-    icon: "📚",
-    x: 57,
-    y: 48
-  }
-  ];
-  const quickDestinations = [{
-    id: "east",
-    name: "東館"
-  },
-  {
-    id: "north",
-    name: "北館"
-  },
-  {
-    id: "south",
-    name: "南館"
-  },
-  {
-    id: "middle",
-    name: "特別棟"
-  },
-  {
-    id: "gym-big",
-    name: "大体育館"
-  },
-  {
-    id: "gym-small",
-    name: "小体育館"
-  },
-  {
-    id: "ko-do",
-    name: "講堂"
-  },
-  {
-    id: "roof",
-    name: "屋上庭園"
-  },
-  { id:"toilet", name:"トイレ" }
- ];
-  // 仮番号は動作確認用です。正式な番号はこの一覧だけを変更してください。
-  const placeData = [
-    {id:"mainGate",number:"1001",name:"正門",building:"",floor:""},
-    {id:"building1f",number:"1002",name:"本館1階",building:"本館",floor:"1階"},
-    {id:"building2f",number:"1003",name:"本館2階",building:"本館",floor:"2階"},
-    {id:"gymEntrance",number:"1004",name:"体育館",building:"体育館",floor:""},
-    {id:"courtyard",number:"1005",name:"校庭",building:"",floor:""},
-    {id:"room301",number:"",name:"東館 3F・301教室",building:"東館",floor:"3F"},
-    {id:"eastEntrance",number:"",name:"東館入口",building:"東館",floor:""},
-    {id:"northEntrance",number:"",name:"北館入口",building:"北館",floor:""},
-    {id:"southEntrance",number:"",name:"南館入口",building:"南館",floor:""}
-  ];
-  const locations = Object.fromEntries(placeData.map(place=>[place.id,place.name]));
-  const destinationNames = {
-  east: "東館",
-  north: "北館",
-  south: "南館",
-  gym: "体育館",
-  roof: "屋上庭園"
-  };
-  // ハブごとの「現在地→最寄りハブ」画像（各現在地につき1枚）
-  const nearestHubImages = {
-  room301: "images/room301_to_A_stairs.png",
-  mainGate: "images/mainGate_to_A_stairs.png",
-  eastEntrance: "images/eastEntrance_to_A_stairs.png",
-  northEntrance: "images/northEntrance_to_B_stairs.png",
-  southEntrance: "images/southEntrance_to_C_stairs.png",
-  gymEntrance: "images/gymEntrance_to_G_hub.png",
-  courtyard: "images/courtyard_to_C_hub.png"
-  };
-  // ハブから目的地までの共通スライド（各団体ID・クイック目的地を同じキーで扱う）
-  const hubToDestImages = {
-  A_stairs: {
-    east: ["images/A_stairs_to_east_01.png",
-      "images/A_stairs_to_east_02.png"],
-    north: ["images/A_stairs_to_north_01.png",
-      "images/A_stairs_to_north_02.png"],
-    south: ["images/A_stairs_to_south_01.png",
-      "images/A_stairs_to_south_02.png"],
-    gym: ["images/A_stairs_to_gym_01.png",
-      "images/A_stairs_to_gym_02.png"],
-    roof: ["images/A_stairs_to_roof_01.png",
-      "images/A_stairs_to_roof_02.png"],
-    class3a: ["images/A_stairs_to_class3a_01.png",
-      "images/A_stairs_to_class3a_02.png"],
-    artclub: ["images/A_stairs_to_artclub_01.png",
-      "images/A_stairs_to_artclub_02.png"],
-    tea: ["images/A_stairs_to_tea_01.png",
-      "images/A_stairs_to_tea_02.png"],
-    science: ["images/A_stairs_to_science_01.png",
-      "images/A_stairs_to_science_02.png"],
-    photo: ["images/A_stairs_to_photo_01.png",
-      "images/A_stairs_to_photo_02.png"],
-    cafe: ["images/A_stairs_to_cafe_01.png",
-      "images/A_stairs_to_cafe_02.png"],
-    music: ["images/A_stairs_to_music_01.png",
-      "images/A_stairs_to_music_02.png"],
-    book: ["images/A_stairs_to_book_01.png",
-      "images/A_stairs_to_book_02.png"]
-  },
-  B_stairs: {
-    east: ["images/B_stairs_to_east_01.png",
-      "images/B_stairs_to_east_02.png"],
-    north: ["images/B_stairs_to_north_01.png",
-      "images/B_stairs_to_north_02.png"],
-    south: ["images/B_stairs_to_south_01.png",
-      "images/B_stairs_to_south_02.png"],
-    gym: ["images/B_stairs_to_gym_01.png",
-      "images/B_stairs_to_gym_02.png"],
-    roof: ["images/B_stairs_to_roof_01.png",
-      "images/B_stairs_to_roof_02.png"],
-    class3a: ["images/B_stairs_to_class3a_01.png",
-      "images/B_stairs_to_class3a_02.png"],
-    artclub: ["images/B_stairs_to_artclub_01.png",
-      "images/B_stairs_to_artclub_02.png"],
-    tea: ["images/B_stairs_to_tea_01.png",
-      "images/B_stairs_to_tea_02.png"],
-    science: ["images/B_stairs_to_science_01.png",
-      "images/B_stairs_to_science_02.png"],
-    photo: ["images/B_stairs_to_photo_01.png",
-      "images/B_stairs_to_photo_02.png"],
-    cafe: ["images/B_stairs_to_cafe_01.png",
-      "images/B_stairs_to_cafe_02.png"],
-    music: ["images/B_stairs_to_music_01.png",
-      "images/B_stairs_to_music_02.png"],
-    book: ["images/B_stairs_to_book_01.png",
-      "images/B_stairs_to_book_02.png"]
-  },
-  C_hub: {
-    east: ["images/C_hub_to_east_01.png",
-      "images/C_hub_to_east_02.png"],
-    north: ["images/C_hub_to_north_01.png",
-      "images/C_hub_to_north_02.png"],
-    south: ["images/C_hub_to_south_01.png",
-      "images/C_hub_to_south_02.png"],
-    gym: ["images/C_hub_to_gym_01.png",
-      "images/C_hub_to_gym_02.png"],
-    roof: ["images/C_hub_to_roof_01.png",
-      "images/C_hub_to_roof_02.png"],
-    class3a: ["images/C_hub_to_class3a_01.png",
-      "images/C_hub_to_class3a_02.png"],
-    artclub: ["images/C_hub_to_artclub_01.png",
-      "images/C_hub_to_artclub_02.png"],
-    tea: ["images/C_hub_to_tea_01.png",
-      "images/C_hub_to_tea_02.png"],
-    science: ["images/C_hub_to_science_01.png",
-      "images/C_hub_to_science_02.png"],
-    photo: ["images/C_hub_to_photo_01.png",
-      "images/C_hub_to_photo_02.png"],
-    cafe: ["images/C_hub_to_cafe_01.png",
-      "images/C_hub_to_cafe_02.png"],
-    music: ["images/C_hub_to_music_01.png",
-      "images/C_hub_to_music_02.png"],
-    book: ["images/C_hub_to_book_01.png",
-      "images/C_hub_to_book_02.png"]
-  },
-  G_hub: {
-    east: ["images/G_hub_to_east_01.png",
-      "images/G_hub_to_east_02.png"],
-    north: ["images/G_hub_to_north_01.png",
-      "images/G_hub_to_north_02.png"],
-    south: ["images/G_hub_to_south_01.png",
-      "images/G_hub_to_south_02.png"],
-    gym: ["images/G_hub_to_gym_01.png",
-      "images/G_hub_to_gym_02.png"],
-    roof: ["images/G_hub_to_roof_01.png",
-      "images/G_hub_to_roof_02.png"],
-    class3a: ["images/G_hub_to_class3a_01.png",
-      "images/G_hub_to_class3a_02.png"],
-    artclub: ["images/G_hub_to_artclub_01.png",
-      "images/G_hub_to_artclub_02.png"],
-    tea: ["images/G_hub_to_tea_01.png",
-      "images/G_hub_to_tea_02.png"],
-    science: ["images/G_hub_to_science_01.png",
-      "images/G_hub_to_science_02.png"],
-    photo: ["images/G_hub_to_photo_01.png",
-      "images/G_hub_to_photo_02.png"],
-    cafe: ["images/G_hub_to_cafe_01.png",
-      "images/G_hub_to_cafe_02.png"],
-    music: ["images/G_hub_to_music_01.png",
-      "images/G_hub_to_music_02.png"],
-    book: ["images/G_hub_to_book_01.png",
-      "images/G_hub_to_book_02.png"]
-  }
-  };
-  const $ = s => document.querySelector(s);
-  let selectedEx = null,routeSlides = [],routeIndex = 0,routeDestination = null,routeFloor = null,routeTargetLabel = null;
-  function mins(s) {
-  const [h,
-    m] = s.split(':').map(Number);
-  return h * 60 + m
-  }
-  function nowMins() {
-  const d = new Date();
-  return d.getHours() * 60 + d.getMinutes()
-  }
-  function updateAlert() {
-    const el = $('#alert');
-    if (selectedFestivalDay === null) {
-      el.hidden = true;
-      el.innerHTML = '';
-      return;
-    }
-    el.hidden = false;
-    const now = nowMins();
-    const list = events
-      .filter(e => Number(e.day) === selectedFestivalDay && e.category === '公演' && mins(e.start) > now && mins(e.start) - now <= 30)
-      .sort((a,b) => mins(a.start) - mins(b.start));
-    el.innerHTML = list.length
-      ? '<span class="alert-icon">⏰</span><div class="alert-copy"><div class="alert-label">' + selectedFestivalDay + '日目 · COMING UP</div>' +
-        list.map(e => '<div class="alert-event"><div><div class="alert-title">' + e.name + '</div><div class="alert-meta">' + (e.place || '会場未登録') + ' · ' + e.start + '〜' + (e.end || '終了時刻未登録') + '</div></div><button type="button" data-alert-index="' + events.indexOf(e) + '">行き方が分からない</button></div>').join('') +
-        '</div>'
-      : '<span class="alert-icon">✨</span><div class="alert-copy"><div class="alert-label">' + selectedFestivalDay + '日目</div><div class="alert-empty">まもなく始まる公演はありません</div></div>';
-    el.querySelectorAll('[data-alert-index]').forEach(button => {
-      button.addEventListener('click', () => navigateToEvent(events[Number(button.dataset.alertIndex)]));
-    });
-  }  function exhibitionMatchesCategory(item, category) {
-    const type = String(item.type || item.category || '').toLowerCase();
-    const text = (String(item.name || '') + ' ' + String(item.category || '')).toLowerCase();
-    if (category === '展示団体') return /展示|アトラクション|体験|販売/.test(type) && !/フード|食品|カフェ/.test(text);
-    if (category === '運動系クラブ') return /運動|スポーツ/.test(type) || /運動部|野球|サッカー|バスケ|テニス|陸上|卓球|バレー/.test(text);
-    if (category === '公演') return /公演|ステージ/.test(type);
-    if (category === '食品販売') return /食品販売|フード|飲食/.test(type) || /カフェ|食品|飲食|スイーツ/.test(text);
-    return true;
-  }
-  document.querySelectorAll('.ex-filter').forEach(button => button.addEventListener('click', () => {
-    selectedExCategory = button.dataset.filter;
-    document.querySelectorAll('.ex-filter').forEach(item => item.classList.toggle('active', item === button));
-    renderExList($('#exSearch').value);
-  }));
-  function renderExList(query = '') {
-  const list = $('#exList');
-  const map = $('#mapCard');
-  const mapSlot = $('#mapSlot');
-  mapSlot.append(map);
-  const q = query.trim().toLowerCase();
-  const items = exhibitions.filter(item => exhibitionMatchesCategory(item, selectedExCategory) && (item.name + item.description + item.category + item.building + item.floor).toLowerCase().includes(q));
-  $('#exCount').textContent = `${items.length} 団体`;
-  list.innerHTML = items.length
-  ? items.map(item => `
-            <button class="ex-card ${selectedEx?.id === item.id ? 'selected' : ''}" data-id="${item.id}">
-              <span class="ex-icon">${item.icon}</span>
-              <span class="ex-info">
-                <span class="ex-title">${item.name}</span>
-                <span class="ex-desc">${item.description}</span>
-              </span>
-              <span class="ex-floor">${item.floor}</span>
-            </button>
-          `).join('')
-  : '<div class="empty">該当する団体が見つかりません</div>';
-  list.querySelectorAll('.ex-card').forEach(button => {
-    button.addEventListener('click',() => {
-      const item = exhibitions.find(exhibition => exhibition.id === button.dataset.id);
-      selectEx(item);
-    });
-  });
-  const selectedCard = selectedEx
-  ? list.querySelector(`.ex-card[data-id="${selectedEx.id}"]`)
-  : null;
-  if (selectedCard) {
-    map.classList.add('visible');
-    selectedCard.insertAdjacentElement('afterend',map);
-  }
-  else {
-    map.classList.remove('visible');
-  }
-  }
-  function selectEx(item) {
-  const map = $('#mapCard');
-  const sameVisibleItem = selectedEx?.id === item.id && map.classList.contains('visible');
-  if (sameVisibleItem) {
-    selectedEx = null;
-    map.classList.remove('visible');
-    $('#mapSlot').append(map);
-    document.querySelectorAll('.ex-card').forEach(card => card.classList.remove('selected'));
-    return;
-  }
-  selectedEx = item;
-  document.querySelectorAll('.ex-card').forEach(card => {
-    card.classList.toggle('selected',card.dataset.id === item.id);
-  });
-  const selectedCard = document.querySelector(`.ex-card[data-id="${item.id}"]`);
-  map.classList.add('visible');
-  selectedCard.insertAdjacentElement('afterend',map);
-  $('#mapLocation').innerHTML = `${item.floor}`;
-  renderCampusMap(item);
-  }
-  function renderCampusMap(item = selectedEx) {
-    const mapViewer = $("#mapArt"); mapViewer.replaceChildren();
-    if (!item) { mapViewer.innerHTML = '<div class="map-placeholder"><strong>校内マップPNG</strong>展示団体を選択すると建物別マップを表示します。</div>'; return; }
-    const src = item.building === "東館" ? CAMPUS_MAP_IMAGES.east : CAMPUS_MAP_IMAGES.other;
-    const image = document.createElement("img"); image.className = "campus-map-image"; image.alt = item.building + " 校内マップ"; image.src = src;
-    image.onerror = () => { mapViewer.innerHTML = '<div class="map-placeholder"><strong>' + item.building + ' の校内マップPNGは未配置です</strong>画像を ' + src + ' に追加すると表示されます。</div>'; };
-    mapViewer.appendChild(image);
-    const pin = document.createElement("span"); pin.className = "pin"; pin.style.left = item.x + "%"; pin.style.top = item.y + "%";
-    const label = document.createElement("span"); label.className = "pin-label"; label.textContent = item.room; label.style.left = item.x + "%"; label.style.top = item.y + "%";
-    mapViewer.append(pin,label);
-  }  function suggestions(input,box,source,onPick) {
-  input.addEventListener('input',() => {
-    const q = input.value.trim().toLowerCase();if (!q) {
-      box.classList.remove('show');return
-    }
-    const found = source.filter(x => (x.name + x.description).toLowerCase().includes(q)).slice(0,5);box.innerHTML = found.length ? found.map(x => `<div class="suggestion" data-id="${x.id}">${x.icon || '📍'}　${x.name}</div>`).join('') : '<div class="suggestion">候補がありません</div>';box.classList.add('show');box.querySelectorAll('[data-id]').forEach(el => el.onclick = () => {
-      const item = source.find(x => x.id === el.dataset.id);input.value = item.name;box.classList.remove('show');onPick(item)
-    })
-  });
-  document.addEventListener('click',e => {
-    if (!box.contains(e.target) && e.target !== input) box.classList.remove('show')
-  })
-  }
-  const scheduleCategories = ["公演",
-  "試合",
-  "部活",
-  "有志"];
-  let selectedDay = null,selectedCategory = "公演";
-  let selectedFestivalDay = null, selectedExCategory = "展示団体";
-  const targetSelection = new Map();
-  function scheduleRows() {
-  return events.filter(e => Number(e.day) === selectedDay && e.category === selectedCategory)
-  }
-  function targetKey(e) {
-  if (selectedCategory === "公演" || selectedCategory === "試合") return e.place || "場所未登録";
-  const rawTarget = e.group || e.organizer || e.name || "団体未登録";
-  const exhibition = exhibitions.find(item => item.id === rawTarget);
-  return exhibition?.name || rawTarget
-  }
-  function descriptionForTarget(target, targetEvents) {
-  const eventDescription = targetEvents.find(event => targetKey(event) === target && event.description)?.description;
-  if (eventDescription) return eventDescription;
-  const normalizedTarget = String(target).trim().toLocaleLowerCase();
-  const exhibition = exhibitions.find(item =>
-    item.id === target || item.name === target || item.name.toLocaleLowerCase().includes(normalizedTarget) ||
-    normalizedTarget.includes(item.name.toLocaleLowerCase()) || item.room === target ||
-    item.room.toLocaleLowerCase().includes(normalizedTarget)
-  );
-  return exhibition?.description || "この団体の説明はまだ登録されていません。"
-  }
-  function currentTargets() {
-  return [...new Set(scheduleRows().map(targetKey))]
-  }
-  function selectionKey() {
-  return `${selectedDay}:${selectedCategory}`
-  }
-  function ensureTargetSelection() {
-  const key = selectionKey();
-  if (!targetSelection.has(key)) targetSelection.set(key,new Set(currentTargets()))
-  }
-  function updateTargetSummary() {
-  const all = currentTargets();
-  ensureTargetSelection();
-  const selected = targetSelection.get(selectionKey());
-  $('#targetSummary').textContent = `表示する${selectedCategory === "公演" || selectedCategory === "試合" ? "場所" : "団体"}（${all.filter(x => selected.has(x)).length} / ${all.length} 選択中）`
-  }
-  function renderTargetChoices() {
-  const targets = currentTargets();
-  ensureTargetSelection();
-  const selected = targetSelection.get(selectionKey());
-  $('#targetChoices').innerHTML = targets.length ? targets.map((target,i) => `<label class="target-option"><input type="checkbox" data-target-index="${i}" ${selected.has(target) ? "checked" : ""}><span>${target}</span></label>`).join("") : '<div class="empty">このカテゴリに選択できる予定はありません</div>';
-  $('#targetChoices').querySelectorAll('input').forEach(input => input.addEventListener('change',() => {
-    const target = targets[Number(input.dataset.targetIndex)],set = targetSelection.get(selectionKey());if (input.checked) set.add(target);else set.delete(target);updateTargetSummary();renderSchedule()
-  }));
-  updateTargetSummary()
-  }
-  const MINUTE_HEIGHT = 2.2;
-  function parseClock(value) {
-  if (typeof value !== "string" || !/^\d{1,2}:\d{2}$/.test(value)) return null;
-  const [h,
-    m] = value.split(":").map(Number);
-  if (h > 23 || m > 59) return null;
-  return h * 60 + m
-  }
-  function clockLabel(total) {
-  const h = Math.floor(total / 60),
-  m = total % 60;
-  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`
-  }
-  function getEventLayout(start,end,gridStart) {
-  const a = parseClock(start),
-  b = parseClock(end);
-  if (a === null || b === null || b <= a) return null;
-  return {
-    top: Math.round((a - gridStart) * MINUTE_HEIGHT * 1000) / 1000,
-    height: Math.round((b - a) * MINUTE_HEIGHT * 1000) / 1000
-  }
-  }
-  function exhibitionForEvent(event) {
-    const org = String(event.name || '').match(/[^\s　]+(?:部|班|委員会|同好会|研究会)/)?.[0];
-    return exhibitions.find(item => event.name === item.name || event.name.includes(item.name) || (org && item.name.includes(org))) || null;
-  }
-  function destinationForBuilding(building) {
-    const aliases = {東館:'east',北館:'north',南館:'south',特別棟:'middle',大体育館:'gym-big',小体育館:'gym-small',体育館:'gym-big',講堂:'ko-do',屋上庭園:'roof'};
-    const id = aliases[building];
-    return quickDestinations.find(item => item.id === id) || {id:'building-' + building,name:building || '目的地未登録',temporary:true};
-  }
-  function floorForOrganization(item) {
-    if (!item || !['東館','北館','南館'].includes(item.building)) return null;
-    return String(item.floor || '').match(/[0-9]+階|[0-9]+F/)?.[0] || null;
-  }
-  function eventVenueDestination(event, organization) {
-    if (organization) return destinationForBuilding(organization.building);
-    const place = String(event.place || '');
-    const exact = quickDestinations.find(item => item.name === place);
-    if (exact) return exact;
-    if (place === '体育館') return Object.assign({},quickDestinations.find(item => item.id === 'gym-big'),{temporary:true});
-    if (/^北/.test(place)) return Object.assign({},quickDestinations.find(item => item.id === 'north'),{temporary:true});
-    if (/^特別棟/.test(place)) return Object.assign({},quickDestinations.find(item => item.id === 'middle'),{temporary:true});
-    return {id:'venue-' + events.indexOf(event),name:place || '会場未登録',temporary:true};
-  }
-  function navigateToExhibition(item) {
-    const dest = destinationForBuilding(item.building);
-    setTab('navigator');
-    chooseDestination(dest,true,floorForOrganization(item),item.name);
-  }
-  function navigateToEvent(event) {
-    if (!event) return;
-    const organization = exhibitionForEvent(event);
-    if (organization) { navigateToExhibition(organization); return; }
-    setTab('navigator');
-    chooseDestination(eventVenueDestination(event,null),true,null,event.name);
-  }
-  let activeDetailEvent = null;
-  function openEventDetail(event) {
-    if (!event) return;
-    activeDetailEvent = event;
-    const organization = exhibitionForEvent(event);
-    const activityOnly = event.category === '部活' || event.category === '有志';
-    $('#eventDialogTitle').textContent = activityOnly ? '' : (event.name || '予定の詳細');
-    const body = $('#eventDialogBody');
-    body.replaceChildren();
-    if (!activityOnly) {
-      const detailLines = [event.place && ('会場：' + event.place),event.start && ('時間：' + event.start + '〜' + (event.end || '終了時刻未登録')),organization && ('建物・階：' + organization.building + (organization.floor ? '・' + organization.floor : ''))].filter(Boolean);
-      const description = event.description || organization?.description;
-      if (description) detailLines.push(description);
-      const p = document.createElement('p'); p.textContent = detailLines.join('\n'); body.appendChild(p);
-    }
-    $('#eventDialog').showModal();
-  }
-  $('#closeEventDialog').addEventListener('click',() => $('#eventDialog').close());
-  $('#eventRouteButton').addEventListener('click',() => { const event = activeDetailEvent; $('#eventDialog').close(); navigateToEvent(event); });
-  function renderSchedule() {
-  const root = $('#schedule');
-  if (!selectedDay) {
-    root.innerHTML = "";
-    return
-  }
-  const rows = scheduleRows();
-  if (!rows.length) {
-    root.innerHTML = '<div class="schedule-empty">該当する予定はありません</div>';
-    return
-  }
-  ensureTargetSelection();
-  const selected = targetSelection.get(selectionKey()),
-  visible = rows.filter(e => selected.has(targetKey(e)));
-  if (!visible.length) {
-    root.innerHTML = '<div class="schedule-empty">表示対象が選択されていません</div>';
-    return
-  }
-  const targets = currentTargets().filter(t => selected.has(t));
-  if (!targets.length) {
-    root.innerHTML = '<div class="schedule-empty">表示対象が選択されていません</div>';
-    return
-  }
-  const timed = visible.map(e => ({
-    ...e,_start: parseClock(e.start),_end: parseClock(e.end)
-  })).filter(e => e._start !== null && e._end !== null && e._end > e._start);
-  const untimed = visible.filter(e => {
-    const a = parseClock(e.start),b = parseClock(e.end);return a === null || b === null || b <= a
-  });
-  if (!timed.length) {
-    root.innerHTML = `<div class="schedule-empty">${visible.length ? "時刻が登録された予定はありません" : "該当する予定はありません"}</div>`;
-    return
-  }
-  const first = Math.floor(Math.min(...timed.map(e => e._start)) / 30) * 30,
-  last = Math.ceil(Math.max(...timed.map(e => e._end)) / 30) * 30 || Math.max(...timed.map(e => e._end));
-  const range = Math.max(30,last - first),
-  height = range * MINUTE_HEIGHT,
-  tickTimes = [];
-  for (let t = first;t <= last;t += 30)tickTimes.push(t);
-  const laneCount = targets.length;
-  const heads = targets.map(target => {
-    if (selectedCategory === "公演" || selectedCategory === "試合") {
-      return `<div class="time-grid-heading">${target}</div>`;
-    }
-    const description = descriptionForTarget(target, visible);
-    const shortDescription = Array.from(description).slice(0,10).join("");
-    return `<div class="time-grid-heading"><details class="group-description"><summary><span class="time-group-name">${target}</span><span class="time-group-short">${shortDescription}</span></summary><p>${description}</p></details></div>`;
-  }).join("");
-  const axis = tickTimes.map((t,i) => `<span class="time-label ${i === 0 ? "first" : i === tickTimes.length - 1 ? "last" : ""}" style="top:${(t - first) * MINUTE_HEIGHT}px">${clockLabel(t)}</span>`).join("");
-  const lanes = targets.map(target => {
-    const items = timed.filter(e => targetKey(e) === target).sort((a,b) => a._start - b._start);const cards = items.map(e => {
-      const layout = getEventLayout(e.start,e.end,first),top = layout.top,eventHeight = layout.height,compact = eventHeight < 38;const title = e.name || e.title || "企画名未登録";return `<article class="time-event ${compact ? "compact" : ""}" data-event-index="${events.indexOf(e)}" tabindex="0" role="button" style="top:${top}px;height:${eventHeight}px" title="詳細を表示：${title}｜${clockLabel(e._start)}〜${clockLabel(e._end)}"><strong>${title}</strong><span class="time-event-time">${clockLabel(e._start)}〜${clockLabel(e._end)}</span></article>`
-    }).join("");return `<div class="time-lane" style="height:${height}px">${cards}</div>`
-  }).join("");
-  const isPlace = selectedCategory === "公演" || selectedCategory === "試合",
-  firstHeading = isPlace ? "時間" : "時間";
-  let html = `<div class="time-grid-scroll"><div class="time-grid-header" style="--lane-count:${laneCount}"><div class="time-grid-heading">${firstHeading}</div>${heads}</div><div class="time-grid-body" style="--lane-count:${laneCount};height:${height}px"><div class="time-axis" style="height:${height}px">${axis}</div>${lanes}</div></div>`;
-  if (untimed.length) html += `<div class="unscheduled"><strong>時間未登録の予定</strong>${untimed.map(e => `${
-    targetKey(e)
-  }
-  ：${
-    e.name || e.title || "企画名未登録"
-  }
-  `).join("<br>")}</div>`;
-  root.innerHTML = html;
-  root.querySelectorAll(".time-event").forEach(card => {
-    const open = () => openEventDetail(events[Number(card.dataset.eventIndex)]);
-    card.addEventListener("click",open);
-    card.addEventListener("keydown",event => { if(event.key === "Enter" || event.key === " "){event.preventDefault();open();} });
-  });
-  }
-  function renderTimetable() {
-  if (!selectedDay) return;
-  $('#selectedDayLabel').textContent = `${selectedDay}日目`;
-  document.querySelectorAll('.category-tab').forEach(b => b.classList.toggle('active',b.dataset.category === selectedCategory));
-  renderTargetChoices();
-  renderSchedule()
-  }
-  document.querySelectorAll('.day-choice').forEach(button => button.addEventListener('click',() => {
-  selectedDay = Number(button.dataset.day); selectedFestivalDay = selectedDay; updateAlert();selectedCategory = "公演";$('#dayChooser').hidden = true;$('#timetableContent').hidden = false;renderTimetable()
-  }));
-  document.querySelectorAll('.category-tab').forEach(button => button.addEventListener('click',() => {
-  selectedCategory = button.dataset.category;renderTimetable()
-  }));
-  $('#backToDays').addEventListener('click',() => {
-  selectedDay = null;selectedFestivalDay = null;updateAlert();$('#schedule').innerHTML = "";$('#dayChooser').hidden = false;$('#timetableContent').hidden = true
-  });
-  $('#selectAllTargets').addEventListener('click',() => {
-  targetSelection.set(selectionKey(),new Set(currentTargets()));renderTargetChoices();renderSchedule()
-  });
-  $('#clearTargets').addEventListener('click',() => {
-  targetSelection.set(selectionKey(),new Set());renderTargetChoices();renderSchedule()
-  });
-  function setTab(name) {
-  document.querySelectorAll('.tab').forEach(b => b.classList.toggle('active',b.dataset.tab === name));
-  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active',p.id === 'panel-' + name));
-  if (name !== 'navigator' && typeof stopLocationScanner === 'function') stopLocationScanner();
-  window.scrollTo({
-    top: 0,behavior: 'smooth'
-  })
-  }
-  document.querySelectorAll('.tab').forEach(b => b.onclick = () => setTab(b.dataset.tab));
-  $('#mapDirections').addEventListener('click',()=>{if(selectedEx) navigateToExhibition(selectedEx);});
-  function resolveStart() {
-    $('#currentLocation').textContent='現在地は未設定です。校内のQRコードを読み取ってください。';
-    $('#currentId').textContent='';
-    return null;
-  }
-  let startId = resolveStart();
-  function setCurrentLocation(place){startId=place.id;$('#currentLocation').textContent=place.name;$('#currentId').textContent=place.id;$('#scannerStatus').textContent='現在地を設定しました：'+place.name;stopLocationScanner();const u=new URL(location.href);u.searchParams.set('start',place.id);history.replaceState({},'',u);if(routeDestination)chooseDestination(routeDestination,false,routeFloor,routeTargetLabel);}
-  function resolveQrLocation(value){let raw=String(value||'').trim();try{const u=new URL(raw);raw=u.searchParams.get('start')||u.searchParams.get('location')||u.searchParams.get('id')||u.searchParams.get('number')||raw;}catch(_){}raw=raw.trim();return placeData.find(x=>x.id===raw||(x.number&&x.number.trim()===raw))||null;}
-  let scanBusy = false, scanLocked = false, lastRejectedQr = '', lastScanAt = 0;
-  function stopLocationScanner(){
-    if(scanTimer) cancelAnimationFrame(scanTimer);
-    scanTimer = null; scanBusy = false; scanLocked = false;
-    if(cameraStream) cameraStream.getTracks().forEach(t => t.stop());
-    cameraStream = null;
-    const v = $('#locationVideo');
-    v.pause(); v.srcObject = null; v.hidden = true;
-    $('#scannerPlaceholder').hidden = false; $('#stopScanner').hidden = true;
-  }
-  async function startLocationScanner(){
-    stopLocationScanner();
-    const status = $('#scannerStatus');
-    if(!window.isSecureContext){status.textContent='カメラにはHTTPS接続が必要です。GitHub PagesのHTTPSで開くか、案内番号を入力してください。';return;}
-    if(!('BarcodeDetector' in window)){status.textContent='このブラウザーは内蔵QR読取に未対応です。最新版の対応ブラウザーを使うか、案内番号を入力してください。';return;}
-    if(!navigator.mediaDevices?.getUserMedia){status.textContent='このページからカメラを利用できません。HTTPSで開き、ブラウザーのカメラ権限を確認してください。';return;}
-    try{
-      barcodeDetector = new BarcodeDetector({formats:['qr_code']});
-      cameraStream = await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
-      const v = $('#locationVideo'); v.srcObject = cameraStream; v.hidden = false;
-      $('#scannerPlaceholder').hidden = true; $('#stopScanner').hidden = false;
-      await v.play(); status.textContent='カメラ起動中です。QRコードを枠内に映してください。';
-      const scan = async () => {
-        if(!cameraStream || scanLocked) return;
-        if(!scanBusy){
-          scanBusy = true;
-          try{
-            const codes = await barcodeDetector.detect(v);
-            if(codes.length){
-              const raw = String(codes[0].rawValue || '').trim();
-              if(raw && raw !== lastRejectedQr){
-                const place = resolveQrLocation(raw);
-                if(place){scanLocked = true; setCurrentLocation(place); return;}
-                lastRejectedQr = raw;
-                status.textContent='QRの番号が未登録または不正です。現在地は変更していません。別のQRを読み取るか番号を入力してください。';
-              }
-            }
-          }catch(_){status.textContent='QRを読み取れませんでした。カメラを安定させ、明るい場所でもう一度お試しください。';}
-          finally{scanBusy = false;}
+      @media (min-width: 700px) {
+        .app {
+          max-width: 760px;
         }
-        if(cameraStream && !scanLocked) scanTimer = requestAnimationFrame(scan);
+
+        .target-choices {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .schedule-table {
+          min-width: 0;
+        }
+
+        .schedule-table th,
+        .schedule-table td {
+          padding: 13px 16px;
+        }
+      }
+
+      .venue {
+        margin: 15px 0 9px;
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 17px;
+        overflow: hidden;
+      }
+
+      .venue-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 13px 14px;
+        background: #eef2e8;
+      }
+
+      .venue-name {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 900;
+        font-size: 13px;
+      }
+
+      .venue-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--green);
+      }
+
+      .venue-count {
+        font-size: 9px;
+        color: var(--muted);
+        font-weight: 700;
+      }
+
+      .event-row {
+        padding: 13px 14px;
+        display: grid;
+        grid-template-columns: 56px 1fr;
+        gap: 9px;
+        border-top: 1px solid #f0f0ec;
+      }
+
+      .event-time {
+        font-size: 11px;
+        font-weight: 900;
+        color: var(--green);
+        padding-top: 1px;
+      }
+
+      .event-name {
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .event-status {
+        display: inline-flex;
+        margin-top: 6px;
+        font-size: 9px;
+        font-weight: 800;
+        color: #788075;
+        background: #f2f3ef;
+        border-radius: 6px;
+        padding: 4px 7px;
+      }
+
+      .event-status.live {
+        background: #ffe5de;
+        color: #b84d32;
+      }
+
+      .event-status.soon {
+        background: #fff0ce;
+        color: #98601a;
+      }
+
+      .qr-test-panel {
+        margin: 10px 0 2px;
+        padding: 10px;
+        border: 1px solid #e6e9df;
+        border-radius: 12px;
+        background: #fff;
+      }
+
+      .qr-test-panel summary {
+        min-height: 32px;
+        display: flex;
+        align-items: center;
+        color: #596558;
+        font-size: 11px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .qr-test-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 7px;
+        padding-top: 8px;
+      }
+
+      .qr-test-grid figure {
+        min-width: 0;
+        margin: 0;
+        padding: 6px;
+        border-radius: 9px;
+        background: #f7f7f2;
+        text-align: center;
+      }
+
+      .qr-test-grid img {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1;
+        background: #fff;
+      }
+
+      .qr-test-grid figcaption {
+        padding-top: 4px;
+        font-size: 9px;
+        line-height: 1.35;
+      }
+      .loc-card {
+        border-radius: 17px;
+        background: var(--green);
+        color: white;
+        padding: 16px;
+        margin: 4px 0 17px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .loc-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+        background: #ffffff20;
+        display: grid;
+        place-items: center;
+        font-size: 21px;
+      }
+
+      .loc-label {
+        font-size: 9px;
+        color: #c8d9c9;
+        letter-spacing: 0.1em;
+        font-weight: 800;
+      }
+
+      .loc-value {
+        font-size: 13px;
+        font-weight: 900;
+        margin-top: 4px;
+      }
+
+      .loc-id {
+        font: 10px monospace;
+        color: #d2e0d0;
+        margin-left: auto;
+      }
+
+      .quick-label {
+        font-size: 10px;
+        font-weight: 900;
+        color: var(--muted);
+        margin: 17px 1px 9px;
+      }
+
+      .quick-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .quick {
+        border: 1px solid var(--line);
+        background: white;
+        border-radius: 12px;
+        padding: 11px 5px;
+        font-family: inherit;
+        font-size: 10px;
+        font-weight: 700;
+        color: #4a5148;
+        cursor: pointer;
+      }
+
+      .quick:active,
+      .quick.selected {
+        background: var(--green);
+        color: white;
+        border-color: var(--green);
+      }
+
+      .route-result {
+        display: none;
+        margin-top: 15px;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+
+      .route-result.show {
+        display: block;
+      }
+
+      .route-header {
+        padding: 14px 15px 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .route-dest {
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .route-step {
+        font-size: 10px;
+        color: var(--muted);
+        font-weight: 800;
+      }
+
+      .slide-wrap {
+        margin: 0 12px;
+        background: #eff2e9;
+        border-radius: 13px;
+        position: relative;
+        overflow: hidden;
+        min-height: 198px;
+      }
+
+      .slide-wrap img {
+        display: block;
+        width: 100%;
+        height: 210px;
+        object-fit: contain;
+      }
+
+      .slide-fallback {
+        height: 210px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 22px;
+        background: linear-gradient(135deg, #edf1e5, #f9f7e9);
+        color: #475548;
+      }
+
+      .slide-fallback .big {
+        font-size: 38px;
+        margin-bottom: 10px;
+      }
+
+      .slide-fallback strong {
+        font-size: 13px;
+      }
+
+      .slide-fallback span {
+        font-size: 10px;
+        color: #7c8577;
+        margin-top: 6px;
+      }
+
+      .route-caption {
+        padding: 10px 15px 2px;
+        font-size: 10px;
+        color: var(--muted);
+      }
+
+      .route-controls {
+        display: flex;
+        gap: 8px;
+        padding: 12px;
+      }
+
+      .route-controls button {
+        flex: 1;
+        border: 0;
+        border-radius: 11px;
+        padding: 12px;
+        background: #edf0e8;
+        color: #334437;
+        font-family: inherit;
+        font-size: 11px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .route-controls button.next {
+        background: var(--green);
+        color: white;
+      }
+
+      .route-controls button:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+
+      .route-note {
+        margin: 0 15px 14px;
+        font-size: 9px;
+        color: #93998f;
+        line-height: 1.6;
+      }
+
+      .empty {
+        padding: 20px;
+        text-align: center;
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .footer {
+        text-align: center;
+        padding: 25px 15px 10px;
+        font-size: 9px;
+        color: #a1a59e;
+        letter-spacing: 0.06em;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main class="app">
+      <header class="top">
+        <div class="brand">
+          <div class="brandmark">
+            <div class="logo">✳</div>
+            <div class="brandname">
+              マグノリア祭 GUIDE
+              <small>MAGNOLIA HIGH SCHOOL FESTIVAL</small>
+            </div>
+          </div>
+          <div class="date-pill">文化祭 2027</div>
+        </div>
+        <div class="eyebrow">WELCOME TO MAGNOLIA</div>
+        <h1 class="hero">
+          好きが集まる、<br /><em>今日だけのマグノリア祭。</em>
+        </h1>
+        <p class="sub">見つけよう。出会おう。マグノリア祭を楽しもう。</p>
+      </header>
+      <nav class="tabs" aria-label="メインメニュー">
+        <button class="tab active" data-tab="exhibitions">団体一覧</button>
+        <button class="tab" data-tab="timetable">タイムテーブル</button>
+        <button class="tab" data-tab="navigator">行き先ナビ</button>
+      </nav>
+      <section
+        class="event-alert"
+        id="alert"
+        aria-live="polite"
+        hidden
+      ></section>
+
+      <div class="content">
+        <section class="panel active" id="panel-exhibitions">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">FIND YOUR FAVORITE</div>
+
+              <h2>団体一覧</h2>
+            </div>
+            <span class="count" id="exCount"></span>
+          </div>
+          <div class="search-wrap">
+            <span class="search-icon">⌕</span>
+            <input
+              id="exSearch"
+              class="search"
+              placeholder="団体名・内容から探す"
+              autocomplete="off"
+            />
+            <button class="clear" id="exClear">×</button>
+            <div class="suggestions" id="exSuggest"></div>
+          </div>
+          <div
+            class="ex-category-tabs"
+            id="exCategoryTabs"
+            role="group"
+            aria-label="団体カテゴリー"
+          >
+            <button class="ex-filter active" data-filter="展示団体">
+              展示団体</button
+            ><button class="ex-filter" data-filter="運動系クラブ">
+              運動系クラブ</button
+            ><button class="ex-filter" data-filter="公演">公演</button
+            ><button class="ex-filter" data-filter="食品販売">食品販売</button>
+          </div>
+          <div class="ex-list" id="exList"></div>
+          <div id="mapSlot">
+            <div class="map-card" id="mapCard">
+              <div class="map-top">
+                <span class="map-title"
+                  >📍<span id="mapLocation">団体を選択してください</span></span
+                >
+              </div>
+              <div
+                class="map-art"
+                id="mapArt"
+                role="region"
+                aria-label="校内マップ"
+              ></div>
+              <div class="map-bottom">
+                <button
+                  class="map-directions-button"
+                  id="mapDirections"
+                  type="button"
+                >
+                  行き方が分からない
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="panel" id="panel-timetable">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">TODAY'S PROGRAM</div>
+              <h2>タイムテーブル</h2>
+            </div>
+            <span class="count">日程を選んでご覧ください</span>
+          </div>
+          <div id="dayChooser" class="day-chooser">
+            <p>日程を選択してください</p>
+            <div class="day-buttons">
+              <button class="day-choice" data-day="1">
+                1日目<span>DAY 1</span></button
+              ><button class="day-choice" data-day="2">
+                2日目<span>DAY 2</span>
+              </button>
+            </div>
+          </div>
+          <div id="timetableContent" hidden>
+            <div class="selected-day-bar">
+              <div>
+                <span class="eyebrow">SELECTED SCHEDULE</span
+                ><strong id="selectedDayLabel"></strong>
+              </div>
+              <button id="backToDays" class="back-days">日程選択に戻る</button>
+            </div>
+            <div class="category-tabs" role="tablist" aria-label="予定カテゴリ">
+              <button class="category-tab active" data-category="公演">
+                公演</button
+              ><button class="category-tab" data-category="試合">試合</button
+              ><button class="category-tab" data-category="部活">部活</button
+              ><button class="category-tab" data-category="有志">有志</button>
+            </div>
+            <details class="target-panel" id="targetPanel">
+              <summary id="targetSummary">
+                表示する場所・団体（0 / 0 選択中）
+              </summary>
+              <div class="target-panel-body">
+                <div class="target-actions">
+                  <button type="button" id="selectAllTargets">すべて選択</button
+                  ><button type="button" id="clearTargets">すべて解除</button>
+                </div>
+                <div id="targetChoices" class="target-choices"></div>
+              </div>
+            </details>
+            <div id="schedule" aria-live="polite"></div>
+          </div>
+        </section>
+        <section class="panel" id="panel-navigator">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">LET'S GO</div>
+              <h2>行き先ナビ</h2>
+            </div>
+          </div>
+
+          <div class="scanner-card">
+            <strong>現在地を設定</strong>
+            <div class="scanner-video-wrap">
+              <span
+                id="scannerPlaceholder"
+                style="
+                  color: #fff;
+                  font-size: 12px;
+                  padding: 12px;
+                  text-align: center;
+                "
+                >QRコードを読み取るか、案内番号を入力してください</span
+              ><video id="locationVideo" playsinline muted hidden></video>
+            </div>
+            <button class="scanner-stop" id="stopScanner" type="button" hidden>
+              カメラを停止
+            </button>
+            <div class="scanner-status" id="scannerStatus" aria-live="polite">
+              カメラが使えない場合は番号を入力してください。
+            </div>
+            <div class="location-input-row">
+              <input
+                id="locationNumber"
+                inputmode="text"
+                autocomplete="off"
+                placeholder="案内番号を入力"
+              /><button id="confirmLocation" type="button">現在地を確定</button>
+            </div>
+            <details class="qr-test-panel">
+              <summary>動作確認用QRコード（別端末で表示してください）</summary>
+              <div class="qr-test-grid" id="qrTestGrid"></div>
+            </details>
+          </div>
+                    <div class="quick-label">行き先を選ぶ</div>
+          <div class="quick-grid" id="quickGrid"></div>
+          <div class="quick-label">または、団体一覧から探す</div>
+          <div class="search-wrap">
+            <span class="search-icon">⌕</span
+            ><input
+              id="destSearch"
+              class="search"
+              placeholder="団体名を入力"
+              autocomplete="off"
+            />
+            <div class="suggestions" id="destSuggest"></div>
+          </div>
+          <div class="loc-card">
+            <div class="loc-icon">⌖</div>
+            <div>
+              <div class="loc-label">YOUR CURRENT LOCATION</div>
+              <div class="loc-value" id="currentLocation">出発地を確認中</div>
+            </div>
+            <span class="loc-id" id="currentId"></span>
+          </div>
+          <div class="route-result" id="routeResult">
+            <div class="route-header">
+              <span class="route-dest" id="routeDest"></span
+              ><span class="route-step" id="routeStep"></span>
+            </div>
+            <div class="route-caption" id="routeFloorNote" hidden></div>
+            <div class="slide-wrap" id="slideWrap"></div>
+            <div class="route-caption" id="routeCaption"></div>
+            <div class="route-controls">
+              <button id="prevBtn">◀ 前へ</button
+              ><button class="next" id="nextBtn">次へ ▶</button>
+            </div>
+            <p class="route-note">
+              試作確認用の仮ルート画像です。実際の校舎や通路とは異なります。QR番号・階段位置・通路は現地確認後に差し替えてください。
+            </p>
+          </div>
+        </section>
+      </div>
+
+      <footer class="footer">MAGNOLIA FESTIVAL · MAKE YOUR DAY</footer>
+    </main>
+    <dialog class="event-dialog" id="eventDialog">
+      <div class="event-dialog-head">
+        <strong id="eventDialogTitle"></strong
+        ><button type="button" id="closeEventDialog" aria-label="閉じる">
+          ×
+        </button>
+      </div>
+      <div class="event-dialog-body" id="eventDialogBody"></div>
+      <div class="event-dialog-actions">
+        <button
+          type="button"
+          id="eventRouteButton"
+          class="map-directions-button"
+        >
+          行き方が分からない
+        </button>
+      </div>
+    </dialog>
+    <script
+      src="scripts/zxing-browser.min.js"
+      onerror="window.zxingLibraryLoadError = true;"
+    ></script>
+    <script>
+      // Canonical organization records and separate schedule-entry records.
+      const organizations = [
+        {
+          id: "class3a",
+          name: "3年A組 おばけ屋敷",
+          type: "文化系クラブ",
+          hasTimetable: false,
+          listDescription: "本気でこわい？教室まるごと肝だめし",
+          timetableDescription: "",
+          location: {
+            building: "東館",
+            floor: 3,
+          },
+          icon: "👻",
+          map: {
+            x: 30,
+            y: 39,
+          },
+          sample: true,
+        },
+        {
+          id: "artclub",
+          name: "美術部 アートギャラリー",
+          type: "文化系クラブ",
+          hasTimetable: false,
+          listDescription: "一年間の作品を展示しています",
+          timetableDescription: "",
+          location: {
+            building: "北館",
+            floor: 2,
+            classroom: "A",
+          },
+          icon: "🎨",
+          map: {
+            x: 39,
+            y: 63,
+          },
+          sample: true,
+        },
+        {
+          id: "tea",
+          name: "茶道部 お茶会",
+          type: "文化系クラブ",
+          hasTimetable: false,
+          listDescription: "和室でほっと一息、季節のお菓子も",
+          timetableDescription: "",
+          location: {
+            building: "南館",
+            floor: 2,
+            classroom: "B",
+          },
+          icon: "🍵",
+          map: {
+            x: 69,
+            y: 42,
+          },
+          sample: true,
+        },
+        {
+          id: "science",
+          name: "科学部 ふしぎ実験室",
+          type: "文化系クラブ",
+          hasTimetable: true,
+          listDescription: "見てびっくり！参加できる実験ショー",
+          timetableDescription: "【動作確認用】科学部 ふしぎ実験室の予定です。",
+          location: {
+            building: "化学AB",
+          },
+          icon: "🧪",
+          map: {
+            x: 61,
+            y: 68,
+          },
+          sample: true,
+        },
+        {
+          id: "physics",
+          name: "物理部 実験展示（仮）",
+          type: "文化系クラブ",
+          hasTimetable: true,
+          listDescription: "身近な物理をためす体験展示",
+          timetableDescription:
+            "【動作確認用】物理部 実験展示（仮）の予定です。",
+          location: {
+            building: "物理AB",
+          },
+          icon: "⚙️",
+          map: {
+            x: 54,
+            y: 72,
+          },
+          sample: true,
+        },
+        {
+          id: "photo",
+          name: "写真部 青春フォトスポット",
+          type: "文化系クラブ",
+          hasTimetable: false,
+          listDescription: "今日の思い出を撮っていこう",
+          timetableDescription: "",
+          location: {
+            building: "東館",
+            floor: 2,
+          },
+          icon: "📸",
+          map: {
+            x: 29,
+            y: 55,
+          },
+          sample: true,
+        },
+        {
+          id: "cafe",
+          name: "家庭科部 あおばカフェ",
+          type: "食品販売",
+          hasTimetable: false,
+          listDescription: "手作りスイーツとドリンク",
+          timetableDescription: "",
+          location: {
+            building: "南館",
+            floor: 1,
+            classroom: "C",
+          },
+          icon: "🍰",
+          map: {
+            x: 75,
+            y: 60,
+          },
+          sample: true,
+        },
+        {
+          id: "music",
+          name: "軽音楽部 ミニライブ",
+          type: "公演団体",
+          hasTimetable: true,
+          listDescription: "放課後の熱量をそのままに！",
+          timetableDescription: "【動作確認用】軽音楽部 ミニライブの予定です。",
+          location: {
+            building: "講堂",
+          },
+          icon: "🎸",
+          map: {
+            x: 82,
+            y: 46,
+          },
+          sample: true,
+        },
+        {
+          id: "book",
+          name: "図書委員会 古本市",
+          type: "文化系クラブ",
+          hasTimetable: false,
+          listDescription: "お気に入りの一冊に出会えるかも",
+          timetableDescription: "",
+          location: {
+            building: "北館",
+            floor: 2,
+            classroom: "D",
+          },
+          icon: "📚",
+          map: {
+            x: 57,
+            y: 48,
+          },
+          sample: true,
+        },
+        {
+          id: "astro",
+          name: "天文班 星空展示（仮）",
+          type: "文化系クラブ",
+          hasTimetable: true,
+          listDescription: "星空の見どころを紹介します",
+          timetableDescription:
+            "【動作確認用】天文班 星空展示（仮）の予定です。",
+          location: {
+            building: "東館",
+            floor: 4,
+          },
+          icon: "🔭",
+          map: {
+            x: 42,
+            y: 39,
+          },
+          sample: true,
+        },
+        {
+          id: "sportsclub",
+          name: "バスケットボール部 体験（仮）",
+          type: "運動系クラブ",
+          hasTimetable: true,
+          listDescription: "シュート体験と部活動紹介",
+          timetableDescription:
+            "【動作確認用】バスケットボール部 体験（仮）の予定です。",
+          location: {
+            building: "大体育館",
+          },
+          icon: "🏀",
+          map: {
+            x: 48,
+            y: 55,
+          },
+          sample: true,
+        },
+        {
+          id: "volunteerBand",
+          name: "有志バンド 公開ステージ（仮）",
+          type: "有志",
+          hasTimetable: true,
+          listDescription: "有志メンバーによる音楽企画",
+          timetableDescription:
+            "【動作確認用】有志バンド 公開ステージ（仮）の予定です。",
+          location: {
+            building: "講堂",
+          },
+          icon: "🎤",
+          map: {
+            x: 82,
+            y: 46,
+          },
+          sample: true,
+        },
+        {
+          id: "brass",
+          name: "吹奏楽部",
+          type: "公演団体",
+          hasTimetable: true,
+          listDescription: "吹奏楽部による演奏をお楽しみください",
+          timetableDescription: "【動作確認用】吹奏楽部の発表・企画です。",
+          location: {
+            building: "大体育館",
+          },
+          icon: "🎺",
+          map: {
+            x: 80,
+            y: 48,
+          },
+          sample: true,
+        },
+        {
+          id: "dance",
+          name: "ダンス部",
+          type: "公演団体",
+          hasTimetable: true,
+          listDescription: "ダンス部のステージパフォーマンス",
+          timetableDescription: "【動作確認用】ダンス部の発表・企画です。",
+          location: {
+            building: "講堂",
+          },
+          icon: "💃",
+          map: {
+            x: 80,
+            y: 46,
+          },
+          sample: true,
+        },
+        {
+          id: "drama",
+          name: "演劇部",
+          type: "公演団体",
+          hasTimetable: true,
+          listDescription: "演劇部による舞台公演",
+          timetableDescription: "【動作確認用】演劇部の発表・企画です。",
+          location: {
+            building: "大体育館",
+          },
+          icon: "🎭",
+          map: {
+            x: 80,
+            y: 48,
+          },
+          sample: true,
+        },
+        {
+          id: "tabletennis",
+          name: "卓球部（仮）",
+          type: "運動系クラブ",
+          hasTimetable: true,
+          listDescription: "卓球部の試合を行います",
+          timetableDescription: "【動作確認用】卓球部（仮）の発表・企画です。",
+          location: {
+            building: "小体育館",
+          },
+          icon: "🏓",
+          map: {
+            x: 46,
+            y: 56,
+          },
+          sample: true,
+        },
+        {
+          id: "rakugo",
+          name: "落語研究班（仮）",
+          type: "文化系クラブ",
+          hasTimetable: true,
+          listDescription: "落語を気軽にお楽しみください",
+          timetableDescription:
+            "【動作確認用】落語研究班（仮）の発表・企画です。",
+          location: {
+            building: "北館",
+            floor: "3",
+            classroom:"B"
+          },
+          icon: "🎙️",
+          map: {
+            x: 48,
+            y: 60,
+          },
+          sample: true,
+        },
+        {
+          id: "calligraphy",
+          name: "書道部（仮）",
+          type: "文化系クラブ",
+          hasTimetable: true,
+          listDescription: "書道作品の展示と実演を行います",
+          timetableDescription: "【動作確認用】書道部（仮）の発表・企画です。",
+          location: {
+            building: "マグノリアホール",
+          },
+          icon: "🖌️",
+          map: {
+            x: 57,
+            y: 48,
+          },
+          sample: true,
+        },
+      ];
+      const scheduleEntries = [
+        {
+          id: "schedule-001",
+          organizationId: "brass",
+          kind: "performance",
+          day: 1,
+          start: "09:00",
+          end: "09:40",
+          title: "吹奏楽部 オープニング演奏",
+          sample: true,
+        },
+        {
+          id: "schedule-002",
+          organizationId: "dance",
+          kind: "performance",
+          day: 1,
+          start: "10:00",
+          end: "10:45",
+          title: "ダンス部 ステージ",
+          sample: true,
+        },
+        {
+          id: "schedule-003",
+          organizationId: "drama",
+          kind: "performance",
+          day: 1,
+          start: "13:00",
+          end: "14:00",
+          title: "演劇部 公演",
+          sample: true,
+        },
+        {
+          id: "schedule-004",
+          organizationId: "music",
+          kind: "performance",
+          day: 1,
+          start: "15:00",
+          end: "16:00",
+          title: "軽音楽部 ファイナルライブ",
+          sample: true,
+        },
+        {
+          id: "schedule-005",
+          organizationId: "science",
+          kind: "activity",
+          day: 1,
+          start: "09:00",
+          end: "12:00",
+          title: "化学班 展示",
+          sample: true,
+        },
+        {
+          id: "schedule-006",
+          organizationId: "rakugo",
+          kind: "activity",
+          day: 1,
+          start: "09:00",
+          end: "12:00",
+          title: "落語研究班",
+          sample: true,
+        },
+        {
+          id: "schedule-007",
+          organizationId: "astro",
+          kind: "activity",
+          day: 1,
+          start: "09:20",
+          end: "12:00",
+          title: "天文班",
+          sample: true,
+        },
+        {
+          id: "schedule-008",
+          organizationId: "calligraphy",
+          kind: "activity",
+          day: 1,
+          start: "15:00",
+          end: "16:00",
+          title: "書道",
+          sample: true,
+        },
+        {
+          id: "schedule-009",
+          organizationId: "volunteerBand",
+          kind: "activity",
+          day: 2,
+          start: "10:15",
+          end: "11:00",
+          title: "有志バンド 公開ステージ（仮）",
+          sample: true,
+        },
+        {
+          id: "schedule-010",
+          organizationId: "sportsclub",
+          kind: "match",
+          day: 2,
+          start: "09:05",
+          end: "09:50",
+          title: "バスケットボール部 交流戦（仮）",
+          sample: true,
+        },
+        {
+          id: "schedule-011",
+          organizationId: "tabletennis",
+          kind: "match",
+          day: 2,
+          start: "10:15",
+          end: "11:00",
+          title: "卓球部 交流戦（仮）",
+          sample: true,
+        },
+        {
+          id: "schedule-012",
+          organizationId: "physics",
+          kind: "activity",
+          day: 2,
+          start: "09:30",
+          end: "11:00",
+          title: "物理部 実験展示（仮）",
+          sample: true,
+        },
+        {
+          id: "schedule-013",
+          organizationId: "volunteerBand",
+          kind: "activity",
+          day: 2,
+          start: "13:05",
+          end: "14:00",
+          title: "有志クイズ企画（仮）",
+          sample: true,
+        },
+      ];
+      const BUILDING_TYPES = [
+        {
+          id: "north",
+          name: "北館",
+        },
+        {
+          id: "south",
+          name: "南館",
+        },
+        {
+          id: "east",
+          name: "東館",
+        },
+        {
+          id: "gym",
+          name: "大体育館",
+        },
+        {
+          id: "gym-small",
+          name: "小体育館",
+        },
+        {
+          id: "hall",
+          name: "講堂",
+        },
+        {
+          id: "roof",
+          name: "屋上庭園",
+        },
+        {
+          id: "chemAB",
+          name: "化学AB",
+        },
+        {
+          id: "physicsAB",
+          name: "物理AB",
+        },
+        {
+          id: "magnolia-hall",
+          name: "マグノリアホール",
+        },
+      ];
+      const CAMPUS_MAP_IMAGES = {
+        east: "images/campus-east.png",
+        other: "images/campus-other.png",
       };
-      scanTimer = requestAnimationFrame(scan);
-    }catch(e){
-      stopLocationScanner();
-      const messages = {NotAllowedError:'カメラが許可されていません。アドレスバーのサイト設定でカメラを許可してください。',NotFoundError:'利用できるカメラが見つかりません。端末のカメラを確認してください。',NotReadableError:'カメラを他のアプリが使用中です。ほかのアプリを閉じて再試行してください.',OverconstrainedError:'利用可能なカメラ設定が見つかりません。端末のカメラを確認してください。'};
-      status.textContent = messages[e?.name] || 'カメラ起動に失敗しました。HTTPS接続とブラウザーのカメラ権限を確認するか、案内番号を入力してください。';
-    }
-  }  $('#confirmLocation').onclick=()=>{const value=$('#locationNumber').value.trim();const place=placeData.find(x=>x.number&&x.number.trim()===value);if(!value||!place){$('#scannerStatus').textContent='番号が正しくありません。設置番号を確認してください。';return;}setCurrentLocation(place);};
-  $('#stopScanner').onclick=stopLocationScanner;
-  $('#locationNumber').addEventListener('keydown',e=>{if(e.key==='Enter')$('#confirmLocation').click();});
+      const quickDestinations = [
+        ...BUILDING_TYPES,
+        { id: "toilet", name: "トイレ" },
+      ];
+      const ORGANIZATION_TYPES = [
+        "文化系クラブ",
+        "運動系クラブ",
+        "食品販売",
+        "公演団体",
+        "有志",
+      ];
+      const FLOOR_BUILDINGS = ["北館", "南館", "東館"];
+      const CLASSROOMS = ["A", "B", "C", "D", "E"];
+      function validateFestivalData() {
+        const issues = [];
+        const organizationIds = new Set();
+        const organizationNames = new Set();
+        for (const organization of organizations) {
+          const { id, name, type, location } = organization;
+          if (!id || organizationIds.has(id))
+            issues.push("団体IDが未設定または重複: " + (id || name));
+          if (!name || organizationNames.has(name))
+            issues.push("団体名が未設定または重複: " + (name || id));
+          organizationIds.add(id);
+          organizationNames.add(name);
+          if (!ORGANIZATION_TYPES.includes(type))
+            issues.push("団体種別が不正: " + name);
+          if (
+            !BUILDING_TYPES.some(
+              (building) => building.name === location?.building,
+            )
+          )
+            issues.push("建物名が不正: " + name);
+          if (
+            location?.floor != null &&
+            (!FLOOR_BUILDINGS.includes(location.building) ||
+              !Number.isInteger(location.floor) ||
+              location.floor < 1)
+          )
+            issues.push("フロア情報が不正: " + name);
+          if (
+            location?.classroom != null &&
+            (!["北館", "南館"].includes(location.building) ||
+              !CLASSROOMS.includes(location.classroom))
+          )
+            issues.push("教室情報が不正: " + name);
+          if (
+            (type === "文化系クラブ" || type === "有志") &&
+            typeof organization.hasTimetable !== "boolean"
+          )
+            issues.push("タイムテーブル有無が未設定: " + name);
+          if (type === "食品販売" && organization.hasTimetable)
+            issues.push("食品販売にタイムテーブルが設定されています: " + name);
+        }
+        for (const organization of organizations) {
+          if (
+            ["運動系クラブ", "公演団体"].includes(organization.type) &&
+            !scheduleEntries.some(
+              (entry) => entry.organizationId === organization.id,
+            )
+          ) {
+            issues.push("開催情報が未登録: " + organization.name);
+          }
+        }
+        const entryIds = new Set();
+        for (const entry of scheduleEntries) {
+          const organization = organizations.find(
+            (item) => item.id === entry.organizationId,
+          );
+          if (!entry.id || entryIds.has(entry.id))
+            issues.push(
+              "開催情報IDが未設定または重複: " + (entry.id || entry.title),
+            );
+          entryIds.add(entry.id);
+          if (!organization) {
+            issues.push("開催情報の団体IDが不明: " + entry.id);
+            continue;
+          }
+          if (entry.kind === "performance" && organization.type !== "公演団体")
+            issues.push("公演種別と団体種別が不一致: " + entry.id);
+          if (entry.kind === "match" && organization.type !== "運動系クラブ")
+            issues.push("試合種別と団体種別が不一致: " + entry.id);
+          if (
+            entry.kind === "activity" &&
+            !(
+              (organization.type === "文化系クラブ" ||
+                organization.type === "有志") &&
+              organization.hasTimetable
+            )
+          )
+            issues.push("活動予定と団体種別が不一致: " + entry.id);
+          const start = parseClock(entry.start),
+            end = parseClock(entry.end);
+          if (start == null || end == null || end <= start)
+            issues.push("開催時間が不正: " + entry.id);
+        }
+        if (issues.length) console.warn("文化祭データの確認事項", issues);
+        return issues;
+      }
+      validateFestivalData();
 
-  let cameraStream=null,scanTimer=null,barcodeDetector=null;
-  function getHub(id) {
-  const filename = nearestHubImages[id];
-  if (!filename) return null;
-  const match = filename.match(/to_(.+)\.png$/);
-  return match ? match[1] : null
-  }
-  function renderToiletPreview(show){
-    const preview = $('#toiletPreview');
-    preview.hidden = !show;
-    preview.replaceChildren();
-    if(!show) return;
-    const stage = document.createElement('div'); stage.className = 'toilet-image-stage';
-    const img = document.createElement('img');
-    img.src = 'images/campus-other.png';
-    img.alt = 'トイレ位置の仮表示に使う校内マップ';
-    img.onerror = () => { preview.innerHTML = '<div class="slide-fallback"><strong>校内マップがありません</strong></div>'; };
-    const male = document.createElement('span'); male.className = 'toilet-marker male'; male.textContent = '男'; male.setAttribute('aria-label','男性用トイレ 仮位置');
-    const female = document.createElement('span'); female.className = 'toilet-marker female'; female.textContent = '女'; female.setAttribute('aria-label','女性用トイレ 仮位置');
-    const note = document.createElement('span'); note.className = 'toilet-map-label'; note.textContent = '男女のマークは仮位置です。実際の場所を確認してから座標を更新してください。';
-    stage.append(img,male,female); preview.append(stage,note);
-  }  function chooseDestination(dest, startScanner = true, floor = null, targetLabel = null) {
-  routeDestination = dest; routeFloor = floor; routeTargetLabel = targetLabel;
-  const floorNote = $('#routeFloorNote'); floorNote.hidden = !floor; floorNote.textContent = floor ? ('建物に到着後、' + floor + 'へ移動してください。階段・エレベーターの位置と経路は未登録です。') : '';
-  renderToiletPreview(dest.id === 'toilet');
-  $('#destSearch').value=dest.name;
-  $('#scannerStatus').textContent='目的地「'+dest.name+'」を設定しました。現在地をQRコードで読み取ってください。';
-  if(startScanner) startLocationScanner();
-  if(!startId){routeSlides=[];routeIndex=0;$('#routeDest').textContent='目的地：'+(targetLabel ? targetLabel+'（'+dest.name+'）' : dest.name);$('#routeResult').classList.add('show');$('#routeCaption').textContent='現在地が未設定です。QRコードを読み取ると案内を更新します。';renderSlide();return;}
-  document.querySelectorAll('.quick').forEach(b => b.classList.toggle('selected',b.dataset.id === dest.id));
-  const hub = getHub(startId),
-  individual = nearestHubImages[startId],
-  shared = hub && hubToDestImages[hub]?.[dest.id];
-  routeSlides = [];
-  if (individual) routeSlides.push(individual);
-  if (Array.isArray(shared)) routeSlides.push(...shared);
-  routeSlides = [...new Set(routeSlides.filter(p => typeof p === 'string' && p.startsWith('images/')))];
-  routeIndex = 0;
-  $('#routeDest').textContent = '目的地：'+(routeTargetLabel ? routeTargetLabel+'（'+dest.name+'）' : dest.name);
-  $('#routeResult').classList.add('show');
-  if (!hub || !individual || !shared?.length) {
-    $('#routeCaption').textContent = 'この出発地・目的地の案内画像は未設定です。データ定義を確認してください。';
-    routeSlides = routeSlides.length ? routeSlides : [];
-  }
-  renderSlide();
-  $('#routeResult').scrollIntoView({
-    behavior: 'smooth',block: 'nearest'
-  })
-  }
-  function renderSlide() {
-  const wrap = $('#slideWrap'),
-  prev = $('#prevBtn'),
-  next = $('#nextBtn');
-  $('#routeStep').textContent = routeSlides.length ? `${routeIndex + 1} / ${routeSlides.length}` : '0 / 0';
-  prev.disabled = routeIndex <= 0;
-  next.disabled = !routeSlides.length || routeIndex >= routeSlides.length - 1;
-  wrap.innerHTML = '';
-  if (!routeSlides.length) {
-    wrap.innerHTML = '<div class="slide-fallback"><div class="big">🧭</div><strong>ルートを準備できません</strong><span>start の値、または目的地の経路データがありません。</span></div>';
-    return
-  }
-  const src = routeSlides[routeIndex],
-  img = document.createElement('img');
-  img.alt = `案内 ${routeIndex + 1}`;
-  img.src = src;
-  img.onerror = () => {
-    wrap.innerHTML = `<div class="slide-fallback"><div class="big">${routeIndex === 0 ? '🚶' : '➡️'}</div><strong>${routeIndex === 0 ? `${
-      locations[startId] || startId
-    }
-    からハブへ` : `ハブから ${
-      routeDestination.name
-    }
-    へ`}</strong><span>案内画像：${src}<br>画像を配置するとここに表示されます</span></div>`
-  };
-  wrap.appendChild(img);
-  $('#routeCaption').textContent = (routeIndex === 0 ? `出発地から最寄りハブへ · ${src}` : `ハブから目的地への案内 · ${src}`) + (routeIndex === routeSlides.length - 1 && routeFloor ? `。到着後、${routeFloor}へ移動してください（階段・エレベーター位置は未登録です）。` : '');
-  }
-  $('#prevBtn').onclick = () => {
-  if (routeIndex > 0) {
-    routeIndex--;
-    renderSlide()
-  }
-  };
-  $('#nextBtn').onclick = () => {
-  if (routeIndex < routeSlides.length - 1) {
-    routeIndex++;
-    renderSlide()
-  }
-  };
-  $('#quickGrid').innerHTML = quickDestinations.map(x => `<button class="quick" data-id="${x.id}"> ${x.name}</button>`).join('');
-  document.querySelectorAll('.quick').forEach(b => b.onclick = () => chooseDestination(quickDestinations.find(x => x.id === b.dataset.id)));
-  $('#exSearch').addEventListener('input',e => {
-  renderExList(e.target.value);$('#exClear').style.display = e.target.value ? 'block' : 'none'
-  });
-  $('#exClear').onclick = () => {
-  $('#exSearch').value = '';
-  $('#exClear').style.display = 'none';
-  renderExList();
-  $('#exSearch').focus()
-  };
-  suggestions($('#exSearch'),$('#exSuggest'),exhibitions,selectEx);
-  suggestions($('#destSearch'),$('#destSuggest'),exhibitions,navigateToExhibition);
-  renderExList();
-  renderCampusMap();
-  renderSchedule();
-  updateAlert();
-  setInterval(() => {
-  updateAlert();renderSchedule()
-  },30000);
-  </script>
-</body>
+      // QR番号と場所IDは共通の場所データを参照します。番号は試作値です。
+      const placeData = [
+        {
+          id: "mainGate",
+          number: "1001",
+          name: "正門",
+          building: "東館",
+          floor: 1,
+          x: 12,
+          y: 58,
+        },
+        {
+          id: "building1f",
+          number: "1002",
+          name: "本館1階",
+          building: "北館",
+          floor: 1,
+          x: 52,
+          y: 28,
+        },
+        {
+          id: "building2f",
+          number: "1003",
+          name: "本館2階",
+          building: "北館",
+          floor: 2,
+          x: 45,
+          y: 42,
+        },
+        {
+          id: "gymEntrance",
+          number: "1004",
+          name: "体育館",
+          building: "大体育館",
+          floor: 1,
+          x: 80,
+          y: 70,
+        },
+        {
+          id: "courtyard",
+          number: "1005",
+          name: "校庭",
+          building: "屋上庭園",
+          floor: 1,
+          x: 80,
+          y: 16,
+        },
+        {
+          id: "room301",
+          number: "",
+          name: "東館 3階・301教室",
+          building: "東館",
+          floor: 3,
+          x: 30,
+          y: 39,
+        },
+        {
+          id: "eastEntrance",
+          number: "",
+          name: "東館入口",
+          building: "東館",
+          floor: 1,
+          x: 18,
+          y: 52,
+        },
+        {
+          id: "northEntrance",
+          number: "",
+          name: "北館入口",
+          building: "北館",
+          floor: 1,
+          x: 50,
+          y: 20,
+        },
+        {
+          id: "southEntrance",
+          number: "",
+          name: "南館入口",
+          building: "南館",
+          floor: 1,
+          x: 64,
+          y: 58,
+        },
+      ];
+      const locations = Object.fromEntries(
+        placeData.map((place) => [place.id, place.name]),
+      );
+      function renderQrTestCodes() {
+        const grid = $("#qrTestGrid");
+        const samples = placeData
+          .filter((place) => place.number)
+          .map((place) => ({ number: place.number, name: place.name }));
+        samples.push({ number: "9999", name: "未登録テスト" });
+        grid.replaceChildren();
 
+        for (const sample of samples) {
+          const figure = document.createElement("figure");
+          const image = document.createElement("img");
+          image.src = `images/qr-tests/${sample.number}.svg`;
+          image.alt = `QRコード ${sample.number}`;
+          const caption = document.createElement("figcaption");
+          caption.textContent = `${sample.number} · ${sample.name}`;
+          figure.append(image, caption);
+          grid.appendChild(figure);
+        }
+      }
+      // ハブごとの「現在地→最寄りハブ」画像（各現在地につき1枚）
+      const nearestHubImages = {
+        room301: "images/room301_to_A_stairs.png",
+        building1f: "images/building1f_to_B_stairs.png",
+        building2f: "images/building2f_to_B_stairs.png",
+        mainGate: "images/mainGate_to_A_stairs.png",
+        eastEntrance: "images/eastEntrance_to_A_stairs.png",
+        northEntrance: "images/northEntrance_to_B_stairs.png",
+        southEntrance: "images/southEntrance_to_C_stairs.png",
+        gymEntrance: "images/gymEntrance_to_G_hub.png",
+        courtyard: "images/courtyard_to_C_hub.png",
+      };
+      // ハブから目的地までの共通スライド（各団体ID・クイック目的地を同じキーで扱う）
+      const hubToDestImages = {
+        A_stairs: {
+          east: [
+            "images/A_stairs_to_east_01.png",
+            "images/A_stairs_to_east_02.png",
+          ],
+          north: [
+            "images/A_stairs_to_north_01.png",
+            "images/A_stairs_to_north_02.png",
+          ],
+          south: [
+            "images/A_stairs_to_south_01.png",
+            "images/A_stairs_to_south_02.png",
+          ],
+          gym: [
+            "images/A_stairs_to_gym_01.png",
+            "images/A_stairs_to_gym_02.png",
+          ],
+          roof: [
+            "images/A_stairs_to_roof_01.png",
+            "images/A_stairs_to_roof_02.png",
+          ],
+          class3a: [
+            "images/A_stairs_to_class3a_01.png",
+            "images/A_stairs_to_class3a_02.png",
+          ],
+          artclub: [
+            "images/A_stairs_to_artclub_01.png",
+            "images/A_stairs_to_artclub_02.png",
+          ],
+          tea: [
+            "images/A_stairs_to_tea_01.png",
+            "images/A_stairs_to_tea_02.png",
+          ],
+          science: [
+            "images/A_stairs_to_science_01.png",
+            "images/A_stairs_to_science_02.png",
+          ],
+          photo: [
+            "images/A_stairs_to_photo_01.png",
+            "images/A_stairs_to_photo_02.png",
+          ],
+          cafe: [
+            "images/A_stairs_to_cafe_01.png",
+            "images/A_stairs_to_cafe_02.png",
+          ],
+          music: [
+            "images/A_stairs_to_music_01.png",
+            "images/A_stairs_to_music_02.png",
+          ],
+          book: [
+            "images/A_stairs_to_book_01.png",
+            "images/A_stairs_to_book_02.png",
+          ],
+        },
+        B_stairs: {
+          east: [
+            "images/B_stairs_to_east_01.png",
+            "images/B_stairs_to_east_02.png",
+          ],
+          north: [
+            "images/B_stairs_to_north_01.png",
+            "images/B_stairs_to_north_02.png",
+          ],
+          south: [
+            "images/B_stairs_to_south_01.png",
+            "images/B_stairs_to_south_02.png",
+          ],
+          gym: [
+            "images/B_stairs_to_gym_01.png",
+            "images/B_stairs_to_gym_02.png",
+          ],
+          roof: [
+            "images/B_stairs_to_roof_01.png",
+            "images/B_stairs_to_roof_02.png",
+          ],
+          class3a: [
+            "images/B_stairs_to_class3a_01.png",
+            "images/B_stairs_to_class3a_02.png",
+          ],
+          artclub: [
+            "images/B_stairs_to_artclub_01.png",
+            "images/B_stairs_to_artclub_02.png",
+          ],
+          tea: [
+            "images/B_stairs_to_tea_01.png",
+            "images/B_stairs_to_tea_02.png",
+          ],
+          science: [
+            "images/B_stairs_to_science_01.png",
+            "images/B_stairs_to_science_02.png",
+          ],
+          photo: [
+            "images/B_stairs_to_photo_01.png",
+            "images/B_stairs_to_photo_02.png",
+          ],
+          cafe: [
+            "images/B_stairs_to_cafe_01.png",
+            "images/B_stairs_to_cafe_02.png",
+          ],
+          music: [
+            "images/B_stairs_to_music_01.png",
+            "images/B_stairs_to_music_02.png",
+          ],
+          book: [
+            "images/B_stairs_to_book_01.png",
+            "images/B_stairs_to_book_02.png",
+          ],
+        },
+        C_hub: {
+          east: ["images/C_hub_to_east_01.png", "images/C_hub_to_east_02.png"],
+          north: [
+            "images/C_hub_to_north_01.png",
+            "images/C_hub_to_north_02.png",
+          ],
+          south: [
+            "images/C_hub_to_south_01.png",
+            "images/C_hub_to_south_02.png",
+          ],
+          gym: ["images/C_hub_to_gym_01.png", "images/C_hub_to_gym_02.png"],
+          roof: ["images/C_hub_to_roof_01.png", "images/C_hub_to_roof_02.png"],
+          class3a: [
+            "images/C_hub_to_class3a_01.png",
+            "images/C_hub_to_class3a_02.png",
+          ],
+          artclub: [
+            "images/C_hub_to_artclub_01.png",
+            "images/C_hub_to_artclub_02.png",
+          ],
+          tea: ["images/C_hub_to_tea_01.png", "images/C_hub_to_tea_02.png"],
+          science: [
+            "images/C_hub_to_science_01.png",
+            "images/C_hub_to_science_02.png",
+          ],
+          photo: [
+            "images/C_hub_to_photo_01.png",
+            "images/C_hub_to_photo_02.png",
+          ],
+          cafe: ["images/C_hub_to_cafe_01.png", "images/C_hub_to_cafe_02.png"],
+          music: [
+            "images/C_hub_to_music_01.png",
+            "images/C_hub_to_music_02.png",
+          ],
+          book: ["images/C_hub_to_book_01.png", "images/C_hub_to_book_02.png"],
+        },
+        G_hub: {
+          east: ["images/G_hub_to_east_01.png", "images/G_hub_to_east_02.png"],
+          north: [
+            "images/G_hub_to_north_01.png",
+            "images/G_hub_to_north_02.png",
+          ],
+          south: [
+            "images/G_hub_to_south_01.png",
+            "images/G_hub_to_south_02.png",
+          ],
+          gym: ["images/G_hub_to_gym_01.png", "images/G_hub_to_gym_02.png"],
+          roof: ["images/G_hub_to_roof_01.png", "images/G_hub_to_roof_02.png"],
+          class3a: [
+            "images/G_hub_to_class3a_01.png",
+            "images/G_hub_to_class3a_02.png",
+          ],
+          artclub: [
+            "images/G_hub_to_artclub_01.png",
+            "images/G_hub_to_artclub_02.png",
+          ],
+          tea: ["images/G_hub_to_tea_01.png", "images/G_hub_to_tea_02.png"],
+          science: [
+            "images/G_hub_to_science_01.png",
+            "images/G_hub_to_science_02.png",
+          ],
+          photo: [
+            "images/G_hub_to_photo_01.png",
+            "images/G_hub_to_photo_02.png",
+          ],
+          cafe: ["images/G_hub_to_cafe_01.png", "images/G_hub_to_cafe_02.png"],
+          music: [
+            "images/G_hub_to_music_01.png",
+            "images/G_hub_to_music_02.png",
+          ],
+          book: ["images/G_hub_to_book_01.png", "images/G_hub_to_book_02.png"],
+        },
+      };
+      const SHORT_HUB_ROUTES = {
+        A_stairs: ["gym"],
+        B_stairs: ["north", "chemAB", "physicsAB"],
+        C_hub: ["south", "roof"],
+        G_hub: ["gym", "gym-small"],
+      };
+      for (const [hubId, routes] of Object.entries(hubToDestImages)) {
+        for (const destinationId of [
+          "gym-small",
+          "hall",
+          "magnolia-hall",
+          "chemAB",
+          "physicsAB",
+          "toilet",
+        ]) {
+          const count = SHORT_HUB_ROUTES[hubId]?.includes(destinationId)
+            ? 1
+            : 2;
+          routes[destinationId] = Array.from(
+            { length: count },
+            (_, index) =>
+              `images/${hubId}_to_${destinationId}_${String(index + 1).padStart(2, "0")}.png`,
+          );
+        }
+      }
+      for (const [hubId, destinations] of Object.entries(SHORT_HUB_ROUTES)) {
+        for (const destinationId of destinations) {
+          if (hubToDestImages[hubId]?.[destinationId]) {
+            hubToDestImages[hubId][destinationId] = hubToDestImages[hubId][
+              destinationId
+            ].slice(0, 1);
+          }
+        }
+      }
+      const $ = (s) => document.querySelector(s);
+      let selectedOrganization = null,
+        routeSlides = [],
+        routeIndex = 0,
+        routeDestination = null,
+        routeFloor = null,
+        routeTargetLabel = null,
+        routeTargetId = null;
+      function mins(s) {
+        const [h, m] = s.split(":").map(Number);
+        return h * 60 + m;
+      }
+      function nowMins() {
+        const d = new Date();
+        return d.getHours() * 60 + d.getMinutes();
+      }
+      function updateAlert() {
+        const el = $("#alert");
+        if (selectedFestivalDay === null) {
+          el.hidden = true;
+          el.innerHTML = "";
+          return;
+        }
+        el.hidden = false;
+        const now = nowMins();
+        const list = scheduleEntries
+          .filter(
+            (e) =>
+              e.kind === "performance" &&
+              e.day === selectedFestivalDay &&
+              mins(e.start) > now &&
+              mins(e.start) - now <= 30,
+          )
+          .sort((a, b) => mins(a.start) - mins(b.start));
+        el.innerHTML = list.length
+          ? '<span class="alert-icon">⏰</span><div class="alert-copy"><div class="alert-label">' +
+            selectedFestivalDay +
+            "日目 · COMING UP</div>" +
+            list
+              .map((e) => {
+                const o = organizationById(e.organizationId);
+                return (
+                  '<div class="alert-event"><div><div class="alert-title">' +
+                  (e.title || o.name) +
+                  '</div><div class="alert-meta">' +
+                  o.location.building +
+                  " · " +
+                  e.start +
+                  "〜" +
+                  e.end +
+                  '</div></div><button type="button" data-alert-id="' +
+                  e.id +
+                  '">行き方が分からない</button></div>'
+                );
+              })
+              .join("") +
+            "</div>"
+          : '<span class="alert-icon">✨</span><div class="alert-copy"><div class="alert-label">' +
+            selectedFestivalDay +
+            '日目</div><div class="alert-empty">まもなく始まる公演はありません</div></div>';
+        el.querySelectorAll("[data-alert-id]").forEach((b) =>
+          b.addEventListener("click", () =>
+            navigateToScheduleEntry(
+              scheduleEntries.find((e) => e.id === b.dataset.alertId),
+            ),
+          ),
+        );
+      }
+      function organizationMatchesCategory(item, category) {
+        const f = {
+          展示団体: ["文化系クラブ", "有志"],
+          運動系クラブ: ["運動系クラブ"],
+          公演: ["公演団体"],
+          食品販売: ["食品販売"],
+        };
+        return (f[category] || []).includes(item.type);
+      }
+      function formatOrganizationLocation(item) {
+        const l = item.location;
+        return [
+          l.building,
+          l.floor ? l.floor + "階" : "",
+          l.classroom ? l.classroom + "教室" : "",
+        ]
+          .filter(Boolean)
+          .join(" · ");
+      }
+      function renderOrganizationList(query = "") {
+        const list = $("#exList"),
+          map = $("#mapCard"),
+          slot = $("#mapSlot");
+        slot.append(map);
+        const q = query.trim().toLocaleLowerCase();
+        const items = organizations.filter(
+          (x) =>
+            organizationMatchesCategory(x, selectedOrganizationCategory) &&
+            [x.name, x.type, x.listDescription, formatOrganizationLocation(x)]
+              .join(" ")
+              .toLocaleLowerCase()
+              .includes(q),
+        );
+        $("#exCount").textContent = items.length + " 団体";
+        list.innerHTML = items.length
+          ? items
+              .map(
+                (x) =>
+                  '<button class="ex-card ' +
+                  (selectedOrganization?.id === x.id ? "selected" : "") +
+                  '" data-id="' +
+                  x.id +
+                  '"><span class="ex-icon">' +
+                  x.icon +
+                  '</span><span class="ex-info"><span class="ex-title">' +
+                  x.name +
+                  '</span><span class="ex-desc">' +
+                  x.type +
+                  " · " +
+                  x.listDescription +
+                  '</span></span><span class="ex-floor">' +
+                  formatOrganizationLocation(x) +
+                  "</span></button>",
+              )
+              .join("")
+          : '<div class="empty">該当する団体が見つかりません</div>';
+        list
+          .querySelectorAll(".ex-card")
+          .forEach((b) =>
+            b.addEventListener("click", () =>
+              selectOrganization(organizationById(b.dataset.id)),
+            ),
+          );
+        const card = selectedOrganization
+          ? list.querySelector(
+              '.ex-card[data-id="' + selectedOrganization.id + '"]',
+            )
+          : null;
+        if (card) {
+          map.classList.add("visible");
+          card.insertAdjacentElement("afterend", map);
+        } else map.classList.remove("visible");
+      }
+      function selectOrganization(item) {
+        const map = $("#mapCard"),
+          same =
+            selectedOrganization?.id === item.id &&
+            map.classList.contains("visible");
+        if (same) {
+          selectedOrganization = null;
+          map.classList.remove("visible");
+          $("#mapSlot").append(map);
+          document
+            .querySelectorAll(".ex-card")
+            .forEach((c) => c.classList.remove("selected"));
+          return;
+        }
+        selectedOrganization = item;
+        document
+          .querySelectorAll(".ex-card")
+          .forEach((c) =>
+            c.classList.toggle("selected", c.dataset.id === item.id),
+          );
+        const card = document.querySelector(
+          '.ex-card[data-id="' + item.id + '"]',
+        );
+        if (!card) return;
+        map.classList.add("visible");
+        card.insertAdjacentElement("afterend", map);
+        $("#mapLocation").textContent = formatOrganizationLocation(item);
+        renderCampusMap(item);
+      }
+      function renderCampusMap(item = selectedOrganization) {
+        const m = $("#mapArt");
+        m.replaceChildren();
+        if (!item) {
+          m.innerHTML =
+            '<div class="map-placeholder"><strong>校内マップPNG</strong>団体を選択すると建物別マップを表示します。</div>';
+          return;
+        }
+        const src =
+          item.location.building === "東館"
+            ? CAMPUS_MAP_IMAGES.east
+            : CAMPUS_MAP_IMAGES.other;
+        const img = document.createElement("img");
+        img.className = "campus-map-image";
+        img.alt = item.location.building + " 校内マップ";
+        img.src = src;
+        img.onerror = () => {
+          m.innerHTML =
+            '<div class="map-placeholder"><strong>校内マップPNGは未配置です</strong>画像を ' +
+            src +
+            " に追加してください。</div>";
+        };
+        m.appendChild(img);
+        const pin = document.createElement("span");
+        pin.className = "pin";
+        pin.style.left = item.map.x + "%";
+        pin.style.top = item.map.y + "%";
+        const label = document.createElement("span");
+        label.className = "pin-label";
+        label.textContent = item.location.classroom
+          ? item.location.classroom + "教室"
+          : item.location.floor
+            ? item.location.floor + "階"
+            : item.location.building;
+        label.style.left = item.map.x + "%";
+        label.style.top = item.map.y + "%";
+        m.append(pin, label);
+      }
+      function suggestions(input, box, source, onPick) {
+        input.addEventListener("input", () => {
+          const q = input.value.trim().toLocaleLowerCase();
+          if (!q) {
+            box.classList.remove("show");
+            return;
+          }
+          const candidates = typeof source === "function" ? source() : source;
+          const found = candidates
+            .filter((x) =>
+              [x.name, x.type, x.listDescription]
+                .join(" ")
+                .toLocaleLowerCase()
+                .includes(q),
+            )
+            .slice(0, 5);
+          box.innerHTML = found.length
+            ? found
+                .map(
+                  (x) =>
+                    '<div class="suggestion" data-id="' +
+                    x.id +
+                    '">' +
+                    (x.icon || "📍") +
+                    "　" +
+                    x.name +
+                    "</div>",
+                )
+                .join("")
+            : '<div class="suggestion">候補がありません</div>';
+          box.classList.add("show");
+          box.querySelectorAll("[data-id]").forEach(
+            (el) =>
+              (el.onclick = () => {
+                const x = source.find((y) => y.id === el.dataset.id);
+                input.value = x.name;
+                box.classList.remove("show");
+                onPick(x);
+              }),
+          );
+        });
+        document.addEventListener("click", (e) => {
+          if (!box.contains(e.target) && e.target !== input)
+            box.classList.remove("show");
+        });
+      }
+      const scheduleCategories = ["公演", "試合", "部活"];
+      let selectedDay = null,
+        selectedCategory = "公演";
+      let selectedFestivalDay = null,
+        selectedOrganizationCategory = "展示団体";
+      const targetSelection = new Map();
+      function scheduleRows() {
+        return scheduleEntries.filter(
+          (e) =>
+            Number(e.day) === selectedDay &&
+            scheduleCategory(e) === selectedCategory,
+        );
+      }
+      function organizationById(id) {
+        return organizations.find((x) => x.id === id) || null;
+      }
+      function scheduleCategory(e) {
+        return e.kind === "performance"
+          ? "公演"
+          : e.kind === "match"
+            ? "試合"
+            : "部活";
+      }
+      function targetKey(e) {
+        const o = organizationById(e.organizationId);
+        return scheduleCategory(e) === "部活"
+          ? e.organizationId
+          : o?.location.building || "場所未登録";
+      }
+      function targetLabel(key) {
+        return organizationById(key)?.name || key;
+      }
+      function descriptionForTarget(key) {
+        return organizationById(key)?.timetableDescription || "";
+      }
+      function currentTargets() {
+        return [...new Set(scheduleRows().map(targetKey))];
+      }
+      function selectionKey() {
+        return `${selectedDay}:${selectedCategory}`;
+      }
+      function ensureTargetSelection() {
+        const key = selectionKey();
+        if (!targetSelection.has(key))
+          targetSelection.set(key, new Set(currentTargets()));
+      }
+      function updateTargetSummary() {
+        const all = currentTargets();
+        ensureTargetSelection();
+        const selected = targetSelection.get(selectionKey());
+        $("#targetSummary").textContent =
+          `表示する${selectedCategory === "公演" || selectedCategory === "試合" ? "場所" : "団体"}（${all.filter((x) => selected.has(x)).length} / ${all.length} 選択中）`;
+      }
+      function renderTargetChoices() {
+        const targets = currentTargets();
+        ensureTargetSelection();
+        const selected = targetSelection.get(selectionKey());
+        $("#targetChoices").innerHTML = targets.length
+          ? targets
+              .map(
+                (target, i) =>
+                  `<label class="target-option"><input type="checkbox" data-target-index="${i}" ${selected.has(target) ? "checked" : ""}><span>${targetLabel(target)}</span></label>`,
+              )
+              .join("")
+          : '<div class="empty">このカテゴリに選択できる予定はありません</div>';
+        $("#targetChoices")
+          .querySelectorAll("input")
+          .forEach((input) =>
+            input.addEventListener("change", () => {
+              const target = targets[Number(input.dataset.targetIndex)],
+                set = targetSelection.get(selectionKey());
+              if (input.checked) set.add(target);
+              else set.delete(target);
+              updateTargetSummary();
+              renderSchedule();
+            }),
+          );
+        updateTargetSummary();
+      }
+      const MINUTE_HEIGHT = 2.2;
+      function parseClock(value) {
+        if (typeof value !== "string" || !/^\d{1,2}:\d{2}$/.test(value))
+          return null;
+        const [h, m] = value.split(":").map(Number);
+        if (h > 23 || m > 59) return null;
+        return h * 60 + m;
+      }
+      function clockLabel(total) {
+        const h = Math.floor(total / 60),
+          m = total % 60;
+        return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+      }
+      function getEventLayout(start, end, gridStart) {
+        const a = parseClock(start),
+          b = parseClock(end);
+        if (a === null || b === null || b <= a) return null;
+        return {
+          top: Math.round((a - gridStart) * MINUTE_HEIGHT * 1000) / 1000,
+          height: Math.round((b - a) * MINUTE_HEIGHT * 1000) / 1000,
+        };
+      }
+      function organizationForScheduleEntry(e) {
+        return organizationById(e?.organizationId);
+      }
+      function destinationForBuilding(b) {
+        return (
+          quickDestinations.find((x) => x.name === b) || {
+            id: "unmapped-" + (b || "unknown"),
+            name: b || "場所未登録",
+            temporary: true,
+          }
+        );
+      }
+      function floorForOrganization(o) {
+        const l = o?.location;
+        return l &&
+          ["東館", "北館", "南館"].includes(l.building) &&
+          Number.isInteger(l.floor) &&
+          l.floor > 0
+          ? l.floor + "階"
+          : null;
+      }
+      function eventVenueDestination(e, o) {
+        return destinationForBuilding(o?.location.building || e?.place || "");
+      }
+      function navigateToOrganization(o) {
+        setTab("navigator");
+        chooseDestination(
+          destinationForBuilding(o.location.building),
+          false,
+          floorForOrganization(o),
+          o.name,
+          o.id,
+        );
+      }
+      function navigateToScheduleEntry(e) {
+        if (!e) return;
+        const o = organizationForScheduleEntry(e);
+        setTab("navigator");
+        if (o)
+          chooseDestination(
+            destinationForBuilding(o.location.building),
+            false,
+            floorForOrganization(o),
+            e.title || o.name,
+            o.id,
+          );
+        else
+          chooseDestination(
+            eventVenueDestination(e, null),
+            false,
+            null,
+            e.title || "",
+            null,
+          );
+      }
+      let activeDetailEvent = null;
+      function openEventDetail(e) {
+        if (!e) return;
+        activeDetailEvent = e;
+        const o = organizationForScheduleEntry(e);
+        $("#eventDialogTitle").textContent = e.title || o?.name || "予定の詳細";
+        const body = $("#eventDialogBody");
+        body.replaceChildren();
+        const lines = [
+          o && "団体：" + o.name,
+          o && "場所：" + formatOrganizationLocation(o),
+          e.start && "時間：" + e.start + "〜" + (e.end || "未登録"),
+          e.timetableDescription ||
+            o?.timetableDescription ||
+            o?.listDescription,
+        ].filter(Boolean);
+        const p = document.createElement("p");
+        p.textContent = lines.join("\n");
+        body.appendChild(p);
+        $("#eventDialog").showModal();
+      }
+      $("#closeEventDialog").addEventListener("click", () =>
+        $("#eventDialog").close(),
+      );
+      $("#eventRouteButton").addEventListener("click", () => {
+        const event = activeDetailEvent;
+        $("#eventDialog").close();
+        navigateToScheduleEntry(event);
+      });
+      function renderSchedule() {
+        const root = $("#schedule");
+        if (!selectedDay) {
+          root.innerHTML = "";
+          return;
+        }
+        const rows = scheduleRows();
+        if (!rows.length) {
+          root.innerHTML =
+            '<div class="schedule-empty">該当する予定はありません</div>';
+          return;
+        }
+        ensureTargetSelection();
+        const selected = targetSelection.get(selectionKey()),
+          visible = rows.filter((e) => selected.has(targetKey(e)));
+        if (!visible.length) {
+          root.innerHTML =
+            '<div class="schedule-empty">表示対象が選択されていません</div>';
+          return;
+        }
+        const targets = currentTargets().filter((t) => selected.has(t));
+        if (!targets.length) {
+          root.innerHTML =
+            '<div class="schedule-empty">表示対象が選択されていません</div>';
+          return;
+        }
+        const timed = visible
+          .map((e) => ({
+            ...e,
+            _eventIndex: scheduleEntries.findIndex(
+              (entry) => entry.id === e.id,
+            ),
+            _start: parseClock(e.start),
+            _end: parseClock(e.end),
+          }))
+          .filter(
+            (e) => e._start !== null && e._end !== null && e._end > e._start,
+          );
+        const untimed = visible.filter((e) => {
+          const a = parseClock(e.start),
+            b = parseClock(e.end);
+          return a === null || b === null || b <= a;
+        });
+        if (!timed.length) {
+          root.innerHTML = `<div class="schedule-empty">${visible.length ? "時刻が登録された予定はありません" : "該当する予定はありません"}</div>`;
+          return;
+        }
+        const first =
+            Math.floor(Math.min(...timed.map((e) => e._start)) / 30) * 30,
+          last =
+            Math.ceil(Math.max(...timed.map((e) => e._end)) / 30) * 30 ||
+            Math.max(...timed.map((e) => e._end));
+        const range = Math.max(30, last - first),
+          height = range * MINUTE_HEIGHT,
+          tickTimes = [];
+        for (let t = first; t <= last; t += 30) tickTimes.push(t);
+        const laneCount = targets.length;
+        const heads = targets
+          .map((target) => {
+            if (selectedCategory === "公演" || selectedCategory === "試合") {
+              return `<div class="time-grid-heading">${targetLabel(target)}</div>`;
+            }
+            const description = descriptionForTarget(target);
+            const shortDescription = Array.from(description)
+              .slice(0, 10)
+              .join("");
+            return `<div class="time-grid-heading"><span class="time-group-name">${targetLabel(target)}</span><span class="time-group-short">${shortDescription}</span></div>`;
+          })
+          .join("");
+        const axis = tickTimes
+          .map(
+            (t, i) =>
+              `<span class="time-label ${i === 0 ? "first" : i === tickTimes.length - 1 ? "last" : ""}" style="top:${(t - first) * MINUTE_HEIGHT}px">${clockLabel(t)}</span>`,
+          )
+          .join("");
+        const lanes = targets
+          .map((target) => {
+            const items = timed
+              .filter((e) => targetKey(e) === target)
+              .sort((a, b) => a._start - b._start);
+            const cards = items
+              .map((e) => {
+                const layout = getEventLayout(e.start, e.end, first),
+                  top = layout.top,
+                  eventHeight = layout.height,
+                  compact = eventHeight < 38;
+                const org = organizationById(e.organizationId);
+                const title = e.title || org?.name || "企画名未登録";
+                return `<article class="time-event ${compact ? "compact" : ""}" data-event-index="${e._eventIndex}" tabindex="0" role="button" style="top:${top}px;height:${eventHeight}px" title="詳細を表示：${title}｜${clockLabel(e._start)}〜${clockLabel(e._end)}"><strong>${title}</strong><span class="time-event-time">${clockLabel(e._start)}〜${clockLabel(e._end)}</span></article>`;
+              })
+              .join("");
+            return `<div class="time-lane" style="height:${height}px">${cards}</div>`;
+          })
+          .join("");
+        const isPlace =
+            selectedCategory === "公演" || selectedCategory === "試合",
+          firstHeading = isPlace ? "時間" : "時間";
+        let html = `<div class="time-grid-scroll"><div class="time-grid-header" style="--lane-count:${laneCount}"><div class="time-grid-heading">${firstHeading}</div>${heads}</div><div class="time-grid-body" style="--lane-count:${laneCount};height:${height}px"><div class="time-axis" style="height:${height}px">${axis}</div>${lanes}</div></div>`;
+        if (untimed.length)
+          html += `<div class="unscheduled"><strong>時間未登録の予定</strong>${untimed
+            .map(
+              (e) => `${targetKey(e)}
+  ：${e.title || organizationById(e.organizationId)?.name || "企画名未登録"}
+  `,
+            )
+            .join("<br>")}</div>`;
+        root.innerHTML = html;
+        root.querySelectorAll(".time-event").forEach((card) => {
+          const open = () =>
+            openEventDetail(scheduleEntries[Number(card.dataset.eventIndex)]);
+          card.addEventListener("click", open);
+          card.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              open();
+            }
+          });
+        });
+      }
+      function renderTimetable() {
+        if (!selectedDay) return;
+        $("#selectedDayLabel").textContent = `${selectedDay}日目`;
+        document
+          .querySelectorAll(".category-tab")
+          .forEach((b) =>
+            b.classList.toggle(
+              "active",
+              b.dataset.category === selectedCategory,
+            ),
+          );
+        renderTargetChoices();
+        renderSchedule();
+      }
+      document.querySelectorAll(".day-choice").forEach((button) =>
+        button.addEventListener("click", () => {
+          selectedDay = Number(button.dataset.day);
+          selectedFestivalDay = selectedDay;
+          updateAlert();
+          selectedCategory = "公演";
+          $("#dayChooser").hidden = true;
+          $("#timetableContent").hidden = false;
+          renderTimetable();
+        }),
+      );
+      document.querySelectorAll(".category-tab").forEach((button) =>
+        button.addEventListener("click", () => {
+          selectedCategory = button.dataset.category;
+          renderTimetable();
+        }),
+      );
+      $("#backToDays").addEventListener("click", () => {
+        selectedDay = null;
+        selectedFestivalDay = null;
+        updateAlert();
+        $("#schedule").innerHTML = "";
+        $("#dayChooser").hidden = false;
+        $("#timetableContent").hidden = true;
+      });
+      $("#selectAllTargets").addEventListener("click", () => {
+        targetSelection.set(selectionKey(), new Set(currentTargets()));
+        renderTargetChoices();
+        renderSchedule();
+      });
+      $("#clearTargets").addEventListener("click", () => {
+        targetSelection.set(selectionKey(), new Set());
+        renderTargetChoices();
+        renderSchedule();
+      });
+      function setTab(name) {
+        document
+          .querySelectorAll(".tab")
+          .forEach((b) => b.classList.toggle("active", b.dataset.tab === name));
+        document
+          .querySelectorAll(".panel")
+          .forEach((p) =>
+            p.classList.toggle("active", p.id === "panel-" + name),
+          );
+        if (name === "navigator") startLocationScanner();
+        else if (scannerState !== "off")
+          stopLocationScanner("行き先ナビを離れたため、カメラを停止しました。");
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+      document
+        .querySelectorAll(".tab")
+        .forEach((b) => (b.onclick = () => setTab(b.dataset.tab)));
+      $("#mapDirections").addEventListener("click", () => {
+        if (selectedOrganization) navigateToOrganization(selectedOrganization);
+      });
+      function resolveStart() {
+        const queryValue = new URLSearchParams(window.location.search).get(
+          "start",
+        );
+        const place = queryValue ? resolveQrLocation(queryValue) : null;
+        if (place) {
+          $("#currentLocation").textContent = place.name;
+          $("#currentId").textContent = place.id;
+          return place.id;
+        }
+        $("#currentLocation").textContent =
+          "現在地は未設定です。校内のQRコードを読み取ってください。";
+        $("#currentId").textContent = "";
+        return null;
+      }
+      let startId = resolveStart();
+      function setCurrentLocation(place) {
+        startId = place.id;
+        $("#currentLocation").textContent = place.name;
+        $("#currentId").textContent = place.id;
+        const u = new URL(location.href);
+        u.searchParams.set("start", place.id);
+        history.replaceState({}, "", u);
+        if (routeDestination)
+          chooseDestination(
+            routeDestination,
+            false,
+            routeFloor,
+            routeTargetLabel,
+            routeTargetId,
+          );
+        else
+          $("#scannerStatus").textContent =
+            "現在地を設定しました：" +
+            place.name +
+            "。カメラは読み取り中です。";
+      }
+      function resolveQrLocation(value) {
+        let raw = String(value || "").trim();
+        try {
+          const u = new URL(raw);
+          raw =
+            u.searchParams.get("start") ||
+            u.searchParams.get("location") ||
+            u.searchParams.get("id") ||
+            u.searchParams.get("number") ||
+            raw;
+        } catch (_) {}
+        raw = raw.trim();
+        return (
+          placeData.find(
+            (x) => x.id === raw || (x.number && x.number.trim() === raw),
+          ) || null
+        );
+      }
+      let scannerState = "off";
+      let scannerControls = null;
+      let scannerGeneration = 0;
+      let scannerLocked = false;
+      let lastRejectedQr = "";
+
+      function updateCameraButton() {
+        const b = $("#stopScanner");
+        b.hidden = false;
+        b.disabled = scannerState === "starting";
+        b.textContent =
+          scannerState === "on" || scannerState === "starting"
+            ? "カメラを停止"
+            : "カメラを再開";
+        $("#locationVideo").hidden = scannerState !== "on";
+        $("#scannerPlaceholder").hidden = scannerState === "on";
+      }
+      function stopLocationScanner(message = "カメラを停止しました。") {
+        scannerGeneration++;
+        scannerState = "off";
+        scannerLocked = false;
+        if (scannerControls) {
+          scannerControls.stop();
+          scannerControls = null;
+        }
+        const v = $("#locationVideo"),
+          s = v.srcObject;
+        if (s?.getTracks) s.getTracks().forEach((t) => t.stop());
+        v.pause();
+        v.srcObject = null;
+        $("#scannerStatus").textContent = message;
+        updateCameraButton();
+      }
+      function cameraErrorMessage(error) {
+        const messages = {
+          NotAllowedError:
+            "カメラが許可されていません。ブラウザーのサイト設定でカメラを許可してください。",
+          NotFoundError:
+            "利用できるカメラが見つかりません。端末のカメラを確認してください。",
+          NotReadableError:
+            "カメラを他のアプリが使用中です。他のアプリを閉じてから再試行してください。",
+          OverconstrainedError:
+            "指定したカメラを利用できません。別のカメラを選ぶか、端末を確認してください。",
+          SecurityError:
+            "安全な接続でカメラを利用できません。HTTPSまたはlocalhostで開いてください。",
+        };
+        return (
+          messages[error?.name] ||
+          "カメラを起動できませんでした。ブラウザーのカメラ権限とHTTPS接続を確認してください。"
+        );
+      }
+
+      async function startLocationScanner() {
+        if (scannerState === "on" || scannerState === "starting") return;
+        const generation = ++scannerGeneration;
+        scannerState = "starting";
+        scannerLocked = false;
+        lastRejectedQr = "";
+        updateCameraButton();
+        const status = $("#scannerStatus"),
+          video = $("#locationVideo");
+        if (!window.isSecureContext) {
+          scannerState = "off";
+          updateCameraButton();
+          status.textContent =
+            "カメラにはHTTPSまたはlocalhostが必要です。VS Code Live ServerかHTTPSで開いてください。";
+          return;
+        }
+        if (!navigator.mediaDevices?.getUserMedia) {
+          scannerState = "off";
+          updateCameraButton();
+          status.textContent =
+            "このブラウザーからカメラを利用できません。HTTPS接続とブラウザー設定を確認してください。";
+          return;
+        }
+        if (!window.ZXingBrowser?.BrowserQRCodeReader) {
+          scannerState = "off";
+          updateCameraButton();
+          status.textContent = window.zxingLibraryLoadError
+            ? "QR読取ライブラリを読み込めません。scripts/zxing-browser.min.jsを確認してください。"
+            : "QR読取機能を初期化できません。ページを再読み込みしてください。";
+          return;
+        }
+        status.textContent =
+          "カメラを起動しています。許可を求められたら「許可」を選んでください。";
+        try {
+          const reader = new ZXingBrowser.BrowserQRCodeReader();
+          const controls = await reader.decodeFromConstraints(
+            { video: { facingMode: { ideal: "environment" } }, audio: false },
+            video,
+            (result, error, callbackControls) => {
+              if (generation !== scannerGeneration || scannerState === "off") {
+                callbackControls?.stop();
+                return;
+              }
+              if (!result || scannerLocked) return;
+              const raw = String(result.getText() || "").trim();
+              if (!raw || raw === lastRejectedQr) return;
+              const place = resolveQrLocation(raw);
+              if (!place) {
+                lastRejectedQr = raw;
+                status.textContent =
+                  "QRの番号が未登録または不正です。現在地は変更していません。";
+                return;
+              }
+              lastRejectedQr = "";
+              if (place.id === startId) return;
+              scannerLocked = true;
+              setCurrentLocation(place);
+              status.textContent =
+                "現在地を更新しました：" +
+                place.name +
+                "。カメラは読み取り中です。";
+              window.setTimeout(() => {
+                if (generation === scannerGeneration) scannerLocked = false;
+              }, 1200);
+            },
+          );
+          if (generation !== scannerGeneration || scannerState === "off") {
+            controls.stop();
+            return;
+          }
+          scannerControls = controls;
+          scannerState = "on";
+          updateCameraButton();
+          status.textContent =
+            "QRコードをカメラに映してください。読み取り中です。";
+        } catch (error) {
+          if (generation !== scannerGeneration) return;
+          scannerState = "off";
+          scannerControls = null;
+          updateCameraButton();
+          status.textContent = cameraErrorMessage(error);
+        }
+      }
+      $("#confirmLocation").onclick = () => {
+        const value = $("#locationNumber").value.trim();
+        const place = placeData.find(
+          (x) => x.number && x.number.trim() === value,
+        );
+        if (!value || !place) {
+          $("#scannerStatus").textContent =
+            "番号が正しくありません。設置番号を確認してください。";
+          return;
+        }
+        setCurrentLocation(place);
+      };
+      $("#stopScanner").onclick = () =>
+        scannerState === "off" ? startLocationScanner() : stopLocationScanner();
+      $("#locationNumber").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") $("#confirmLocation").click();
+      });
+
+      function getHub(id) {
+        const filename = nearestHubImages[id];
+        if (!filename) return null;
+        const match = filename.match(/to_(.+)\.png$/);
+        return match ? match[1] : null;
+      }
+
+      function chooseDestination(
+        dest,
+        startScanner = false,
+        floor = null,
+        targetLabel = null,
+        targetId = null,
+      ) {
+        routeDestination = dest;
+        routeFloor = floor;
+        routeTargetLabel = targetLabel;
+        routeTargetId = targetId;
+        const note = $("#routeFloorNote");
+        note.hidden = !floor;
+        note.textContent = floor
+          ? "建物に到着後、" +
+            floor +
+            "へ移動してください。階段・エレベーターの位置と経路は未登録です。"
+          : "";
+        $("#destSearch").value = targetLabel || dest.name;
+        if (!startId)
+          $("#scannerStatus").textContent =
+            "目的地を設定しました。現在地をQRコードで読み取ってください。";
+        document
+          .querySelectorAll(".quick")
+          .forEach((b) =>
+            b.classList.toggle("selected", b.dataset.id === dest.id),
+          );
+        $("#routeResult").classList.add("show");
+        $("#routeDest").textContent =
+          "目的地：" +
+          (targetLabel ? targetLabel + "（" + dest.name + "）" : dest.name);
+        if (!startId) {
+          routeSlides = [];
+          routeIndex = 0;
+          $("#routeCaption").textContent =
+            "現在地は未設定です。QRコードを読み取ると案内を更新します。";
+          renderSlide();
+          return;
+        }
+        const current = placeData.find((p) => p.id === startId),
+          org = organizationById(routeTargetId);
+        const same =
+          startId === dest.id ||
+          (!routeTargetId && current && current.building === dest.name) ||
+          (org &&
+            current &&
+            current.building === org.location.building &&
+            current.floor === org.location.floor &&
+            current.floor &&
+            !org.location.classroom);
+        if (same) {
+          routeSlides = [];
+          routeIndex = 0;
+          $("#routeCaption").textContent =
+            "現在地と目的地が同じ場所です。移動は不要です。";
+          renderSlide();
+          return;
+        }
+        const hub = getHub(startId),
+          individual = nearestHubImages[startId],
+          shared = hub && hubToDestImages[hub]?.[dest.id];
+        routeSlides = [];
+        if (individual) routeSlides.push(individual);
+        if (Array.isArray(shared)) routeSlides.push(...shared);
+        routeSlides = [
+          ...new Set(
+            routeSlides.filter(
+              (x) => typeof x === "string" && x.startsWith("images/"),
+            ),
+          ),
+        ];
+        routeIndex = 0;
+        if (!hub || !individual || !Array.isArray(shared) || !shared.length) {
+          routeSlides = [];
+          $("#routeCaption").textContent =
+            "この出発地・目的地の案内画像は未設定です。経路データを確認してください。";
+        }
+        renderSlide();
+        $("#routeResult").scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+        });
+      }
+      function renderSlide() {
+        const wrap = $("#slideWrap"),
+          prev = $("#prevBtn"),
+          next = $("#nextBtn");
+        $("#routeStep").textContent = routeSlides.length
+          ? `${routeIndex + 1} / ${routeSlides.length}`
+          : "0 / 0";
+        prev.disabled = routeIndex <= 0;
+        next.disabled =
+          !routeSlides.length || routeIndex >= routeSlides.length - 1;
+        wrap.innerHTML = "";
+        if (!routeSlides.length) {
+          const sameLocation = /移動は不要/.test(
+            $("#routeCaption").textContent,
+          );
+          wrap.innerHTML = sameLocation
+            ? '<div class="slide-fallback"><div class="big">📍</div><strong>目的地にいます</strong><span>現在地と目的地が同じ場所です。</span></div>'
+            : '<div class="slide-fallback"><div class="big">🧭</div><strong>ルートを準備できません</strong><span>start の値、または目的地の経路データがありません。</span></div>';
+          return;
+        }
+        const src = routeSlides[routeIndex],
+          img = document.createElement("img");
+        img.alt = `案内 ${routeIndex + 1}`;
+        img.src = src;
+        img.onerror = () => {
+          wrap.innerHTML = `<div class="slide-fallback"><div class="big">${routeIndex === 0 ? "🚶" : "➡️"}</div><strong>${
+            routeIndex === 0
+              ? `${locations[startId] || startId}
+    からハブへ`
+              : `ハブから ${routeDestination.name}
+    へ`
+          }</strong><span>案内画像：${src}<br>画像を配置するとここに表示されます</span></div>`;
+        };
+        wrap.appendChild(img);
+        $("#routeCaption").textContent =
+          (routeIndex === 0
+            ? `出発地から最寄りハブへ · ${src}`
+            : `ハブから目的地への案内 · ${src}`) +
+          (routeIndex === routeSlides.length - 1 && routeFloor
+            ? `。到着後、${routeFloor}へ移動してください（階段・エレベーター位置は未登録です）。`
+            : "");
+      }
+      $("#prevBtn").onclick = () => {
+        if (routeIndex > 0) {
+          routeIndex--;
+          renderSlide();
+        }
+      };
+      $("#nextBtn").onclick = () => {
+        if (routeIndex < routeSlides.length - 1) {
+          routeIndex++;
+          renderSlide();
+        }
+      };
+      $("#quickGrid").innerHTML = quickDestinations
+        .map(
+          (x) => `<button class="quick" data-id="${x.id}"> ${x.name}</button>`,
+        )
+        .join("");
+      document
+        .querySelectorAll(".quick")
+        .forEach(
+          (b) =>
+            (b.onclick = () =>
+              chooseDestination(
+                quickDestinations.find((x) => x.id === b.dataset.id),
+              )),
+        );
+      $("#exSearch").addEventListener("input", (e) => {
+        renderOrganizationList(e.target.value);
+        $("#exClear").style.display = e.target.value ? "block" : "none";
+      });
+      $("#exClear").onclick = () => {
+        $("#exSearch").value = "";
+        $("#exClear").style.display = "none";
+        renderOrganizationList();
+        $("#exSearch").focus();
+      };
+      document.querySelectorAll(".ex-filter").forEach((button) => {
+        button.addEventListener("click", () => {
+          selectedOrganizationCategory = button.dataset.filter;
+          document
+            .querySelectorAll(".ex-filter")
+            .forEach((item) =>
+              item.classList.toggle("active", item === button),
+            );
+          renderOrganizationList($("#exSearch").value);
+        });
+      });
+      suggestions(
+        $("#exSearch"),
+        $("#exSuggest"),
+        () =>
+          organizations.filter((item) =>
+            organizationMatchesCategory(item, selectedOrganizationCategory),
+          ),
+        selectOrganization,
+      );
+      suggestions(
+        $("#destSearch"),
+        $("#destSuggest"),
+        organizations,
+        navigateToOrganization,
+      );
+      renderQrTestCodes();
+      renderOrganizationList();
+      renderCampusMap();
+      renderSchedule();
+      updateAlert();
+      setInterval(() => {
+        updateAlert();
+        renderSchedule();
+      }, 30000);
+    </script>
+  </body>
 </html>
