@@ -199,7 +199,7 @@
         padding: 6px;
 
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 5px;
 
         background: #ffffff;
@@ -449,6 +449,52 @@
         overflow: visible;
         padding: 1px 2px 5px;
       }
+
+      .ex-row { display: grid; gap: 5px; }
+      .ex-actions { display: flex; gap: 7px; padding: 0 4px; }
+      .ex-actions button, .ticket-action, .mypage-action {
+        min-height: 40px; border: 1px solid var(--line); border-radius: 11px;
+        background: #fff; color: var(--green); font: inherit; font-size: 11px;
+        font-weight: 800; padding: 8px 12px; cursor: pointer;
+      }
+      .ex-actions .favorite-button { min-width: 48px; font-size: 18px; }
+      .ex-actions .favorite-button.is-favorite { color: #e7a524; }
+      .ticket-action { flex: 1; }
+
+      .mypage-card, .ticket-card, .ticket-panel-card {
+        margin: 10px 0; padding: 14px; border: 1px solid var(--line);
+        border-radius: 15px; background: #fff; box-shadow: var(--shadow);
+      }
+      .mypage-card h3, .ticket-panel-card h3 { margin: 0 0 8px; font-size: 14px; }
+      .mypage-empty, .ticket-muted { color: var(--muted); font-size: 12px; line-height: 1.7; }
+      .ticket-status { display: block; margin: 5px 0 10px; color: var(--green); font-size: 12px; font-weight: 800; }
+      .ticket-card { border-color: #e4d9ae; background: #fffdf3; }
+      .ticket-number { margin: 8px 0; color: var(--green); font-size: 32px; font-weight: 900; letter-spacing: .04em; }
+      .ticket-meta { font-size: 12px; line-height: 1.8; }
+      .ticket-toolbar { display:flex; gap:8px; margin-top:10px; }
+      .ticket-toolbar button { flex:1; min-height:44px; }
+      .ticket-reminder { margin: 8px 0; padding: 10px; border-radius: 11px; background:#fff0d9; color:#784a11; font-size:12px; font-weight:800; }
+      .favorite-list { display:grid; gap:7px; }
+      .favorite-entry { width:100%; padding:11px; text-align:left; border:1px solid var(--line); border-radius:11px; background:white; font:inherit; cursor:pointer; }
+
+      /* Horizontal time, vertical venue/group rows. Event positions stay minute-precise. */
+      .timeline-scroll { max-width:100%; overflow:auto; border:1px solid var(--line); border-radius:14px; background:#fff; -webkit-overflow-scrolling:touch; }
+      .timeline-canvas { width:max-content; min-width:100%; }
+      .timeline-ruler, .timeline-row { display:grid; grid-template-columns:132px auto; }
+      .timeline-name { position:sticky; left:0; z-index:4; width:132px; padding:8px; border-right:1px solid var(--line); background:#eef2e8; font-size:10px; font-weight:900; }
+      .timeline-ruler { position:sticky; top:0; z-index:6; min-height:48px; background:#eef2e8; border-bottom:1px solid var(--line); }
+      .timeline-ruler-track { position:relative; height:48px; }
+      .timeline-tick { position:absolute; top:0; bottom:0; width:1px; background:#dfe5da; font-size:9px; font-weight:800; color:#526253; }
+      .timeline-tick span { position:relative; left:4px; top:5px; white-space:nowrap; }
+      .timeline-row { min-height:78px; border-bottom:1px solid var(--line); }
+      .timeline-row .timeline-name { background:#fff; }
+      .timeline-track { position:relative; min-height:78px; background-image:repeating-linear-gradient(to right, transparent 0 calc(var(--half-hour) - 1px), #e7ebe3 calc(var(--half-hour) - 1px) var(--half-hour)); }
+      .timeline-event { position:absolute; top:8px; height:62px; min-width:3px; overflow:hidden; padding:5px; border:0; border-left:3px solid var(--green); border-radius:7px; background:#e9f0e8; color:#2d4435; text-align:left; font:inherit; font-size:9px; line-height:1.25; cursor:pointer; }
+      .timeline-event:nth-of-type(2n) { border-left-color:#e39a38; background:#fff0d9; }
+      .timeline-event strong,.timeline-event span { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+      .timeline-event span { margin-top:3px; font-size:8px; font-weight:800; }
+      .timeline-event.ticket-booked::after { content:'🎟'; position:absolute; right:3px; top:2px; }
+      @media(max-width:420px){ .timeline-ruler,.timeline-row{grid-template-columns:112px auto}.timeline-name{width:112px}.tab{font-size:10px;padding:10px 2px} }
 
       .ex-card {
         width: 100%;
@@ -1473,6 +1519,7 @@
         <button class="tab active" data-tab="exhibitions">団体一覧</button>
         <button class="tab" data-tab="timetable">タイムテーブル</button>
         <button class="tab" data-tab="navigator">行き先ナビ</button>
+        <button class="tab" data-tab="mypage">マイページ</button>
       </nav>
       <section
         class="event-alert"
@@ -1668,6 +1715,14 @@
             </p>
           </div>
         </section>
+        <section class="panel" id="panel-mypage">
+          <div class="section-head"><div><div class="eyebrow">YOUR FESTIVAL</div><h2>マイページ</h2></div></div>
+          <p class="ticket-muted">整理券とお気に入りをこの端末のブラウザーに保存して表示します。</p>
+          <div id="ticketStatus" class="ticket-status" aria-live="polite">整理券情報を確認しています。</div>
+          <div class="mypage-card"><h3>取得済み整理券</h3><div id="myTickets"><p class="mypage-empty">確認中です。</p></div></div>
+          <div class="mypage-card"><h3>マイスケジュール</h3><div id="mySchedule"><p class="mypage-empty">有効な整理券はありません。</p></div></div>
+          <div class="mypage-card"><h3>お気に入り団体</h3><div id="favoriteList" class="favorite-list"></div></div>
+        </section>
       </div>
 
       <footer class="footer">MAGNOLIA FESTIVAL · MAKE YOUR DAY</footer>
@@ -1689,6 +1744,11 @@
           行き方が分からない
         </button>
       </div>
+    </dialog>
+    <dialog class="event-dialog" id="ticketDialog">
+      <div class="event-dialog-head"><strong id="ticketDialogTitle">整理券</strong><button type="button" id="closeTicketDialog" aria-label="閉じる">×</button></div>
+      <div class="event-dialog-body" id="ticketDialogBody"></div>
+      <div class="event-dialog-actions" id="ticketDialogActions"></div>
     </dialog>
     <script
       src="scripts/zxing-browser.min.js"
@@ -1994,8 +2054,8 @@
             "【動作確認用】落語研究班（仮）の発表・企画です。",
           location: {
             building: "北館",
-            floor: "3",
-            classroom:"B"
+            floor: 3,
+            classroom: "B",
           },
           icon: "🎙️",
           map: {
@@ -2637,6 +2697,146 @@
         }
       }
       const $ = (s) => document.querySelector(s);
+      // Supabase public settings are intentionally placeholders. Never put the
+      // service-role key in this static page.
+      const TICKETING_CONFIG = { url: "https://xwkorizzolxclgccpteu.supabase.co", anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh3a29yaXp6b2x4Y2xnY2NwdGV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM2MjQ5OTAsImV4cCI6MjEwOTIwMDk5MH0.jWWQO9QyzVU6YK4bULTjTLyPfSIWsBSgYcFnoFYwfp0", functionName: "festival-tickets" };
+      const TICKET_TOKEN_KEY = "magnolia.ticket-owner.v1";
+      const FAVORITES_KEY = "magnolia.favorites.v1";
+      let ticketCatalog = null, myTicketRows = [], ticketBusy = false;
+      let favoriteIds;
+      try { favoriteIds = new Set(JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]")); }
+      catch (_) { favoriteIds = new Set(); }
+      function escapeHtml(value) { return String(value ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" })[c]); }
+      const ticketDraftKey = (sessionId) => `magnolia.ticket-draft.${sessionId}`;
+      function ticketBackendReady() { return Boolean(TICKETING_CONFIG.url && TICKETING_CONFIG.anonKey); }
+      function getOwnerToken() {
+        let token = localStorage.getItem(TICKET_TOKEN_KEY);
+        if (!token) {
+          const bytes = crypto.getRandomValues(new Uint8Array(32));
+          token = [...bytes].map((b) => b.toString(16).padStart(2, "0")).join("");
+          localStorage.setItem(TICKET_TOKEN_KEY, token);
+        }
+        return token;
+      }
+      async function ticketApi(action, payload = {}) {
+        if (!ticketBackendReady()) throw new Error("整理券システムは公開設定待ちです。管理者がSupabaseを設定してください。");
+        const response = await fetch(`${TICKETING_CONFIG.url.replace(/\/$/, "")}/functions/v1/${TICKETING_CONFIG.functionName}`, {
+          method: "POST", headers: { "Content-Type": "application/json", apikey: TICKETING_CONFIG.anonKey, Authorization: `Bearer ${TICKETING_CONFIG.anonKey}` },
+          body: JSON.stringify({ action, ...payload }),
+        });
+        const body = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(body.error || `通信に失敗しました (${response.status})`);
+        return body;
+      }
+      function ticketOrgConfig(orgId) { return ticketCatalog?.organizations?.find((x) => x.organizationId === orgId) || null; }
+      function currentSessionFor(orgId) { return ticketOrgConfig(orgId)?.sessions?.find((s) => s.available) || null; }
+      function saveFavorites() { localStorage.setItem(FAVORITES_KEY, JSON.stringify([...favoriteIds])); renderFavoriteList(); }
+      function toggleFavorite(orgId) {
+        favoriteIds.has(orgId) ? favoriteIds.delete(orgId) : favoriteIds.add(orgId);
+        saveFavorites(); renderOrganizationList($("#exSearch").value);
+      }
+      function renderFavoriteList() {
+        const root = $("#favoriteList"); if (!root) return;
+        const items = organizations.filter((x) => favoriteIds.has(x.id));
+        root.innerHTML = items.length ? items.map((x) => `<button class="favorite-entry" data-favorite-id="${x.id}">⭐ ${escapeHtml(x.name)}<br><small>${escapeHtml(formatOrganizationLocation(x))}</small></button>`).join("") : '<p class="mypage-empty">お気に入りはまだありません。団体一覧の☆から追加できます。</p>';
+        root.querySelectorAll("[data-favorite-id]").forEach((b) => b.onclick = () => {
+          const org = organizationById(b.dataset.favoriteId); if (!org) return;
+          selectedOrganizationCategory = ({"文化系クラブ":"展示団体","有志":"展示団体","運動系クラブ":"運動系クラブ","公演団体":"公演","食品販売":"食品販売"})[org.type] || "展示団体";
+          $("#exSearch").value = "";
+          document.querySelectorAll(".ex-filter").forEach((filter) => filter.classList.toggle("active", filter.dataset.filter === selectedOrganizationCategory));
+          setTab("exhibitions"); renderOrganizationList(); selectOrganization(org);
+        });
+      }
+      function formatDateTime(value) {
+        if (!value) return "未設定";
+        return new Intl.DateTimeFormat("ja-JP", { hour: "2-digit", minute: "2-digit" }).format(new Date(value));
+      }
+      function renderMyTickets() {
+        const root = $("#myTickets"), schedule = $("#mySchedule"); if (!root || !schedule) return;
+        const active = myTicketRows.filter((t) => t.status === "active" && t.periodId === ticketCatalog?.period?.id);
+        const orgFor = (t) => organizationById(t.organizationId);
+        root.innerHTML = active.length ? active.map((t) => `<article class="ticket-card"><strong>${escapeHtml(orgFor(t)?.name || "団体")}</strong><div class="ticket-number">${escapeHtml(t.displayNumber)}</div><div class="ticket-meta">集合：${formatDateTime(t.gatherAt)}<br>体験：${formatDateTime(t.programStartsAt)}〜${formatDateTime(t.programEndsAt)}<br>集合場所：${escapeHtml(t.meetingPlace)}<br>参加人数：${t.attendeeCount}人${t.notice ? `<br>注意：${escapeHtml(t.notice)}` : ""}</div><div class="ticket-toolbar"><button class="mypage-action" data-ticket-detail="${t.id}">整理券を表示</button>${t.canCancel ? `<button class="mypage-action" data-ticket-cancel="${t.id}">キャンセル</button>` : ""}</div></article>`).join("") : '<p class="mypage-empty">現在の開催区分の有効な整理券はありません。</p>';
+        const dayFromPeriod = Number((ticketCatalog?.period?.id || "").slice(1,2));
+        const scheduleDay = dayFromPeriod || selectedDay || null;
+        const regular = scheduleDay ? scheduleEntries.filter((e) => Number(e.day) === scheduleDay && favoriteIds.has(e.organizationId)) : [];
+        const ticketSchedule = active.slice().sort((a,b) => new Date(a.gatherAt)-new Date(b.gatherAt)).map((t) => `<button class="favorite-entry" data-ticket-detail="${t.id}">${formatDateTime(t.gatherAt)}　${escapeHtml(orgFor(t)?.name || "団体")}<br><small>整理券 ${escapeHtml(t.displayNumber)} · 有効</small></button>`).join("");
+        const regularSchedule = regular.map((e) => `<button class="favorite-entry" data-my-event="${e.id}">${e.start || "時間未設定"}　${escapeHtml(e.title || organizationById(e.organizationId)?.name || "予定")}<br><small>お気に入りの予定 · ${e.end || "終了時刻未設定"}</small></button>`).join("");
+        schedule.innerHTML = ticketSchedule + regularSchedule || '<p class="mypage-empty">現在の開催区分の有効な整理券、またはお気に入り団体の予定はありません。</p>';
+        root.querySelectorAll("[data-ticket-detail]").forEach((b) => b.onclick = () => showTicketDetail(myTicketRows.find((t) => t.id === b.dataset.ticketDetail)));
+        schedule.querySelectorAll("[data-ticket-detail]").forEach((b) => b.onclick = () => showTicketDetail(myTicketRows.find((t) => t.id === b.dataset.ticketDetail)));
+        schedule.querySelectorAll("[data-my-event]").forEach((b) => b.onclick = () => openEventDetail(scheduleEntries.find((e) => e.id === b.dataset.myEvent)));
+        root.querySelectorAll("[data-ticket-cancel]").forEach((b) => b.onclick = () => cancelTicket(b.dataset.ticketCancel));
+      }
+      function showTicketDetail(ticket) {
+        if (!ticket) return;
+        const org = organizationById(ticket.organizationId);
+        $("#ticketDialogTitle").textContent = "整理券を保存してください";
+        $("#ticketDialogBody").innerHTML = `<p>整理券を取得しました。念のため、この画面のスクリーンショットを保存してください。同じ端末・同じブラウザーから再表示できますが、ブラウザーデータを消去すると復元できない場合があります。</p><article class="ticket-card"><strong>${escapeHtml(org?.name || "団体")}</strong><div class="ticket-number">整理券番号：${escapeHtml(ticket.displayNumber)}</div><div class="ticket-meta">集合時刻：${formatDateTime(ticket.gatherAt)}<br>体験・公演：${formatDateTime(ticket.programStartsAt)}〜${formatDateTime(ticket.programEndsAt)}<br>集合場所：${escapeHtml(ticket.meetingPlace)}<br>参加人数：${ticket.attendeeCount}人${ticket.notice ? `<br>注意事項：${escapeHtml(ticket.notice)}` : ""}</div></article>`;
+        $("#ticketDialogActions").innerHTML = '<button type="button" class="map-directions-button" id="ticketDialogConfirm">確認して整理券を表示</button>';
+        $("#ticketDialogConfirm").onclick = () => $("#ticketDialog").close();
+        if (!$("#ticketDialog").open) $("#ticketDialog").showModal();
+      }
+      function prepareTicket(sessionId) {
+        const org = ticketCatalog?.organizations?.find((o) => o.sessions?.some((s) => s.id === sessionId));
+        const session = org?.sessions?.find((s) => s.id === sessionId);
+        if (!org || !session) return;
+        $("#ticketDialogTitle").textContent = "整理券の内容を確認";
+        $("#ticketDialogBody").innerHTML = `<article class="ticket-panel-card"><h3>${escapeHtml(organizationById(org.organizationId)?.name || "団体")}</h3><div class="ticket-meta">集合時刻：${formatDateTime(session.gatherAt)}<br>体験・公演：${formatDateTime(session.programStartsAt)}〜${formatDateTime(session.programEndsAt)}<br>残り人数：${session.remainingPeople}人<br>この整理券の参加人数：${session.participantsPerTicket}人<br>集合場所：${escapeHtml(session.meetingPlace)}${org.description ? `<br>${escapeHtml(org.description)}` : ""}${org.notice ? `<br>注意事項：${escapeHtml(org.notice)}` : ""}</div></article><p>取得すると、この端末のブラウザーに管理用情報が保存されます。</p>`;
+        $("#ticketDialogActions").innerHTML = '<button type="button" class="map-directions-button" id="confirmIssueTicket">この内容で整理券を取得</button>';
+        $("#confirmIssueTicket").onclick = () => { $("#ticketDialog").close(); issueTicket(sessionId); };
+        if (!$("#ticketDialog").open) $("#ticketDialog").showModal();
+      }
+      async function issueTicket(sessionId) {
+        if (ticketBusy) return;
+        ticketBusy = true;
+        const status = $("#ticketStatus");
+        try {
+          const org = ticketCatalog?.organizations?.find((o) => o.sessions?.some((s) => s.id === sessionId));
+          const session = org?.sessions?.find((s) => s.id === sessionId);
+          if (!session || !session.available) throw new Error("受付状況が更新されました。最新情報を読み込みます。");
+          let idem = localStorage.getItem(ticketDraftKey(sessionId));
+          if (!idem) { idem = crypto.randomUUID(); localStorage.setItem(ticketDraftKey(sessionId), idem); }
+          status.textContent = "発券を確認しています…";
+          const result = await ticketApi("issue", { ownerToken: getOwnerToken(), sessionId, idempotencyKey: idem });
+          localStorage.removeItem(ticketDraftKey(sessionId));
+          await refreshTicketData();
+          const saved = myTicketRows.find((t) => t.id === result.ticket?.id);
+          if (saved) showTicketDetail(saved); else status.textContent = `整理券 ${result.ticket?.displayNumber || ""} を取得しました。マイページを更新してください。`;
+        } catch (error) { status.textContent = error.message; await refreshTicketData(); }
+        finally { ticketBusy = false; }
+      }
+      async function cancelTicket(ticketId) {
+        const t = myTicketRows.find((x) => x.id === ticketId);
+        if (!t || !t.canCancel || !confirm(`整理券 ${t.displayNumber} をキャンセルしますか？`)) return;
+        try { await ticketApi("cancel", { ownerToken: getOwnerToken(), ticketId }); $("#ticketStatus").textContent = "キャンセルしました。空き状況を更新しました。"; await refreshTicketData(); }
+        catch (error) { $("#ticketStatus").textContent = error.message; await refreshTicketData(); }
+      }
+      async function refreshTicketData() {
+        if (!ticketBackendReady()) { $("#ticketStatus").textContent = "整理券システムは準備中です。管理者のSupabase設定後に利用できます。"; ticketCatalog = null; myTicketRows = []; renderMyTickets(); updateAlert(); return; }
+        try {
+          ticketCatalog = await ticketApi("catalog");
+          if (localStorage.getItem(TICKET_TOKEN_KEY)) {
+            const mine = await ticketApi("mine", { ownerToken: getOwnerToken() });
+            myTicketRows = mine.tickets || [];
+          }
+          const period = ticketCatalog.period?.label;
+          $("#ticketStatus").textContent = period ? `現在の開催区分：${period}` : "現在は受付対象の開催区分ではありません。";
+          renderOrganizationList($("#exSearch").value); renderMyTickets(); updateAlert();
+        } catch (error) { $("#ticketStatus").textContent = `整理券情報を取得できません：${error.message}`; }
+      }
+      function connectTicketRealtime() {
+        if (!ticketBackendReady() || window.ticketRealtimeSocket) return;
+        try {
+          const wsUrl = TICKETING_CONFIG.url.replace(/^http/, "ws").replace(/\/$/, "") + `/realtime/v1/websocket?apikey=${encodeURIComponent(TICKETING_CONFIG.anonKey)}&vsn=1.0.0`;
+          const socket = new WebSocket(wsUrl); window.ticketRealtimeSocket = socket;
+          let ref = 1, heartbeat;
+          socket.onopen = () => { socket.send(JSON.stringify({ topic: "realtime:public:ticket_availability", event: "phx_join", payload: { config: { broadcast: { ack: false, self: false }, presence: { key: "" }, postgres_changes: [{ event: "*", schema: "public", table: "ticket_availability" }] }, access_token: TICKETING_CONFIG.anonKey }, ref: String(ref), join_ref: String(ref) })); heartbeat = setInterval(() => { if (socket.readyState === WebSocket.OPEN) socket.send(JSON.stringify({ topic: "phoenix", event: "heartbeat", payload: {}, ref: String(++ref) })); }, 25000); };
+          socket.onmessage = (event) => { try { const message = JSON.parse(event.data); if (message.event === "postgres_changes" || message.event === "system") refreshTicketData(); } catch (_) {} };
+          socket.onclose = () => { clearInterval(heartbeat); window.ticketRealtimeSocket = null; setTimeout(connectTicketRealtime, 8000); };
+          socket.onerror = () => socket.close();
+        } catch (_) { window.ticketRealtimeSocket = null; }
+      }
+      $("#closeTicketDialog").onclick = () => $("#ticketDialog").close();
       let selectedOrganization = null,
         routeSlides = [],
         routeIndex = 0,
@@ -2654,14 +2854,8 @@
       }
       function updateAlert() {
         const el = $("#alert");
-        if (selectedFestivalDay === null) {
-          el.hidden = true;
-          el.innerHTML = "";
-          return;
-        }
-        el.hidden = false;
         const now = nowMins();
-        const list = scheduleEntries
+        const performances = selectedFestivalDay === null ? [] : scheduleEntries
           .filter(
             (e) =>
               e.kind === "performance" &&
@@ -2670,32 +2864,22 @@
               mins(e.start) - now <= 30,
           )
           .sort((a, b) => mins(a.start) - mins(b.start));
-        el.innerHTML = list.length
-          ? '<span class="alert-icon">⏰</span><div class="alert-copy"><div class="alert-label">' +
-            selectedFestivalDay +
-            "日目 · COMING UP</div>" +
-            list
-              .map((e) => {
-                const o = organizationById(e.organizationId);
-                return (
-                  '<div class="alert-event"><div><div class="alert-title">' +
-                  (e.title || o.name) +
-                  '</div><div class="alert-meta">' +
-                  o.location.building +
-                  " · " +
-                  e.start +
-                  "〜" +
-                  e.end +
-                  '</div></div><button type="button" data-alert-id="' +
-                  e.id +
-                  '">行き方が分からない</button></div>'
-                );
-              })
-              .join("") +
-            "</div>"
-          : '<span class="alert-icon">✨</span><div class="alert-copy"><div class="alert-label">' +
-            selectedFestivalDay +
-            '日目</div><div class="alert-empty">まもなく始まる公演はありません</div></div>';
+        const serverNow = ticketCatalog?.serverNow ? new Date(ticketCatalog.serverNow).getTime() : Date.now();
+        const reminders = myTicketRows.filter((t) => t.status === "active" && t.periodId === ticketCatalog?.period?.id && new Date(t.gatherAt).getTime() >= serverNow && new Date(t.gatherAt).getTime() - serverNow <= 10 * 60000);
+        if (!performances.length && !reminders.length && selectedFestivalDay === null) { el.hidden = true; el.replaceChildren(); return; }
+        el.hidden = false;
+        let html = '<span class="alert-icon">⏰</span><div class="alert-copy"><div class="alert-label">お知らせ</div>';
+        if (performances.length) html += `<div class="alert-label">${selectedFestivalDay}日目 · COMING UP</div>` + performances.map((e) => {
+          const o = organizationById(e.organizationId);
+          return `<div class="alert-event"><div><div class="alert-title">${e.title || o?.name || "公演"}</div><div class="alert-meta">${o?.location.building || e.place || "場所未登録"} · ${e.start}〜${e.end}</div></div><button type="button" data-alert-id="${e.id}">行き方が分からない</button></div>`;
+        }).join("");
+        if (reminders.length) html += reminders.map((t) => {
+          const o = organizationById(t.organizationId);
+          return `<div class="ticket-reminder">まもなく開始 · ${escapeHtml(o?.name || "整理券企画")}<br>集合時刻：${formatDateTime(t.gatherAt)} · 整理券番号：${escapeHtml(t.displayNumber)}<br><button type="button" data-reminder-id="${t.id}">整理券を確認</button></div>`;
+        }).join("");
+        if (!performances.length && selectedFestivalDay !== null) html += `<div class="alert-empty">${selectedFestivalDay}日目に、まもなく始まる公演はありません</div>`;
+        html += "</div>";
+        el.innerHTML = html;
         el.querySelectorAll("[data-alert-id]").forEach((b) =>
           b.addEventListener("click", () =>
             navigateToScheduleEntry(
@@ -2703,6 +2887,7 @@
             ),
           ),
         );
+        el.querySelectorAll("[data-reminder-id]").forEach((b) => b.addEventListener("click", () => showTicketDetail(myTicketRows.find((t) => t.id === b.dataset.reminderId))));
       }
       function organizationMatchesCategory(item, category) {
         const f = {
@@ -2739,26 +2924,15 @@
         );
         $("#exCount").textContent = items.length + " 団体";
         list.innerHTML = items.length
-          ? items
-              .map(
-                (x) =>
-                  '<button class="ex-card ' +
-                  (selectedOrganization?.id === x.id ? "selected" : "") +
-                  '" data-id="' +
-                  x.id +
-                  '"><span class="ex-icon">' +
-                  x.icon +
-                  '</span><span class="ex-info"><span class="ex-title">' +
-                  x.name +
-                  '</span><span class="ex-desc">' +
-                  x.type +
-                  " · " +
-                  x.listDescription +
-                  '</span></span><span class="ex-floor">' +
-                  formatOrganizationLocation(x) +
-                  "</span></button>",
-              )
-              .join("")
+          ? items.map((x) => {
+        const ticketOrg = ticketOrgConfig(x.id);
+              const session = currentSessionFor(x.id);
+              const nextSession = ticketOrg?.sessions?.filter((s) => new Date(s.acceptanceStartsAt).getTime() > new Date(ticketCatalog?.serverNow || Date.now()).getTime()).sort((a,b) => new Date(a.acceptanceStartsAt)-new Date(b.acceptanceStartsAt))[0];
+              const ticketControl = ticketOrg?.enabled
+                ? `<button class="ticket-action" type="button" data-issue-session="${session?.id || ""}" ${session ? "" : "disabled"}>${session ? `整理券を取得 · 残り${session.remainingPeople}人` : nextSession ? `次回受付：${formatDateTime(nextSession.acceptanceStartsAt)}` : "整理券：現在受付なし"}</button>`
+                : "";
+              return `<div class="ex-row"><button class="ex-card ${selectedOrganization?.id === x.id ? "selected" : ""}" data-id="${x.id}"><span class="ex-icon">${x.icon}</span><span class="ex-info"><span class="ex-title">${escapeHtml(x.name)}</span><span class="ex-desc">${escapeHtml(x.type)} · ${escapeHtml(x.listDescription)}</span></span><span class="ex-floor">${escapeHtml(formatOrganizationLocation(x))}</span></button><div class="ex-actions"><button class="favorite-button ${favoriteIds.has(x.id) ? "is-favorite" : ""}" type="button" aria-label="お気に入り${favoriteIds.has(x.id) ? "解除" : "追加"}" aria-pressed="${favoriteIds.has(x.id)}" data-favorite-toggle="${x.id}">${favoriteIds.has(x.id) ? "★" : "☆"}</button>${ticketControl}</div></div>`;
+            }).join("")
           : '<div class="empty">該当する団体が見つかりません</div>';
         list
           .querySelectorAll(".ex-card")
@@ -2767,6 +2941,8 @@
               selectOrganization(organizationById(b.dataset.id)),
             ),
           );
+        list.querySelectorAll("[data-favorite-toggle]").forEach((button) => button.addEventListener("click", (event) => { event.stopPropagation(); toggleFavorite(button.dataset.favoriteToggle); }));
+        list.querySelectorAll("[data-issue-session]").forEach((button) => button.addEventListener("click", () => prepareTicket(button.dataset.issueSession)));
         const card = selectedOrganization
           ? list.querySelector(
               '.ex-card[data-id="' + selectedOrganization.id + '"]',
@@ -2774,7 +2950,7 @@
           : null;
         if (card) {
           map.classList.add("visible");
-          card.insertAdjacentElement("afterend", map);
+          (card.closest(".ex-row") || card).insertAdjacentElement("afterend", map);
         } else map.classList.remove("visible");
       }
       function selectOrganization(item) {
@@ -2802,7 +2978,7 @@
         );
         if (!card) return;
         map.classList.add("visible");
-        card.insertAdjacentElement("afterend", map);
+        (card.closest(".ex-row") || card).insertAdjacentElement("afterend", map);
         $("#mapLocation").textContent = formatOrganizationLocation(item);
         renderCampusMap(item);
       }
@@ -2890,7 +3066,7 @@
             box.classList.remove("show");
         });
       }
-      const scheduleCategories = ["公演", "試合", "部活"];
+      const scheduleCategories = ["公演", "試合", "部活", "有志"];
       let selectedDay = null,
         selectedCategory = "公演";
       let selectedFestivalDay = null,
@@ -2911,7 +3087,9 @@
           ? "公演"
           : e.kind === "match"
             ? "試合"
-            : "部活";
+            : organizationById(e.organizationId)?.type === "有志"
+              ? "有志"
+              : "部活";
       }
       function targetKey(e) {
         const o = organizationById(e.organizationId);
@@ -3122,57 +3300,35 @@
           root.innerHTML = `<div class="schedule-empty">${visible.length ? "時刻が登録された予定はありません" : "該当する予定はありません"}</div>`;
           return;
         }
-        const first =
-            Math.floor(Math.min(...timed.map((e) => e._start)) / 30) * 30,
-          last =
-            Math.ceil(Math.max(...timed.map((e) => e._end)) / 30) * 30 ||
-            Math.max(...timed.map((e) => e._end));
-        const range = Math.max(30, last - first),
-          height = range * MINUTE_HEIGHT,
-          tickTimes = [];
-        for (let t = first; t <= last; t += 30) tickTimes.push(t);
-        const laneCount = targets.length;
-        const heads = targets
-          .map((target) => {
-            if (selectedCategory === "公演" || selectedCategory === "試合") {
-              return `<div class="time-grid-heading">${targetLabel(target)}</div>`;
-            }
-            const description = descriptionForTarget(target);
-            const shortDescription = Array.from(description)
-              .slice(0, 10)
-              .join("");
-            return `<div class="time-grid-heading"><span class="time-group-name">${targetLabel(target)}</span><span class="time-group-short">${shortDescription}</span></div>`;
-          })
-          .join("");
-        const axis = tickTimes
-          .map(
-            (t, i) =>
-              `<span class="time-label ${i === 0 ? "first" : i === tickTimes.length - 1 ? "last" : ""}" style="top:${(t - first) * MINUTE_HEIGHT}px">${clockLabel(t)}</span>`,
-          )
-          .join("");
-        const lanes = targets
-          .map((target) => {
-            const items = timed
-              .filter((e) => targetKey(e) === target)
-              .sort((a, b) => a._start - b._start);
-            const cards = items
-              .map((e) => {
-                const layout = getEventLayout(e.start, e.end, first),
-                  top = layout.top,
-                  eventHeight = layout.height,
-                  compact = eventHeight < 38;
-                const org = organizationById(e.organizationId);
-                const title = e.title || org?.name || "企画名未登録";
-                return `<article class="time-event ${compact ? "compact" : ""}" data-event-index="${e._eventIndex}" tabindex="0" role="button" style="top:${top}px;height:${eventHeight}px" title="詳細を表示：${title}｜${clockLabel(e._start)}〜${clockLabel(e._end)}"><strong>${title}</strong><span class="time-event-time">${clockLabel(e._start)}〜${clockLabel(e._end)}</span></article>`;
-              })
-              .join("");
-            return `<div class="time-lane" style="height:${height}px">${cards}</div>`;
-          })
-          .join("");
-        const isPlace =
-            selectedCategory === "公演" || selectedCategory === "試合",
-          firstHeading = isPlace ? "時間" : "時間";
-        let html = `<div class="time-grid-scroll"><div class="time-grid-header" style="--lane-count:${laneCount}"><div class="time-grid-heading">${firstHeading}</div>${heads}</div><div class="time-grid-body" style="--lane-count:${laneCount};height:${height}px"><div class="time-axis" style="height:${height}px">${axis}</div>${lanes}</div></div>`;
+        const first = Math.floor(Math.min(...timed.map((e) => e._start)) / 30) * 30;
+        const last = Math.ceil(Math.max(...timed.map((e) => e._end)) / 30) * 30;
+        const range = Math.max(30, last - first), pxPerMinute = 3.2;
+        const ticks = [];
+        for (let t = first; t <= last; t += 30) ticks.push(t);
+        const ruler = ticks.map((t) => `<div class="timeline-tick" style="left:${(t-first)*pxPerMinute}px"><span>${clockLabel(t)}</span></div>`).join("");
+        const rowsHtml = targets.map((target) => {
+          const items = timed.filter((e) => targetKey(e) === target).sort((a,b) => a._start-b._start);
+          const laneEnds = [];
+          const cards = items.map((e) => {
+            let lane = laneEnds.findIndex((end) => end <= e._start);
+            if (lane < 0) lane = laneEnds.length;
+            laneEnds[lane] = e._end;
+            const org = organizationById(e.organizationId);
+            const title = e.title || org?.name || "企画名未登録";
+            const ownsTicket = myTicketRows.some((ticket) => ticket.status === "active" && ticket.organizationId === e.organizationId && ticket.periodId === ticketCatalog?.period?.id && formatDateTime(ticket.programStartsAt) === e.start && formatDateTime(ticket.programEndsAt) === e.end);
+            const left = (e._start-first)*pxPerMinute, width = Math.max(8,(e._end-e._start)*pxPerMinute);
+            return `<button class="timeline-event ${ownsTicket ? "ticket-booked" : ""}" data-event-index="${e._eventIndex}" type="button" style="left:${left}px;width:${width}px;top:${8+lane*47}px" title="${title}｜${clockLabel(e._start)}〜${clockLabel(e._end)}"><strong>${title}</strong><span>${clockLabel(e._start)}〜${clockLabel(e._end)}</span></button>`;
+          }).join("");
+          const rowHeight = Math.max(78, 16 + laneEnds.length*47);
+          let label = targetLabel(target);
+          if (selectedCategory === "部活" || selectedCategory === "有志") {
+            const desc = Array.from(descriptionForTarget(target)).slice(0,10).join("");
+            label = `${label}<br><small>${desc}</small>`;
+          }
+          return `<div class="timeline-row" style="min-height:${rowHeight}px"><div class="timeline-name">${label}</div><div class="timeline-track" style="width:${range*pxPerMinute}px;min-height:${rowHeight}px;--half-hour:${30*pxPerMinute}px">${cards}</div></div>`;
+        }).join("");
+        const targetHeader = selectedCategory === "公演" || selectedCategory === "試合" ? "会場" : "団体";
+        let html = `<div class="timeline-scroll"><div class="timeline-canvas"><div class="timeline-ruler"><div class="timeline-name">${targetHeader}</div><div class="timeline-ruler-track" style="width:${range*pxPerMinute}px">${ruler}</div></div>${rowsHtml}</div></div>`;
         if (untimed.length)
           html += `<div class="unscheduled"><strong>時間未登録の予定</strong>${untimed
             .map(
@@ -3182,7 +3338,7 @@
             )
             .join("<br>")}</div>`;
         root.innerHTML = html;
-        root.querySelectorAll(".time-event").forEach((card) => {
+        root.querySelectorAll(".timeline-event").forEach((card) => {
           const open = () =>
             openEventDetail(scheduleEntries[Number(card.dataset.eventIndex)]);
           card.addEventListener("click", open);
@@ -3255,6 +3411,7 @@
         if (name === "navigator") startLocationScanner();
         else if (scannerState !== "off")
           stopLocationScanner("行き先ナビを離れたため、カメラを停止しました。");
+        if (name === "mypage") { renderFavoriteList(); refreshTicketData(); }
         window.scrollTo({
           top: 0,
           behavior: "smooth",
@@ -3672,10 +3829,14 @@
       renderOrganizationList();
       renderCampusMap();
       renderSchedule();
+      renderFavoriteList();
       updateAlert();
+      refreshTicketData();
+      connectTicketRealtime();
       setInterval(() => {
         updateAlert();
         renderSchedule();
+        if (ticketBackendReady()) refreshTicketData();
       }, 30000);
     </script>
   </body>
