@@ -189,16 +189,19 @@
       }
 
       .tabs {
-        position: sticky;
-        top: 5px;
+        position: fixed;
+        bottom: 0;
+        left: 16px;
+        right: 16px;
         z-index: 19;
-        margin: 0 16px 19px;
+        margin: 0 0 19px;
         padding: 5px;
         background: #e9ebe4;
         border-radius: 15px;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 4px;
+        box-sizing: border-box;
       }
 
       .tab {
